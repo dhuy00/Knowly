@@ -6,12 +6,9 @@ export default function MainLayout() {
   const [filter, setFilter] = useState("all");
 
   return (
-    <div>
+    <div className="flex font-poppins">
       <nav style={{ display: "flex", gap: 20 }}>
         <Sidebar onSelect={(id) => setFilter(id)}/>
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/dashboard">Dashboard</Link>
       </nav>
 
       <div style={{ padding: 20 }}>
