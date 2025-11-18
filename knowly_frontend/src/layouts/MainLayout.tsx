@@ -6,7 +6,7 @@ export default function MainLayout() {
   const [filter, setFilter] = useState("all");
 
   return (
-    <div className="flex font-poppins">
+    <div className="flex font-poppins bg-background-primary">
       <nav style={{ display: "flex", gap: 20 }}>
         <Sidebar onSelect={(id) => setFilter(id)}/>
       </nav>

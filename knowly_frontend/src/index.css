@@ -7,7 +7,10 @@
   --color-sidebar-item-background: rgba(238, 242, 255, 1);
   --color-sidebar-background: rgba(255, 255, 255, 0);
   --color-background-primary: rgba(247, 247, 247, 1);
-  --color-text-primary: rgba(100, 116, 139, 1);
+  --color-text-secondary: rgba(100, 116, 139, 1);
+  --color-text-primary: rgba(8, 16, 33);
+  --color-border-primary: rgba(226, 232, 240, 1);
+  --color-background-primary: rgba(246, 246, 246, 1);
   /* Font */
   --font-poppins: "Poppins", sans-serif;
 }
