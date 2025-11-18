@@ -31,7 +31,11 @@ const Sidebar: React.FC<SidebarProps> = ({ onSelect }) => {
           {navigations.map((item) => (
             <button
               key={item.id}
-              className={`font-medium flex items-center gap-2 py-2 px-4 rounded-md hover:bg-sidebar-item-background transition-colors ${active === item.id ? "bg-sidebar-item-background text-text-primary-hover" : "text-text-secondary "
+              className={`font-medium flex items-center gap-2 py-2 px-4 rounded-md 
+              hover:bg-sidebar-item-background active:text-text-primary-hover 
+              active:bg-sidebar-item-active-background transition-colors ${active === item.id
+                  ? "bg-sidebar-item-background text-text-primary-hover"
+                  : "text-text-secondary "
                 }`}
               onClick={() => handleClick(item.id)}
             >
@@ -44,7 +48,10 @@ const Sidebar: React.FC<SidebarProps> = ({ onSelect }) => {
           {subNavigations.map((item) => (
             <button
               key={item.id}
-              className={`font-medium flex items-center gap-2 py-2 px-4 rounded-md hover:bg-sidebar-item-background transition-colors ${active === item.id ? "bg-sidebar-item-background text-text-primary-hover" : "text-text-secondary "
+              className={`font-medium flex items-center gap-2 py-2 px-4 rounded-md 
+                hover:bg-sidebar-item-background transition-colors ${active === item.id 
+                  ? "bg-sidebar-item-background text-text-primary-hover" 
+                  : "text-text-secondary "
                 }`}
               onClick={() => handleClick(item.id)}
             >
