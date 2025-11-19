@@ -3,12 +3,11 @@ import Sidebar from "./Sidebar";
 import { useState } from "react";
 
 export default function MainLayout() {
-  const [filter, setFilter] = useState("all");
 
   return (
-    <div className="flex font-poppins bg-background-primary">
+    <div className="flex font-poppins bg-background-primary p-4 h-screen">
       <nav style={{ display: "flex", gap: 20 }}>
-        <Sidebar onSelect={(id) => setFilter(id)}/>
+        <Sidebar/>
       </nav>
 
       <div style={{ padding: 20 }}>

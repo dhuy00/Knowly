@@ -1,18 +1,10 @@
-import type { ReactNode } from "react";
 import { BiCategory } from "react-icons/bi";
 import { LuClipboardList } from "react-icons/lu";
 import { IoDocumentAttachOutline, IoNotificationsOutline } from "react-icons/io5";
 import { MdOutlineFolderOpen, MdInfoOutline } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
+import type { NavItem } from "../types/Sidebar";
 
-
-
-export interface NavItem {
-  id: string | number;
-  name: string;
-  path: NamedCurve;
-  icon: ReactNode;
-}
 
 export const navigations: NavItem[] = [
   {
@@ -36,7 +28,7 @@ export const navigations: NavItem[] = [
   {
     id: 4,
     name: "Projects",
-    path: '/dashboard',
+    path: '/projects',
     icon: <MdOutlineFolderOpen />
   },
 ]
