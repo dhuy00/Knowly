@@ -55,7 +55,7 @@ const Sidebar = () => {
       <div className="flex justify-between border-t border-border-primary pt-4 p-4 
       items-center hover:bg-background-secondary">
         <div className="flex gap-1">
-          <span className="w-10 h-10 rounded-full bg-background-primary"></span>
+          <span className="w-10 h-10 rounded-full bg-background-common"></span>
           <div className="flex flex-col font-medium">
             <span className="text-[12px] text-text-secondary">Welcome back</span>
             <span className="text-sm text-text-primary">Duck Huy</span>

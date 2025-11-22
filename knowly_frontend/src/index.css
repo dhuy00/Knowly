@@ -9,12 +9,15 @@
   --color-sidebar-item-background: rgba(238, 242, 255, 1);
   --color-sidebar-item-active-background: rgba(222, 229, 255, 1);
   --color-sidebar-background: rgba(255, 255, 255, 0);
-  --color-background-primary: rgba(247, 247, 247, 1);
   --color-border-primary: rgba(226, 232, 240, 1);
-  --color-background-primary: rgba(246, 246, 246, 1);
+  --color-border-secondary: rgba(155, 155, 155, 1);
+  --color-background-common: rgba(246, 246, 246, 1);
+  --color-background-primary: rgba(255, 255, 255, 1);
   --color-background-secondary:   rgba(250, 250, 250, 1);
+  --color-background-hover-primary: rgba(28, 46, 150, 0.04);
   /* Font */
   --font-poppins: "Poppins", sans-serif;
   /* Font size */
   --text-common: 14px;
+  --text-small: 12px;
 }
