@@ -23,17 +23,17 @@ const SelectField: React.FC<SelectFieldProps> = ({ label, options }) => {
   }
 
   return (
-    <div className="flex flex-col gap-2 mt-4 text-common">
+    <div className="flex flex-col gap-2 mt-4 text-common relative">
       <label className="font-medium">{label}</label>
       <div>
-        <div className="flex items-center gap-4 border border-border-secondary w-64 
+        <div className="flex items-center gap-4 border border-border-secondary
         justify-between px-4 py-2 rounded-md hover:bg-background-hover-primary"
           onClick={() => handleToggleOptions(null)}>
           <label>{selectedValue ? selectedValue : 'Choose an option'}</label>
           <FaAngleDown className={`${showOptions ? 'rotate-180' : ''} transition-all`} />
         </div>
-        <div className={`w-64 max-h-64 overflow-y-auto flex flex-col border border-border-secondary rounded-md 
-          mt-2 overflow-hidden ${showOptions ? '' : 'h-0 border-none'}`}>
+        <div className={`absolute bg-white max-h-64 overflow-y-auto flex flex-col border border-border-secondary rounded-md 
+          mt-2 overflow-hidden ${showOptions ? '' : 'h-0 border-none'} w-full z-10`}>
           {
             options.map((item, index) => (
               <div style={{color: item.textColor}} className="py-2 px-2 font-medium 
