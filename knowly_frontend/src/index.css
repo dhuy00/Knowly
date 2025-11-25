@@ -16,6 +16,8 @@
   --color-background-primary: rgba(255, 255, 255, 1);
   --color-background-secondary:   rgba(250, 250, 250, 1);
   --color-background-hover-primary: rgba(28, 46, 150, 0.04);
+  --color-background-hover-secondary: rgba(28, 46, 150, 0.08);
+  --color-background-active-primary: rgba(28, 46, 150, 0.1);
   --color-button-primary: rgba(79, 70, 229, 1);
   --color-button-primary-active: rgba(54, 44, 207, 1);
   --color-button-primary-hover: rgba(54, 44, 240, 1);
