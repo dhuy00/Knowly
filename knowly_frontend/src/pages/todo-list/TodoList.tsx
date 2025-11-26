@@ -7,6 +7,7 @@ import { IoMdSettings } from "react-icons/io";
 import { MdFilterAlt } from "react-icons/md";
 import { RiExpandDiagonal2Line } from "react-icons/ri";
 import { CgAddR } from "react-icons/cg";
+import Category from '../../components/todolist/Category'
 
 
 const TodoList = () => {
@@ -80,7 +81,8 @@ const TodoList = () => {
           today
         </h3>
         <button className='flex justify-center items-center gap-1 text-common font-medium 
-      bg-text-primary-hover text-white px-4 py-1.5 rounded-md'>
+      bg-button-primary text-white px-4 py-1.5 rounded-md hover:bg-button-primary-hover 
+      active:bg-button-primary-active'>
           <CgAddR />
           <span>
             Add new
@@ -125,6 +127,10 @@ const TodoList = () => {
           </button>
         </div>
       </Dialog>
+
+      <div className='mt-12'>
+        <Category/>
+      </div>
     </div>
   );
 }
