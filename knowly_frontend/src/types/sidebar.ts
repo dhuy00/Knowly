@@ -6,3 +6,5 @@ export interface NavItem {
   path: string;
   icon: ReactNode;
 }
+
+

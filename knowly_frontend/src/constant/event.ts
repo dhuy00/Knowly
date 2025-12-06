@@ -1,0 +1,1 @@
+export const EVENT_OPEN_TASK_DETAIL = "openTaskDetail" as const
