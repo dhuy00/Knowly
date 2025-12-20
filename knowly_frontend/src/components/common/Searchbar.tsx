@@ -13,14 +13,14 @@ const Searchbar: React.FC<SearchbarProps> = ({ value, onChange, className, place
     <div className='flex'>
       <input
         type='text'
-  
+        value={value}
         placeholder={placeholder}
         onChange={onChange}
-        className={`border-2 border-border-secondary rounded-s-md px-2 py-1 outline-none text-common ${className}`} />
-      <span className='flex justify-center items-center px-2 py-1 border-2 border-border-secondary 
+        className={`border border-border-secondary rounded-s-md px-2 py-1 outline-none text-common ${className}`} />
+      <span className='flex justify-center items-center px-2 py-1 border border-border-secondary 
       rounded-e-md border-l-0 hover:bg-background-hover-primary cursor-pointer 
       active:bg-background-active-primary'>
-        <IoSearch className='text-2xl text-text-secondary' />
+        <IoSearch className='text-xl text-text-secondary' />
       </span>
     </div>
   )

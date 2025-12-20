@@ -27,7 +27,8 @@
   --text-common: 14px;
   --text-small: 12px;
   /* Box shadow */
-  --shadow-around: 0 0 3px rgba(0,0,0,0.45);
+  --shadow-around: 0 0 2px rgba(0,0,0,0.45);
+  --shadow-around-md: 0 0 4px rgba(0,0,0,0.45);
 }
 
 @layer utilities {
