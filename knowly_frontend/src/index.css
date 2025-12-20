@@ -29,3 +29,14 @@
   /* Box shadow */
   --shadow-around: 0 0 3px rgba(0,0,0,0.45);
 }
+
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;    
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
