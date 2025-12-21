@@ -5,11 +5,11 @@ import type { Option } from "../../types/task";
 interface SelectFieldProps {
   label?: string,
   options: Option[],
-  placeholder: string,
-  className?: string
+  placeholder?: string,
+  className?: string,
 }
 
-const SelectField: React.FC<SelectFieldProps> = ({ label, options, placeholder, className }) => {
+const SelectField: React.FC<SelectFieldProps> = ({ label, options, placeholder, className, optionClassName }) => {
   const [showOptions, setShowOptions] = useState<boolean>(false)
   const [selectedValue, setSelectedValue] = useState<string>("")
 
@@ -25,14 +25,14 @@ const SelectField: React.FC<SelectFieldProps> = ({ label, options, placeholder, 
         label && (<label className="font-medium">{label}</label>)
       }
       <div>
-        <div className="flex items-center gap-4 border border-border-secondary
-        justify-between px-4 py-2 rounded-md hover:bg-background-hover-primary"
+        <div className={`flex items-center gap-4 border border-border-secondary
+        justify-between px-4 py-2 rounded-md hover:bg-background-hover-primary`}
           onClick={() => handleToggleOptions(null)}>
           <label>{selectedValue ? selectedValue : placeholder}</label>
           <FaAngleDown className={`${showOptions ? 'rotate-180' : ''} transition-all`} />
         </div>
         <div className={`absolute bg-white max-h-64 overflow-y-auto flex flex-col border border-border-secondary rounded-md 
-          mt-2 overflow-hidden ${showOptions ? '' : 'h-0 border-none'} w-full z-10`}>
+          mt-2 overflow-hidden no-scrollbar ${showOptions ? '' : 'h-0 border-none'} w-full z-10`}>
           {
             options.map((item, index) => (
               <div style={{ color: item.textColor }} className={`py-2 px-2 font-medium 

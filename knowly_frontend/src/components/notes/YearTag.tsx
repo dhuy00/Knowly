@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PriorityTag = () => {
+const YearTag = () => {
   return (
     <div className='text-[8px] bg-indigo-400 text-white w-fit px-2 py-[3px] rounded-full'>
       2024
@@ -8,4 +8,4 @@ const PriorityTag = () => {
   )
 }
 
-export default PriorityTag
+export default YearTag

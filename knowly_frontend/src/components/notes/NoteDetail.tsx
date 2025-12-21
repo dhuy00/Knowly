@@ -1,93 +1,63 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
+import { TbBackground } from "react-icons/tb";
+import coverImg from "../../assets/cover.jpg";
+import Toolbar from "./Toolbar";
+import TextEditor from "./TextEditor";
+import { useRef } from "react";
+
 
 const NoteDetail = () => {
-  const editorRef = useRef<HTMLDivElement | null>(null);
-  const [content, setContent] = useState<string>("");
+  const [hasCover, setHasCover] = useState(false);
+  const editorRef = useRef<HTMLDivElement>(null);
 
-  const exec = (command: string, value?: string) => {
-    editorRef.current?.focus();
-    document.execCommand(command, false, value);
+  const formatText = (tag: string) => {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return;
+
+    const range = selection.getRangeAt(0);
+    if (range.collapsed) return; // chưa bôi đen
+
+    const wrapper = document.createElement(tag);
+    wrapper.appendChild(range.extractContents());
+    range.insertNode(wrapper);
+
+    selection.removeAllRanges();
   };
-
-  const handleInput = () => {
-    setContent(editorRef.current?.innerHTML || "");
-  };
-
-  useEffect(() => {
-    if (editorRef.current && content === "") {
-      editorRef.current.innerHTML = "";
-    }
-  }, []);
 
   return (
-    <div className="bg-background-primary w-full h-full rounded-xl p-5 shadow-sm flex flex-col gap-3">
-      
-      {/* Toolbar */}
-      <div className="flex flex-wrap gap-1 border-b pb-2">
-        <ToolbarButton label="B" onClick={() => exec("bold")} />
-        <ToolbarButton label="I" onClick={() => exec("italic")} />
-        <ToolbarButton label="U" onClick={() => exec("underline")} />
-
-        <Divider />
-
-        <ToolbarButton label="H1" onClick={() => exec("formatBlock", "h1")} />
-        <ToolbarButton label="H2" onClick={() => exec("formatBlock", "h2")} />
-        <ToolbarButton label="Quote" onClick={() => exec("formatBlock", "blockquote")} />
-
-        <Divider />
-
-        <ToolbarButton label="• List" onClick={() => exec("insertUnorderedList")} />
-        <ToolbarButton label="1. List" onClick={() => exec("insertOrderedList")} />
-
-        <Divider />
-
-        <ToolbarButton label="Undo" onClick={() => exec("undo")} />
-        <ToolbarButton label="Redo" onClick={() => exec("redo")} />
+    <div className="bg-background-primary w-full h-full rounded-xl py-12 shadow-sm overflow-hidden 
+    px-24 relative flex flex-col gap-4">
+      {hasCover ? (
+        <img
+          src={coverImg}
+          alt="cover-img"
+          className="w-full object-cover h-[150px] absolute inset-0"
+        />
+      ) : (
+        <div className="flex text-text-secondary items-center gap-2">
+          <TbBackground className="text-2xl"/>
+          <span className=" font-medium">Add a cover...</span>
+        </div>
+      )}
+      <input type="text" placeholder="New post title here..." 
+      className="text-[1.75rem] font-semibold text-text-secondary focus:outline-none"/>
+      <div className="text-text-secondary font-medium flex gap-2 text-sm items-center">
+        <span>Related Task: </span>
+        <button 
+          className="bg-button-primary text-white text-sm px-4 py-1 rounded-sm hover:bg-button-primary-hover
+          active:bg-button-primary-active transition-color cursor-pointer"
+        >
+          Add
+        </button>
+        </div>
+      <div>
+        <Toolbar onFormat={formatText} />
       </div>
-
-      {/* Editor */}
-      <div
-        ref={editorRef}
-        contentEditable
-        onInput={handleInput}
-        className="flex-1 overflow-y-auto outline-none text-sm leading-relaxed
-                   prose prose-sm max-w-none
-                   [&_h1]:text-2xl [&_h1]:font-bold
-                   [&_h2]:text-xl [&_h2]:font-semibold
-                   [&_blockquote]:border-l-4 [&_blockquote]:pl-3 [&_blockquote]:italic
-                   empty:before:content-['Start_writing...']
-                   empty:before:text-text-secondary
-                   empty:before:pointer-events-none"
-      />
-
-      {/* Debug / Save preview (có thể bỏ) */}
-      <div className="text-xs text-text-secondary border-t pt-2">
-        Characters: {content.replace(/<[^>]+>/g, "").length}
+      <div>
+        <TextEditor editorRef={editorRef} />
       </div>
     </div>
   );
 };
-
-const ToolbarButton = ({
-  label,
-  onClick,
-}: {
-  label: string;
-  onClick: () => void;
-}) => (
-  <button
-    onMouseDown={(e) => e.preventDefault()}
-    onClick={onClick}
-    className="px-2 py-1 text-xs rounded-md
-               bg-background-secondary hover:bg-background-hover
-               border border-border"
-  >
-    {label}
-  </button>
-);
-
-const Divider = () => (
-  <span className="w-px bg-border mx-1" />
-);
 
 export default NoteDetail;

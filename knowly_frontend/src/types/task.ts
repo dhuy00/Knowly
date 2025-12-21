@@ -1,5 +1,5 @@
 export interface Option {
-  name: string,
+  name: string | number,
   backgroundColor?: string,
   textColor?: string
 }

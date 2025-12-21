@@ -1,5 +1,5 @@
 import React from "react";
-import PriorityTag from "./PriorityTag";
+import YearTag from "./YearTag";
 import { FaRegCalendar } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
 
@@ -9,7 +9,7 @@ const NotePreview = ({openNoteDetail}) => {
     <div className="w-[260px] h-[300px] rounded-lg shadow-around p-2 flex flex-col gap-1
     hover:shadow-around-md hover:-translate-y-1 transition-all">
       <div className="flex gap-1 items-center">
-        <PriorityTag />
+        <YearTag />
         <p className="text-text-secondary font-medium text-small ">
           Psychological Review
         </p>
