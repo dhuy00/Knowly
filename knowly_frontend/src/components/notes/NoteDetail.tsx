@@ -4,11 +4,11 @@ import coverImg from "../../assets/cover.jpg";
 import Toolbar from "./Toolbar";
 import TextEditor from "./TextEditor";
 import { useRef } from "react";
+import Editor from "./editor/Editor";
 
 
 const NoteDetail = () => {
   const [hasCover, setHasCover] = useState(false);
-  const editorRef = useRef<HTMLDivElement>(null);
 
   const formatText = (tag: string) => {
     const selection = window.getSelection();
@@ -54,7 +54,7 @@ const NoteDetail = () => {
         <Toolbar onFormat={formatText} />
       </div>
       <div>
-        <TextEditor editorRef={editorRef} />
+        <Editor/>
       </div>
     </div>
   );

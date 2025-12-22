@@ -1,13 +1,22 @@
 import React, { useRef } from "react";
 
-const TextEditor = ({ editorRef }: { editorRef: React.RefObject<HTMLDivElement> }) => {
+const TextEditor = () => {
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const handleInput = () => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    textarea.style.height = "auto"; // reset
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  };
+
   return (
-    <div
-      ref={editorRef}
-      contentEditable
-      suppressContentEditableWarning
-      className="w-full min-h-[120px] outline-none text-text-secondary"
+    <textarea
+      ref={textareaRef}
+      onInput={handleInput}
       placeholder="Your text here..."
+      className="w-full min-h-[120px] outline-none text-primary resize-none overflow-hidden"
     />
   );
 };
