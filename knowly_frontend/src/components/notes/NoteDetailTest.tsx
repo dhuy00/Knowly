@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const NoteDetail = () => {
+const NoteDetailTest = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const [content, setContent] = useState<string>("");
 
@@ -90,4 +90,4 @@ const Divider = () => (
   <span className="w-px bg-border mx-1" />
 );
 
-export default NoteDetail;
+export default NoteDetailTest;

@@ -10,6 +10,7 @@ import Notifications from "../pages/notifications/Notifications";
 import Settings from "../pages/settings/Settings";
 import Support from "../pages/support/Support";
 import NoteDetail from "../components/notes/NoteDetail.js"
+import NoteDetailTest from "../components/notes/NoteDetailTest.js";
 
 
 export const router = createBrowserRouter([
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "notes/:id",
         element: (<NoteDetail />),
+      },
+      {
+        path: "notes/:id/test",
+        element: (<NoteDetailTest />),
       },
       {
         path: "projects",
