@@ -3,16 +3,23 @@ import { TbBackground } from "react-icons/tb";
 import coverImg from "../../assets/cover.jpg";
 import Toolbar from "./Toolbar";
 import TextEditor from "./TextEditor";
-
+import type { TextFormat } from "../../types/note";
 
 const NoteDetail = () => {
   const [hasCover, setHasCover] = useState(false);
   const editorRef = React.useRef<HTMLDivElement>(null);
+  const [currentFormat, setCurrentFormat] = useState<TextFormat>({
+    bold: false,
+    italic: false,
+    quote: false,
+    underline: false  
+  })
 
   const format = (command: string, value?: string) => {
     console.log("ON exec command: ", command)
     console.log("On exec value: ", value)
     editorRef.current?.focus();
+    console.log("Current element: ", editorRef.current)
     document.execCommand(command, false, value);
   };
 
@@ -43,10 +50,10 @@ const NoteDetail = () => {
         </button>
         </div>
       <div>
-        <Toolbar format={format} />
+        <Toolbar format={format} currentFormat={currentFormat} />
       </div>
       <div className="max-h-[200px]">
-        <TextEditor editorRef={editorRef}/>
+        <TextEditor editorRef={editorRef} currentFormat={currentFormat} setCurrentFormat={setCurrentFormat}/>
       </div>
     </div>
   );

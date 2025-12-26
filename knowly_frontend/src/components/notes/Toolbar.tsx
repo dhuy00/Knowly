@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, type Dispatch, type SetStateAction } from "react";
 import { FaRegImages } from "react-icons/fa6";
 import { FaLink } from "react-icons/fa6";
 import { BsFillLightningChargeFill } from "react-icons/bs";
@@ -10,13 +10,15 @@ import { FaCode } from "react-icons/fa6";
 import { GoListOrdered } from "react-icons/go";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import FontSizeSelect from "./FontSizeSelect";
+import type { TextFormat } from "../../types/note";
 
 type ToolbarProps = {
   format: (command: string, value?: string) => void;
+  currentFormat: TextFormat;
 };
 
-const Toolbar = ({ format }: ToolbarProps) => {
-  const textFormatStyle = 'px-1.5 py-1.5 rounded-sm text-primary hover:bg-blue-200 cursor-pointer'
+const Toolbar = ({ format, currentFormat }: ToolbarProps) => {
+  const textFormatStyle = `px-1.5 py-1.5 rounded-sm text-primary hover:bg-blue-200 cursor-pointer`
   const [number, setNumber] = useState<number[] | string[]>([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
   const handleFormat = (event: React.MouseEvent<HTMLDivElement>, command: string, value?: string) => {
@@ -47,16 +49,16 @@ const Toolbar = ({ format }: ToolbarProps) => {
         </div>
       </div>
       <div className="flex gap-2 items-center">
-        <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "bold")}}>
+        <div className={`${textFormatStyle} ${currentFormat.bold ? 'bg-blue-200' : ''}`} onMouseDown={(event) => {handleFormat(event, "bold")}}>
           <FiBold />
         </div>
-        <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "italic")}}>
+        <div className={`${textFormatStyle} ${currentFormat.italic ? 'bg-blue-200' : ''}`} onMouseDown={(event) => {handleFormat(event, "italic")}}>
           <RiItalic />
         </div>
-        <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "underline")}}>
+        <div className={`${textFormatStyle} ${currentFormat.underline ? 'bg-blue-200' : ''}`} onMouseDown={(event) => {handleFormat(event, "underline")}}>
           <BsTypeUnderline />
         </div>
-        <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "formatBlock", "blockquote")}}>
+        <div className={`${textFormatStyle} ${currentFormat.quote ? 'bg-blue-200' : ''}`} onMouseDown={(event) => {handleFormat(event, "formatBlock", "blockquote")}}>
           <RiDoubleQuotesL />
         </div>
         <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "code")}}>
