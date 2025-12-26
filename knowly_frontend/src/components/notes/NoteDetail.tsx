@@ -3,25 +3,17 @@ import { TbBackground } from "react-icons/tb";
 import coverImg from "../../assets/cover.jpg";
 import Toolbar from "./Toolbar";
 import TextEditor from "./TextEditor";
-import { useRef } from "react";
 
 
 const NoteDetail = () => {
   const [hasCover, setHasCover] = useState(false);
-  const editorRef = useRef<HTMLDivElement>(null);
+  const editorRef = React.useRef<HTMLDivElement>(null);
 
-  const formatText = (tag: string) => {
-    const selection = window.getSelection();
-    if (!selection || selection.rangeCount === 0) return;
-
-    const range = selection.getRangeAt(0);
-    if (range.collapsed) return; // chưa bôi đen
-
-    const wrapper = document.createElement(tag);
-    wrapper.appendChild(range.extractContents());
-    range.insertNode(wrapper);
-
-    selection.removeAllRanges();
+  const format = (command: string, value?: string) => {
+    console.log("ON exec command: ", command)
+    console.log("On exec value: ", value)
+    editorRef.current?.focus();
+    document.execCommand(command, false, value);
   };
 
   return (
@@ -51,10 +43,10 @@ const NoteDetail = () => {
         </button>
         </div>
       <div>
-        <Toolbar onFormat={formatText} />
+        <Toolbar format={format} />
       </div>
-      <div>
-        <TextEditor editorRef={editorRef} />
+      <div className="max-h-[200px]">
+        <TextEditor editorRef={editorRef}/>
       </div>
     </div>
   );

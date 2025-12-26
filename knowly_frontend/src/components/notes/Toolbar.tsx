@@ -11,10 +11,18 @@ import { GoListOrdered } from "react-icons/go";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import FontSizeSelect from "./FontSizeSelect";
 
+type ToolbarProps = {
+  format: (command: string, value?: string) => void;
+};
 
-const Toolbar = ({ onFormat }: { onFormat: (tag: string) => void }) => {
+const Toolbar = ({ format }: ToolbarProps) => {
   const textFormatStyle = 'px-1.5 py-1.5 rounded-sm text-primary hover:bg-blue-200 cursor-pointer'
   const [number, setNumber] = useState<number[] | string[]>([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+
+  const handleFormat = (event: React.MouseEvent<HTMLDivElement>, command: string, value?: string) => {
+    event.preventDefault();
+    format(command, value);
+  }
 
   return (
     <div className="flex gap-2 items-center justify-between w-full">
@@ -39,25 +47,25 @@ const Toolbar = ({ onFormat }: { onFormat: (tag: string) => void }) => {
         </div>
       </div>
       <div className="flex gap-2 items-center">
-        <div className={`${textFormatStyle}`} onClick={() => onFormat("strong")}>
+        <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "bold")}}>
           <FiBold />
         </div>
-        <div className={`${textFormatStyle}`} onClick={() => onFormat("em")}>
+        <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "italic")}}>
           <RiItalic />
         </div>
-        <div className={`${textFormatStyle}`} >
+        <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "underline")}}>
           <BsTypeUnderline />
         </div>
-        <div className={`${textFormatStyle}`} onClick={() => onFormat("blockquote")}>
+        <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "formatBlock", "blockquote")}}>
           <RiDoubleQuotesL />
         </div>
-        <div className={`${textFormatStyle}`} onClick={() => onFormat("code")}>
+        <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "code")}}>
           <FaCode />
         </div>
-        <div className={`${textFormatStyle}`}>
+        <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "insertOrderedList")}}>
           <GoListOrdered />
         </div>
-        <div className={`${textFormatStyle}`}>
+        <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "insertUnorderedList")}}>
           <AiOutlineUnorderedList />
         </div>
         <FontSizeSelect options={number} value="5"/>

@@ -55,3 +55,16 @@ blockquote {
   color: #555;
   margin: 8px 0;
 }
+
+.editor {
+  position: relative;
+}
+
+.editor.is-empty::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #9ca3af;
+  pointer-events: none;
+}
