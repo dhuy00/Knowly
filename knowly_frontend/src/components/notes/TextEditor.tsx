@@ -1,4 +1,9 @@
-import React, { useState, type Dispatch, type SetStateAction } from "react";
+import React, {
+  useEffect,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import type { TextFormat } from "../../types/note";
 
 type TextEditorProps = {
@@ -25,36 +30,39 @@ const TextEditor = ({
     }
   };
 
-  function getParentsUntil(
-    element: HTMLElement,
-    stopId: string
-  ): HTMLElement[] {
-    const parents: HTMLElement[] = [];
+  function getParentsUntil(element: HTMLElement, stopId: string): string[] {
+    if (element.id == stopId) return [];
+    const tagList: string[] = [];
+    tagList.push(element.tagName.toLowerCase());
     let current = element.parentElement;
 
     while (current && current.id !== stopId) {
-      parents.push(current);
+      tagList.push(current.tagName.toLowerCase());
       current = current.parentElement;
     }
 
-    return parents;
+    return tagList;
   }
+
+  const detectFormatFromParents = (parents: string[]): TextFormat => {
+    return {
+      bold: document.queryCommandState("bold"),
+      italic: document.queryCommandState("italic"),
+      underline: document.queryCommandState("underline"),
+      quote: parents.some((p) => p === "blockquote"),
+    };
+  };
 
   const handleOnclick = (event: React.MouseEvent<HTMLDivElement>) => {
     const element = event.target as HTMLElement;
-    console.log("Element: ", element)
     const parents = getParentsUntil(element, "editor-root");
-    console.log("Parents: ", parents)
-
-    console.log(parents.map(p => p.tagName));
-
-    // if (tagName.toLowerCase() == "b") {
-    //   setCurrentFormat((prev) => ({
-    //     ...prev,
-    //     bold: true,
-    //   }));
-    // }
+    const detectedFormat = detectFormatFromParents(parents);
+    setCurrentFormat(detectedFormat);
   };
+
+  useEffect(() => {
+    console.log("Current format: ", currentFormat);
+  }, [currentFormat]);
 
   return (
     <div

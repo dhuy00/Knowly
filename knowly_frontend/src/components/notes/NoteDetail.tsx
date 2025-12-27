@@ -16,10 +16,7 @@ const NoteDetail = () => {
   })
 
   const format = (command: string, value?: string) => {
-    console.log("ON exec command: ", command)
-    console.log("On exec value: ", value)
     editorRef.current?.focus();
-    console.log("Current element: ", editorRef.current)
     document.execCommand(command, false, value);
   };
 
