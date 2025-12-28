@@ -1,82 +1,52 @@
-import React, {
-  useEffect,
-  useState,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
-import type { TextFormat } from "../../types/note";
+import React from "react";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import MenuBar from "./MenuBar";
+import TextAlign from "@tiptap/extension-text-align";
+import Highlight from "@tiptap/extension-highlight";
 
-type TextEditorProps = {
-  editorRef: React.RefObject<HTMLDivElement | null>;
-  currentFormat: TextFormat;
-  setCurrentFormat: Dispatch<SetStateAction<TextFormat>>;
-};
+interface RichTextEditorProps {
+  content: string;
+  onChange: (content: string) => void;
+}
 
-const TextEditor = ({
-  editorRef,
-  currentFormat,
-  setCurrentFormat,
-}: TextEditorProps) => {
-  const handleInput = () => {
-    const element = editorRef?.current;
-    if (!element) return;
-
-    const text = element.innerText.replace(/\n/g, "").trim();
-
-    if (text === "") {
-      element.classList.add("is-empty");
-    } else {
-      element.classList.remove("is-empty");
-    }
-  };
-
-  function getParentsUntil(element: HTMLElement, stopId: string): string[] {
-    if (element.id == stopId) return [];
-    const tagList: string[] = [];
-    tagList.push(element.tagName.toLowerCase());
-    let current = element.parentElement;
-
-    while (current && current.id !== stopId) {
-      tagList.push(current.tagName.toLowerCase());
-      current = current.parentElement;
-    }
-
-    return tagList;
-  }
-
-  const detectFormatFromParents = (parents: string[]): TextFormat => {
-    return {
-      bold: document.queryCommandState("bold"),
-      italic: document.queryCommandState("italic"),
-      underline: document.queryCommandState("underline"),
-      quote: parents.some((p) => p === "blockquote"),
-    };
-  };
-
-  const handleOnclick = (event: React.MouseEvent<HTMLDivElement>) => {
-    const element = event.target as HTMLElement;
-    const parents = getParentsUntil(element, "editor-root");
-    const detectedFormat = detectFormatFromParents(parents);
-    setCurrentFormat(detectedFormat);
-  };
-
-  useEffect(() => {
-    console.log("Current format: ", currentFormat);
-  }, [currentFormat]);
+const TextEditor = ({ content, onChange }: RichTextEditorProps) => {
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        bulletList: {
+          HTMLAttributes: {
+            class: "list-disc ml-3",
+          },
+        },
+        orderedList: {
+          HTMLAttributes: {
+            class: "list-decimal ml-3",
+          },
+        },
+      }),
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+      Highlight,
+    ],
+    content: content,
+    editorProps: {
+      attributes: {
+        class: "h-[400px] border rounded-md overflow-y-auto py-2 px-3 focus:outline-none",
+      },
+    },
+    onUpdate: ({ editor }) => {
+      if (typeof onChange === "function") {
+        onChange(editor.getHTML());
+      }
+    },
+  });
 
   return (
-    <div
-      ref={editorRef}
-      onInput={handleInput}
-      onClick={(event) => handleOnclick(event)}
-      id="editor-root"
-      contentEditable
-      suppressContentEditableWarning
-      className="editor is-empty w-full outline-none text-text-secondary max-h-[400px] overflow-y-auto
-      prose prose-sm max-w-none [&_h1]:text-2xl [&_h1]:font-bold [&_h2]:text-xl [&_h2]:font-semibold 
-      [&_blockquote]:border-l-4 [&_blockquote]:pl-3 [&_blockquote]:italic "
-      data-placeholder="Your text here..."
-    />
+    <div>
+      <EditorContent editor={editor} />
+    </div>
   );
 };
 
