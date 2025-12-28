@@ -4,6 +4,8 @@ import StarterKit from "@tiptap/starter-kit";
 import MenuBar from "./MenuBar";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
+import Placeholder from "@tiptap/extension-placeholder";
+import Toolbar from "./Toolbar";
 
 interface RichTextEditorProps {
   content: string;
@@ -16,12 +18,12 @@ const TextEditor = ({ content, onChange }: RichTextEditorProps) => {
       StarterKit.configure({
         bulletList: {
           HTMLAttributes: {
-            class: "list-disc ml-3",
+            class: "list-disc ml-6",
           },
         },
         orderedList: {
           HTMLAttributes: {
-            class: "list-decimal ml-3",
+            class: "list-decimal ml-6",
           },
         },
       }),
@@ -29,11 +31,17 @@ const TextEditor = ({ content, onChange }: RichTextEditorProps) => {
         types: ["heading", "paragraph"],
       }),
       Highlight,
+      Placeholder.configure({
+        placeholder: "Your text here...",
+        showOnlyWhenEditable: true,
+        showOnlyCurrent: false,
+      }),
     ],
     content: content,
     editorProps: {
       attributes: {
-        class: "h-[400px] border rounded-md overflow-y-auto py-2 px-3 focus:outline-none",
+        class:
+          "h-[400px] rounded-md overflow-y-auto mt-4 focus:outline-none text-md text-text-secondary",
       },
     },
     onUpdate: ({ editor }) => {
@@ -45,6 +53,7 @@ const TextEditor = ({ content, onChange }: RichTextEditorProps) => {
 
   return (
     <div>
+      <Toolbar editor={editor} />
       <EditorContent editor={editor} />
     </div>
   );

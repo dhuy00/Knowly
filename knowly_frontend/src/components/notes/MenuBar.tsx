@@ -36,7 +36,6 @@ function MenuBar({ editor }: { editor: Editor | null }) {
     }),
   });
 
-  // ✅ Derived toolbar config (NO state)
   const options = [
     {
       icon: <Heading1 className="size-4" />,

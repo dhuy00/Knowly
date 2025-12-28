@@ -2,29 +2,113 @@ import React, { useState, type Dispatch, type SetStateAction } from "react";
 import { FaRegImages } from "react-icons/fa6";
 import { FaLink } from "react-icons/fa6";
 import { BsFillLightningChargeFill } from "react-icons/bs";
-import { FiBold } from "react-icons/fi";
-import { RiItalic } from "react-icons/ri";
-import { BsTypeUnderline } from "react-icons/bs";
-import { RiDoubleQuotesL } from "react-icons/ri";
-import { FaCode } from "react-icons/fa6";
-import { GoListOrdered } from "react-icons/go";
-import { AiOutlineUnorderedList } from "react-icons/ai";
 import FontSizeSelect from "./FontSizeSelect";
-import type { TextFormat } from "../../types/note";
+import { Editor, useEditorState } from "@tiptap/react";
+import {
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
+  Bold,
+  Heading1,
+  Heading2,
+  Heading3,
+  Highlighter,
+  Italic,
+  List,
+  ListOrdered,
+  Strikethrough,
+} from "lucide-react";
 
 type ToolbarProps = {
-  format: (command: string, value?: string) => void;
-  currentFormat: TextFormat;
+  editor: Editor;
 };
 
-const Toolbar = ({ format, currentFormat }: ToolbarProps) => {
-  const textFormatStyle = `px-1.5 py-1.5 rounded-sm text-primary hover:bg-blue-200 cursor-pointer`
-  const [number, setNumber] = useState<number[] | string[]>([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+const Toolbar = ({ editor }: ToolbarProps) => {
+  const textFormatStyle = `px-1.5 py-1.5 rounded-sm text-primary hover:bg-blue-200 cursor-pointer`;
+  const [number, setNumber] = useState<number[] | string[]>([
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+  ]);
 
-  const handleFormat = (event: React.MouseEvent<HTMLDivElement>, command: string, value?: string) => {
-    event.preventDefault();
-    format(command, value);
-  }
+  const editorState = useEditorState({
+    editor,
+    selector: (ctx) => ({
+      h1: ctx.editor.isActive("heading", { level: 1 }),
+      h2: ctx.editor.isActive("heading", { level: 2 }),
+      h3: ctx.editor.isActive("heading", { level: 3 }),
+      bold: ctx.editor.isActive("bold"),
+      italic: ctx.editor.isActive("italic"),
+      strike: ctx.editor.isActive("strike"),
+      alignLeft: ctx.editor.isActive({ textAlign: "left" }),
+      alignCenter: ctx.editor.isActive({ textAlign: "center" }),
+      alignRight: ctx.editor.isActive({ textAlign: "right" }),
+      bullet: ctx.editor.isActive("bulletList"),
+      ordered: ctx.editor.isActive("orderedList"),
+      highlight: ctx.editor.isActive("highlight"),
+    }),
+  });
+
+  const options = [
+    {
+      icon: <Heading1 className="size-4" />,
+      onClick: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
+      pressed: editorState.h1,
+    },
+    {
+      icon: <Heading2 className="size-4" />,
+      onClick: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+      pressed: editorState.h2,
+    },
+    {
+      icon: <Heading3 className="size-4" />,
+      onClick: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
+      pressed: editorState.h3,
+    },
+    {
+      icon: <Bold className="size-4" />,
+      onClick: () => editor.chain().focus().toggleBold().run(),
+      pressed: editorState.bold,
+    },
+    {
+      icon: <Italic className="size-4" />,
+      onClick: () => editor.chain().focus().toggleItalic().run(),
+      pressed: editorState.italic,
+    },
+    {
+      icon: <Strikethrough className="size-4" />,
+      onClick: () => editor.chain().focus().toggleStrike().run(),
+      pressed: editorState.strike,
+    },
+    {
+      icon: <AlignLeft className="size-4" />,
+      onClick: () => editor.chain().focus().setTextAlign("left").run(),
+      pressed: editorState.alignLeft,
+    },
+    {
+      icon: <AlignCenter className="size-4" />,
+      onClick: () => editor.chain().focus().setTextAlign("center").run(),
+      pressed: editorState.alignCenter,
+    },
+    {
+      icon: <AlignRight className="size-4" />,
+      onClick: () => editor.chain().focus().setTextAlign("right").run(),
+      pressed: editorState.alignRight,
+    },
+    {
+      icon: <List className="size-4" />,
+      onClick: () => editor.chain().focus().toggleBulletList().run(),
+      pressed: editorState.bullet,
+    },
+    {
+      icon: <ListOrdered className="size-4" />,
+      onClick: () => editor.chain().focus().toggleOrderedList().run(),
+      pressed: editorState.ordered,
+    },
+    {
+      icon: <Highlighter className="size-4" />,
+      onClick: () => editor.chain().focus().toggleHighlight().run(),
+      pressed: editorState.highlight,
+    },
+  ];
 
   return (
     <div className="flex gap-2 items-center justify-between w-full">
@@ -49,28 +133,18 @@ const Toolbar = ({ format, currentFormat }: ToolbarProps) => {
         </div>
       </div>
       <div className="flex gap-2 items-center">
-        <div className={`${textFormatStyle} ${currentFormat.bold ? 'bg-blue-200' : ''}`} onMouseDown={(event) => {handleFormat(event, "bold")}}>
-          <FiBold />
-        </div>
-        <div className={`${textFormatStyle} ${currentFormat.italic ? 'bg-blue-200' : ''}`} onMouseDown={(event) => {handleFormat(event, "italic")}}>
-          <RiItalic />
-        </div>
-        <div className={`${textFormatStyle} ${currentFormat.underline ? 'bg-blue-200' : ''}`} onMouseDown={(event) => {handleFormat(event, "underline")}}>
-          <BsTypeUnderline />
-        </div>
-        <div className={`${textFormatStyle} ${currentFormat.quote ? 'bg-blue-200' : ''}`} onMouseDown={(event) => {handleFormat(event, "formatBlock", "blockquote")}}>
-          <RiDoubleQuotesL />
-        </div>
-        <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "code")}}>
-          <FaCode />
-        </div>
-        <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "insertOrderedList")}}>
-          <GoListOrdered />
-        </div>
-        <div className={`${textFormatStyle}`} onMouseDown={(event) => {handleFormat(event, "insertUnorderedList")}}>
-          <AiOutlineUnorderedList />
-        </div>
-        <FontSizeSelect options={number} value="5"/>
+        {options.map((option, index) => (
+          <div
+            key={index}
+            onClick={option.onClick}
+            className={`${textFormatStyle} ${
+              option.pressed ? "bg-blue-200" : "hover:bg-slate-200"
+            }`}
+          >
+            {option.icon}
+          </div>
+        ))}
+        <FontSizeSelect options={number} value="5" />
       </div>
     </div>
   );

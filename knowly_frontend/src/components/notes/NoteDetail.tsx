@@ -47,7 +47,7 @@ const NoteDetail = () => {
         </button>
         </div>
       <div>
-        <Toolbar format={format} currentFormat={currentFormat} />
+        {/* <Toolbar format={format} currentFormat={currentFormat} /> */}
       </div>
       <div className="max-h-[200px]">
         <TextEditor editorRef={editorRef} currentFormat={currentFormat} setCurrentFormat={setCurrentFormat}/>
