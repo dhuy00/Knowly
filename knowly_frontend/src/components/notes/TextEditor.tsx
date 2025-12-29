@@ -1,11 +1,14 @@
 import React from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import MenuBar from "./MenuBar";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import Placeholder from "@tiptap/extension-placeholder";
 import Toolbar from "./Toolbar";
+import FontFamily from '@tiptap/extension-font-family'
+import { TextStyle } from "@tiptap/extension-text-style";
+import { FontSize } from "../../extensions/FontSize";
+import { Color } from "@tiptap/extension-color";
 
 interface RichTextEditorProps {
   content: string;
@@ -36,6 +39,10 @@ const TextEditor = ({ content, onChange }: RichTextEditorProps) => {
         showOnlyWhenEditable: true,
         showOnlyCurrent: false,
       }),
+      TextStyle,
+      FontFamily,
+      FontSize,
+      Color
     ],
     content: content,
     editorProps: {

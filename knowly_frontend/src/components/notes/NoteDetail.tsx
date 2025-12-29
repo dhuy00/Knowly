@@ -50,7 +50,7 @@ const NoteDetail = () => {
         {/* <Toolbar format={format} currentFormat={currentFormat} /> */}
       </div>
       <div className="max-h-[200px]">
-        <TextEditor editorRef={editorRef} currentFormat={currentFormat} setCurrentFormat={setCurrentFormat}/>
+        <TextEditor/>
       </div>
     </div>
   );

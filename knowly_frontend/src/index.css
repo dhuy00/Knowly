@@ -76,3 +76,7 @@ blockquote {
   pointer-events: none;
   height: 0;
 }
+
+.ProseMirror span {
+  font-size: inherit;
+}

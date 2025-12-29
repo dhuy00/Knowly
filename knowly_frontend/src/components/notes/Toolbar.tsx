@@ -110,6 +110,36 @@ const Toolbar = ({ editor }: ToolbarProps) => {
     },
   ];
 
+  const setFontSize = (size: string) => {
+    editor.chain().focus().setMark("textStyle", { fontSize: size }).run();
+  };
+
+  const unsetFontSize = () => {
+    editor.chain().focus().unsetMark("textStyle").run();
+  };
+
+  const setFontFamily = (font: string) => {
+    editor.chain().focus().setFontFamily(font).run();
+  };
+
+  const setFontColor = (color: string) => {
+    editor.chain().focus().setColor(color).run();
+  };
+
+  const unsetFontColor = () => {
+    editor.chain().focus().unsetColor().run();
+  };
+
+  const fonts = [
+    { label: "Default", value: "" },
+    { label: "Arial", value: "Arial" },
+    { label: "Roboto", value: "Roboto" },
+    { label: "Times New Roman", value: "Times New Roman" },
+    { label: "Montserrat", value: "Montserrat" },
+  ];
+
+  const fontSizes = ["12px", "14px", "16px", "18px", "20px", "24px", "32px"];
+
   return (
     <div className="flex gap-2 items-center justify-between w-full">
       <div className="flex items-center gap-2 l">
@@ -133,18 +163,52 @@ const Toolbar = ({ editor }: ToolbarProps) => {
         </div>
       </div>
       <div className="flex gap-2 items-center">
-        {options.map((option, index) => (
-          <div
-            key={index}
-            onClick={option.onClick}
-            className={`${textFormatStyle} ${
-              option.pressed ? "bg-blue-200" : "hover:bg-slate-200"
-            }`}
+        <div className="flex gap-2 items-center">
+          {/* Font Family */}
+          <select
+            className="px-2 py-1 text-sm border rounded"
+            onChange={(e) => setFontFamily(e.target.value)}
+            defaultValue=""
           >
-            {option.icon}
-          </div>
-        ))}
-        <FontSizeSelect options={number} value="5" />
+            {fonts.map((f) => (
+              <option key={f.label} value={f.value}>
+                {f.label}
+              </option>
+            ))}
+          </select>
+
+          {/* Font Size */}
+          <select
+            className="px-2 py-1 text-sm border rounded"
+            onChange={(e) => setFontSize(e.target.value)}
+            defaultValue="16px"
+          >
+            {fontSizes.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </select>
+          <input
+            type="color"
+            className="w-8 h-8 p-0 border rounded cursor-pointer"
+            onChange={(e) => setFontColor(e.target.value)}
+            title="Text color"
+          />
+
+          {/* Existing buttons */}
+          {options.map((option, index) => (
+            <div
+              key={index}
+              onClick={option.onClick}
+              className={`${textFormatStyle} ${
+                option.pressed ? "bg-blue-200" : "hover:bg-slate-200"
+              }`}
+            >
+              {option.icon}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
