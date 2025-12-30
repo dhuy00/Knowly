@@ -5,10 +5,11 @@ import type { Option } from "../../types/task";
 interface SelectFieldProps {
   value?: number | string,
   options: number[] | string [],
-  className?: string
+  className?: string,
+  handleChange:  (value?: string | number | null) => void
 }
 
-const FontSizeSelect: React.FC<SelectFieldProps> = ({ value, options, className }) => {
+const FontSizeSelect: React.FC<SelectFieldProps> = ({ value, options, className, handleChange }) => {
   const [showOptions, setShowOptions] = useState<boolean>(false)
   const [selectedValue, setSelectedValue] = useState<string|number>("")
 
@@ -23,7 +24,7 @@ const FontSizeSelect: React.FC<SelectFieldProps> = ({ value, options, className 
       <div>
         <div className={`flex items-center gap-2 border border-border-secondary
         w-12 justify-center h-7 rounded-sm hover:bg-background-hover-primary`}
-          onClick={() => handleToggleOptions(null)}>
+          onClick={() => handleChange(null)}>
           <label>{value ? value : ''}</label>
           <FaAngleDown className={`${showOptions ? 'rotate-180' : ''} transition-all`} />
         </div>

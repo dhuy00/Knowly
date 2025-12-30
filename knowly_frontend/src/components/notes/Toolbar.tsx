@@ -178,6 +178,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
           </select>
 
           {/* Font Size */}
+          <FontSizeSelect options={fontSizes} />
           <select
             className="px-2 py-1 text-sm border rounded"
             onChange={(e) => setFontSize(e.target.value)}
