@@ -58,6 +58,10 @@ export const router = createBrowserRouter([
         path: "support",
         element: (<Support />),
       },
+      {
+        path: "datetime",
+        element: (<Support />),
+      },
     ],
   },
 ]);
