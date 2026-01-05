@@ -11,7 +11,6 @@ import Settings from "../pages/settings/Settings";
 import Support from "../pages/support/Support";
 import NoteDetail from "../components/notes/NoteDetail.js"
 import NoteDetailTest from "../components/notes/NoteDetailTest.js";
-import HappyNewYear from "../components/common/HappyNewYear.js";
 
 
 export const router = createBrowserRouter([

@@ -6,25 +6,24 @@ interface SelectFieldProps {
   value?: number | string,
   options: number[] | string [],
   className?: string,
-  handleChange:  (value?: string | number | null) => void
+  setValue:  (value?: string | number | null) => void
 }
 
-const FontSizeSelect: React.FC<SelectFieldProps> = ({ value, options, className, handleChange }) => {
+const FontSizeSelect: React.FC<SelectFieldProps> = ({ value, options, className, setValue }) => {
   const [showOptions, setShowOptions] = useState<boolean>(false)
-  const [selectedValue, setSelectedValue] = useState<string|number>("")
 
-  const handleToggleOptions = (value?: string | number | null) => {
+  const handleToggleOptions = (selectedValue?: string | number | null) => {
     setShowOptions(!showOptions)
 
-    if (value) setSelectedValue(value)
+    if (selectedValue) setValue(selectedValue)
   }
 
   return (
     <div className={`flex flex-col gap-2 text-common relative ${className}`}>
       <div>
         <div className={`flex items-center gap-2 border border-border-secondary
-        w-12 justify-center h-7 rounded-sm hover:bg-background-hover-primary`}
-          onClick={() => handleChange(null)}>
+        w-16 justify-center h-7 rounded-sm hover:bg-background-hover-primary`}
+          onClick={() => handleToggleOptions(null)}>
           <label>{value ? value : ''}</label>
           <FaAngleDown className={`${showOptions ? 'rotate-180' : ''} transition-all`} />
         </div>
@@ -33,7 +32,7 @@ const FontSizeSelect: React.FC<SelectFieldProps> = ({ value, options, className,
           {
             options.map((item, index) => (
               <div className={`py-2 px-2 font-medium 
-              hover:bg-background-hover-primary text-center`}
+              hover:bg-background-hover-primary text-center cursor-pointer`}
                 onClick={() => handleToggleOptions(item)}>
                 <span className="rounded-full">{item}</span>
               </div>

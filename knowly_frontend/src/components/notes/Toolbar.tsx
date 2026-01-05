@@ -110,7 +110,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
     },
   ];
 
-  const setFontSize = (size: string) => {
+  const setFontSize = (size?: string | number | null) => {
     editor.chain().focus().setMark("textStyle", { fontSize: size }).run();
   };
 
@@ -178,8 +178,8 @@ const Toolbar = ({ editor }: ToolbarProps) => {
           </select>
 
           {/* Font Size */}
-          <FontSizeSelect options={fontSizes} />
-          <select
+          <FontSizeSelect value="14px" options={fontSizes} setValue={setFontSize}/>
+          {/* <select
             className="px-2 py-1 text-sm border rounded"
             onChange={(e) => setFontSize(e.target.value)}
             defaultValue="16px"
@@ -189,7 +189,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
                 {size}
               </option>
             ))}
-          </select>
+          </select> */}
           <input
             type="color"
             className="w-8 h-8 p-0 border rounded cursor-pointer"
