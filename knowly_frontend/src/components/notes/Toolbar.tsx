@@ -1,4 +1,4 @@
-import React, { useState, type Dispatch, type SetStateAction } from "react";
+import React, { useState } from "react";
 import { FaRegImages } from "react-icons/fa6";
 import { FaLink } from "react-icons/fa6";
 import { BsFillLightningChargeFill } from "react-icons/bs";
@@ -25,9 +25,7 @@ type ToolbarProps = {
 
 const Toolbar = ({ editor }: ToolbarProps) => {
   const textFormatStyle = `px-1.5 py-1.5 rounded-sm text-primary hover:bg-blue-200 cursor-pointer`;
-  const [number, setNumber] = useState<number[] | string[]>([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-  ]);
+  const [fontSize, setFonSize] = useState(12);
 
   const editorState = useEditorState({
     editor,
@@ -110,25 +108,23 @@ const Toolbar = ({ editor }: ToolbarProps) => {
     },
   ];
 
-  const setFontSize = (size?: string | number | null) => {
-    editor.chain().focus().setMark("textStyle", { fontSize: size }).run();
+  const setFontSize = (size: number) => {
+    const editSize = size.toString() + "px";
+    setFonSize(size);
+    editor.chain().focus().setMark("textStyle", { fontSize: editSize }).run();
   };
 
-  const unsetFontSize = () => {
-    editor.chain().focus().unsetMark("textStyle").run();
-  };
-
-  const setFontFamily = (font: string) => {
-    editor.chain().focus().setFontFamily(font).run();
-  };
+  // const unsetFontSize = () => {
+  //   editor.chain().focus().unsetMark("textStyle").run();
+  // };
 
   const setFontColor = (color: string) => {
     editor.chain().focus().setColor(color).run();
   };
 
-  const unsetFontColor = () => {
-    editor.chain().focus().unsetColor().run();
-  };
+  // const unsetFontColor = () => {
+  //   editor.chain().focus().unsetColor().run();
+  // };
 
   const fonts = [
     { label: "Default", value: "" },
@@ -138,7 +134,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
     { label: "Montserrat", value: "Montserrat" },
   ];
 
-  const fontSizes = ["12px", "14px", "16px", "18px", "20px", "24px", "32px"];
+  const fontSizes = [12, 14, 16, 18, 20, 24, 32];
 
   return (
     <div className="flex gap-2 items-center justify-between w-full">
@@ -164,39 +160,6 @@ const Toolbar = ({ editor }: ToolbarProps) => {
       </div>
       <div className="flex gap-2 items-center">
         <div className="flex gap-2 items-center">
-          {/* Font Family */}
-          <select
-            className="px-2 py-1 text-sm border rounded"
-            onChange={(e) => setFontFamily(e.target.value)}
-            defaultValue=""
-          >
-            {fonts.map((f) => (
-              <option key={f.label} value={f.value}>
-                {f.label}
-              </option>
-            ))}
-          </select>
-
-          {/* Font Size */}
-          <FontSizeSelect value="14px" options={fontSizes} setValue={setFontSize}/>
-          {/* <select
-            className="px-2 py-1 text-sm border rounded"
-            onChange={(e) => setFontSize(e.target.value)}
-            defaultValue="16px"
-          >
-            {fontSizes.map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
-          </select> */}
-          <input
-            type="color"
-            className="w-8 h-8 p-0 border rounded cursor-pointer"
-            onChange={(e) => setFontColor(e.target.value)}
-            title="Text color"
-          />
-
           {/* Existing buttons */}
           {options.map((option, index) => (
             <div
@@ -209,6 +172,18 @@ const Toolbar = ({ editor }: ToolbarProps) => {
               {option.icon}
             </div>
           ))}
+          {/* Font Size */}
+          <FontSizeSelect
+            value={fontSize}
+            options={fontSizes}
+            setValue={setFontSize}
+          />
+          <input
+            type="color"
+            id="fontColor"
+            className="w-7 h-7 p-0 border border-border-secondary rounded cursor-pointer"
+            onChange={(e) => setFontColor(e.target.value)}
+          />
         </div>
       </div>
     </div>
