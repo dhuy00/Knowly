@@ -36,7 +36,10 @@ const Toolbar = ({ editor }: ToolbarProps) => {
       bold: ctx.editor.isActive("bold"),
       italic: ctx.editor.isActive("italic"),
       strike: ctx.editor.isActive("strike"),
-      alignLeft: ctx.editor.isActive({ textAlign: "left" }),
+      alignLeft:
+        !ctx.editor.isActive({ textAlign: "center" }) &&
+        !ctx.editor.isActive({ textAlign: "right" }) &&
+        !ctx.editor.isActive({ textAlign: "justify" }),
       alignCenter: ctx.editor.isActive({ textAlign: "center" }),
       alignRight: ctx.editor.isActive({ textAlign: "right" }),
       bullet: ctx.editor.isActive("bulletList"),
@@ -125,14 +128,6 @@ const Toolbar = ({ editor }: ToolbarProps) => {
   // const unsetFontColor = () => {
   //   editor.chain().focus().unsetColor().run();
   // };
-
-  const fonts = [
-    { label: "Default", value: "" },
-    { label: "Arial", value: "Arial" },
-    { label: "Roboto", value: "Roboto" },
-    { label: "Times New Roman", value: "Times New Roman" },
-    { label: "Montserrat", value: "Montserrat" },
-  ];
 
   const fontSizes = [12, 14, 16, 18, 20, 24, 32];
 

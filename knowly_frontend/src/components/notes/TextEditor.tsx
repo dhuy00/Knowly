@@ -61,7 +61,7 @@ const TextEditor = ({ content, onChange }: RichTextEditorProps) => {
   return (
     <div>
       <Toolbar editor={editor} />
-      <EditorContent editor={editor} />
+      <EditorContent editor={editor} className="editor-content"/>
     </div>
   );
 };

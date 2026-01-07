@@ -77,6 +77,25 @@ blockquote {
   height: 0;
 }
 
-.ProseMirror span {
+/* Heading scale */
+.ProseMirror h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.ProseMirror h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.ProseMirror h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Inline text only inherits inside block */
+.ProseMirror h1 span,
+.ProseMirror h2 span,
+.ProseMirror h3 span,
+.ProseMirror p span {
   font-size: inherit;
 }
+
