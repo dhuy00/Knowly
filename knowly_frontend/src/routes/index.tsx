@@ -10,6 +10,7 @@ import Notifications from "../pages/notifications/Notifications";
 import Settings from "../pages/settings/Settings";
 import Support from "../pages/support/Support";
 import NoteDetail from "../components/notes/NoteDetail.js"
+import TestDiagram from "../components/notes/TestDiagram.js";
 
 
 export const router = createBrowserRouter([
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
       {
         path: "support",
         element: (<Support />),
+      },
+      {
+        path: "diagram-test",
+        element: (<TestDiagram />),
       },
     ],
   },
