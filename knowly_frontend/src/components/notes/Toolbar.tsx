@@ -138,19 +138,19 @@ const Toolbar = ({ editor }: ToolbarProps) => {
           className="bg-green-100 w-fit px-3 py-2 rounded-sm hover:bg-green-200 active:bg-green-300 
       transition-colors cursor-pointer"
         >
-          <FaRegImages className="text-green-600 text-xl" />
+          <FaRegImages className="text-green-600 text-lg" />
         </div>
         <div
           className="bg-indigo-100 w-fit px-3 py-2 rounded-sm hover:bg-indigo-200 active:bg-indigo-300 
       transition-colors cursor-pointer"
         >
-          <FaLink className="text-indigo-600 text-xl" />
+          <FaLink className="text-indigo-600 text-lg" />
         </div>
         <div
           className="bg-yellow-100 w-fit px-3 py-2 rounded-sm hover:bg-yellow-200 active:bg-yellow-300 
       transition-colors cursor-pointer"
         >
-          <BsFillLightningChargeFill className="text-yellow-500 text-xl" />
+          <BsFillLightningChargeFill className="text-yellow-500 text-lg" />
         </div>
       </div>
       <div className="flex gap-2 items-center">
