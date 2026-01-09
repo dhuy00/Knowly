@@ -68,7 +68,7 @@ const TestDiagram: React.FC = () => {
 
   return (
     <div>
-      <h1>Test Diagram</h1>
+      <h1>Test Diagramm</h1>
       <div ref={paperRef} style={{ border: "1px solid #ccc", width: 800, height: 400 }} />
     </div>
   )
