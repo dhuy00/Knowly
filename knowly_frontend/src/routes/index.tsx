@@ -11,6 +11,7 @@ import Settings from "../pages/settings/Settings";
 import Support from "../pages/support/Support";
 import NoteDetail from "../components/notes/NoteDetail.js"
 import TestDiagram from "../components/notes/TestDiagram.js";
+import DiagramEditor from "../components/diagram/DiagramEditor.js";
 
 
 export const router = createBrowserRouter([
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: "notes/:id",
         element: (<NoteDetail />),
+      },
+      {
+        path: "notes/diagram/:id",
+        element: (<DiagramEditor />),
       },
       {
         path: "projects",
