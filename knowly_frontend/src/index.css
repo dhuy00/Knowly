@@ -99,3 +99,8 @@ blockquote {
   font-size: inherit;
 }
 
+.react-flow__node.selected {
+  border-color: transparent !important; 
+  box-shadow: 0 0 0 1.5px #5766ee !important;
+}
+
