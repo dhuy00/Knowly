@@ -10,7 +10,7 @@ interface DialogProps {
   footer?: React.ReactNode;
   children: React.ReactNode;
   disableBackdropClose?: boolean;
-  width?: string;
+  style?: string;
 }
 
 const Dialog: React.FC<DialogProps> = ({
@@ -20,7 +20,7 @@ const Dialog: React.FC<DialogProps> = ({
   footer,
   children,
   disableBackdropClose = false,
-  width = "max-w-lg",
+  style = ''
 }) => {
   if (typeof document === "undefined") return null;
 
@@ -41,7 +41,7 @@ const Dialog: React.FC<DialogProps> = ({
 
           {/* Dialog Box */}
           <motion.div
-            className={`relative bg-white rounded-2xl shadow-xl px-6 py-2 w-full ${width} z-10`}
+            className={`relative bg-white rounded-2xl shadow-xl px-6 py-2 ${style} z-10`}
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
@@ -62,7 +62,7 @@ const Dialog: React.FC<DialogProps> = ({
             )}
 
             {/* Body */}
-            <div className="text-gray-700 mb-4">{children}</div>
+            <div className="text-gray-700 mb-4 h-[90%]">{children}</div>
 
             {/* Footer */}
             {footer && <div className="flex justify-end gap-2 mt-4">{footer}</div>}

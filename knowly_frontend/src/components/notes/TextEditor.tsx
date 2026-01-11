@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
@@ -9,6 +9,8 @@ import FontFamily from '@tiptap/extension-font-family'
 import { TextStyle } from "@tiptap/extension-text-style";
 import { FontSize } from "../../extensions/FontSize";
 import { Color } from "@tiptap/extension-color";
+import Dialog from "../common/Dialog";
+import DiagramEditor from "../diagram/DiagramEditor";
 
 interface RichTextEditorProps {
   content: string;
@@ -16,6 +18,8 @@ interface RichTextEditorProps {
 }
 
 const TextEditor = ({ content, onChange }: RichTextEditorProps) => {
+  const [openDiagram, setOpenDiagram] = useState<boolean>(false);
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -60,8 +64,15 @@ const TextEditor = ({ content, onChange }: RichTextEditorProps) => {
 
   return (
     <div>
-      <Toolbar editor={editor} />
+      <Toolbar editor={editor} setOpenDiagram={setOpenDiagram}/>
       <EditorContent editor={editor} className="editor-content"/>
+      <Dialog
+        open={openDiagram}
+        onClose={() => setOpenDiagram(false)}
+        title="Diagram view"
+        style="w-[95%] h-[700px]">
+          <DiagramEditor/>
+      </Dialog>
     </div>
   );
 };

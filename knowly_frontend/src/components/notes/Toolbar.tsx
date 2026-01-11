@@ -23,9 +23,10 @@ import { useNavigate } from "react-router-dom";
 
 type ToolbarProps = {
   editor: Editor;
+  setOpenDiagram: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Toolbar = ({ editor }: ToolbarProps) => {
+const Toolbar = ({ editor, setOpenDiagram }: ToolbarProps) => {
   const navigate = useNavigate()
   const textFormatStyle = `px-1.5 py-1.5 rounded-sm text-primary hover:bg-blue-200 cursor-pointer`;
   const [fontSize, setFonSize] = useState(12);
@@ -132,8 +133,8 @@ const Toolbar = ({ editor }: ToolbarProps) => {
   //   editor.chain().focus().unsetColor().run();
   // };
 
-  const handleOpenDiagram = (id: number) => {
-    navigate(`/notes/diagram/${id}`)
+  const handleOpenDiagram = () => {
+    setOpenDiagram(true)
   }
 
   const fontSizes = [12, 14, 16, 18, 20, 24, 32];
@@ -188,7 +189,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
           />
           <button className="flex gap-2 items-center bg-button-primary text-white text-sm px-3 py-2
            rounded-sm hover:bg-button-primary-hover active:bg-button-primary-active transition-color cursor-pointer"
-           onClick={() => handleOpenDiagram(1)}>
+           onClick={() => handleOpenDiagram()}>
             <span className="text-small">Add a Diagram</span>
             <BsDiagram3 className="text-md"/>
           </button>
