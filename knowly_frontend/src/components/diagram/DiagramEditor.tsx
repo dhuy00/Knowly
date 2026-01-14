@@ -25,7 +25,7 @@ const DiagramEditor = () => {
       case "output":
         return "#6865A5";
       default:
-        return "#ff0072";       
+        return "#ff0072";              
     }
   };
 
