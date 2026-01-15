@@ -48,7 +48,7 @@ const DiagramEditor = () => {
 
   const onConnect = useCallback(
     (params) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
-    []
+    []          
   );
 
   return (
