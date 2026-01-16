@@ -23,7 +23,7 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
       },
       style: {
         backgroundColor: "#3fc5cc",
-        color: "#333",
+        color: "#333",    
       },
     };
 
