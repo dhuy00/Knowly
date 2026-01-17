@@ -12,11 +12,17 @@ import React, { useState, useCallback, useEffect } from "react";
 import DiagramToolbar from "./DiagramToolbar";
 import { useNode } from "../../hooks/useNode";
 import type { Node, Edge } from "@xyflow/react";
+import CustomNode from "./CustomNode";
 
 const DiagramEditor = () => {
   const initialNodes: Node[] = [];
 
   const { nodes, onNodesChange, addNode, updateNodeLabel, deleteNode } = useNode({ initialNodes });
+
+  const nodeTypes = {
+    'custom': CustomNode,
+  }
+  
 
   const nodeColor = (node) => {
     switch (node.type) {
@@ -51,12 +57,21 @@ const DiagramEditor = () => {
     []          
   );
 
+  useEffect(() => {
+    const selectedNode = nodes.find((n) => n.selected)
+
+    if(selectedNode) {
+      console.log("Selected node");
+    }
+  }, [nodes])
+
   return (
     <div className="bg-background-primary h-full w-full rounded-xl p-5 shadow-sm overflow-hidden flex">
       <DiagramToolbar addNode={addNode}/>
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
