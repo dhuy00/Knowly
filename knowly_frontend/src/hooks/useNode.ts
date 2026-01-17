@@ -13,15 +13,17 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
     setNodes((nds) => applyNodeChanges(changes, nds));
   }, []);
 
+  const generateRandomPosition = (): XYPosition => ({
+    x: Math.random() * 400,
+    y: Math.random() * 400,
+  }) 
+
   const addNode = (label: string = "New Node", position?: XYPosition) => {
     const newNode: Node = {
       id: crypto.randomUUID(),
       data: { label, updateLabel: (id: string, value: string) => {updateNodeLabel(id, value)} },
       type: 'custom',
-      position: position ?? {
-        x: Math.random() * 400,
-        y: Math.random() * 400,
-      },
+      position: position ?? generateRandomPosition(),
       style: {
         backgroundColor: "#3fc5cc",
         color: "#333",  

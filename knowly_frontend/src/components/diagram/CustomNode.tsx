@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { NodeResizer } from "@xyflow/react";
+import type { NodeData } from "../../types/diagram";
 
 interface CustomNodeProps {
-  id: number | string;
-  data: Object;
+  id: string;
+  data: NodeData;
   selected: boolean
 }
 
 const CustomNode: React.FC<CustomNodeProps> = ({ id, data, selected }) => {
   const [value, setValue] = useState(data.label);
   const [isEditing, setIsEditing] = useState(false);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     data.updateLabel(id, event.target.value);
   };
