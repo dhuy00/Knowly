@@ -27,7 +27,8 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
       style: {
         backgroundColor: "#3fc5cc",
         color: "#333",  
-        borderRadius: '2px'  
+        borderRadius: '2px' ,
+        width: 200,
       },
     };
 
