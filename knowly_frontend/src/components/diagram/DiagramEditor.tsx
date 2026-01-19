@@ -13,6 +13,7 @@ import DiagramToolbar from "./DiagramToolbar";
 import { useNode } from "../../hooks/useNode";
 import type { Node, Edge } from "@xyflow/react";
 import CustomNode from "./CustomNode";
+import TableNode from "./TableNode";
 
 const DiagramEditor = () => {
   const initialNodes: Node[] = [];
@@ -21,6 +22,7 @@ const DiagramEditor = () => {
 
   const nodeTypes = {
     'custom': CustomNode,
+    'table': TableNode
   }
   
 
@@ -57,13 +59,13 @@ const DiagramEditor = () => {
     []          
   );
 
-  useEffect(() => {
-    const selectedNode = nodes.find((n) => n.selected)
+  // useEffect(() => {
+  //   const selectedNode = nodes.find((n) => n.selected)
 
-    if(selectedNode) {
-      console.log("Selected node");
-    }
-  }, [nodes])
+  //   if(selectedNode) {
+  //     console.log("Selected node");
+  //   }
+  // }, [nodes])
 
   return (
     <div className="bg-background-primary h-full w-full rounded-xl p-5 shadow-sm overflow-hidden flex">
