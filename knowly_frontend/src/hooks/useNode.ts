@@ -68,7 +68,7 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
   const updateNodeRow = (id: string, newValue: string, rowId: string) => {
     setNodes((nodes) =>
       nodes.map((node) =>
-        node.id == id
+        node.id == id      
           ? {
               ...node,
               data: {
