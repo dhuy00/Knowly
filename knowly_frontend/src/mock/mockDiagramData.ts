@@ -6,7 +6,7 @@ export const rowData  = [
   {
     row_id: '2',
     value: 'name'
-  },
+  },            
   {
     row_id: '3',
     value: 'address'
