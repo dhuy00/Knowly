@@ -81,9 +81,9 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
     );
   };
 
-  useEffect(() => {
-    console.log("Update nodes: ", nodes)
-  }, [nodes])
+  // useEffect(() => {
+  //   console.log("Update nodes: ", nodes)
+  // }, [nodes])
 
   const updateNodeData = (id: string, data: Partial<Node["data"]>) => {
     setNodes((prev) =>

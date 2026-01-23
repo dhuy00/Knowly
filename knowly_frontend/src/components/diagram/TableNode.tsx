@@ -14,21 +14,15 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [selectedRow, setSelectedRow] = useState<number>(-1);
 
-  useEffect(() => {
-    console.log("Selected changed")
-  }, [selected])
+  // useEffect(() => {
+  //   console.log("Selected changed")
+  // }, [selected])
 
-  const rows = data.rows ?? [
-    "id",
-    "name",
-    "address",
-    "password",
-    "phone_number",
-  ];
+  const rows = data.rows;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, rowId: string) => {
     data.updateNodeRow(id, event.target.value, rowId);
-    data.updateLabel(id, event.target.value);
+    // data.updateLabel(id, event.target.value);
   };
 
   const handleFocus = (index: number) => {
