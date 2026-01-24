@@ -10,8 +10,10 @@ interface TableNodeProps {
 }
 
 const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingContent, setisEditingContent] = useState(false);
+  const [isEditingHeader, setIsEditingHeader] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputHeaderRef = useRef<HTMLInputElement | null>(null);
   const [selectedRow, setSelectedRow] = useState<number>(-1);
 
   // useEffect(() => {
@@ -20,48 +22,82 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
 
   const rows = data.rows;
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>, rowId: string) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    rowId: string,
+  ) => {
     data.updateNodeRow(id, event.target.value, rowId);
-    // data.updateLabel(id, event.target.value);
+  };
+
+  const handleChangeHeader = (event: React.ChangeEvent<HTMLInputElement>) => {
+    data.updateLabel(id, event.target.value);
   };
 
   const handleFocus = (index: number) => {
-    setSelectedRow(index)
-    setIsEditing(true)
+    setSelectedRow(index);
+    setisEditingContent(true);
+  };
+
+  const handleFocusHeader = () => {
+    setIsEditingHeader(true);
   };
 
   useEffect(() => {
-    if (isEditing && inputRef.current) {
+    if (isEditingContent && inputRef.current) {
       inputRef.current.focus();
       inputRef.current.select();
     }
-  }, [isEditing]);
+
+    if (isEditingHeader && inputHeaderRef.current) {
+      inputHeaderRef.current.focus();
+      inputHeaderRef.current.select();
+    }
+  }, [isEditingContent, isEditingHeader]);
 
   const handleOnBlur = () => {
-    setIsEditing(false)
-    // setSelectedRow(-1)
-    // window.getSelection()?.removeAllRanges()
-  }
+    setisEditingContent(false);
+  };
 
-const handleMouseDown = (e: React.MouseEvent<HTMLInputElement>) => {
-  const input = inputRef.current;
-  if (!input) return;
+  const handleOnBlurHeader = () => {
+    setIsEditingHeader(false);
+  };
 
-  const pos = input.value.length;
+  const handleMouseDown = (
+    e: React.MouseEvent<HTMLInputElement>,
+    inputRef: React.RefObject<HTMLInputElement | null>,
+  ) => {
+    const input = inputRef.current;
+    if (!input) return;
 
-  requestAnimationFrame(() => {
-    input.setSelectionRange(pos, pos);
-  });
-};
+    const pos = input.value.length;
 
+    requestAnimationFrame(() => {
+      input.setSelectionRange(pos, pos);
+    });
+  };
 
   return (
     <div className="w-full h-full bg-white rounded-sm">
       <NodeResizer isVisible={selected} minWidth={150} minHeight={120} />
 
       {/* Header */}
-      <div className="bg-[#3fc5cc] px-3 py-1 text-center rounded-t-sm">
-        {data.label ?? "Users"}
+      <div
+        className="bg-[#3fc5cc] px-3 py-1 text-center rounded-t-sm"
+        onDoubleClick={() => handleFocusHeader()}
+      >
+        {isEditingHeader ? (
+          <input
+            ref={inputHeaderRef}
+            value={data.label}
+            className="focus:outline-none w-full text-center"
+            onChange={(e) => handleChangeHeader(e)}
+            readOnly={!isEditingHeader}
+            onBlur={handleOnBlurHeader}
+            onClick={(e) => handleMouseDown(e, inputHeaderRef)}
+          />
+        ) : (
+          <div>{data.label}</div>
+        )}
       </div>
 
       {/* Table body */}
@@ -80,9 +116,9 @@ const handleMouseDown = (e: React.MouseEvent<HTMLInputElement>) => {
                 value={row.value}
                 className="focus:outline-none w-full"
                 onChange={(e) => handleChange(e, row.rowId)}
-                readOnly={!isEditing}
+                readOnly={!isEditingContent}
                 onBlur={handleOnBlur}
-                onClick={handleMouseDown}
+                onClick={(e) => handleMouseDown(e, inputRef)}
               />
             ) : (
               <span>{row.value}</span>
