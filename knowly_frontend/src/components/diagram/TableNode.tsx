@@ -27,14 +27,33 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
 
   const handleFocus = (index: number) => {
     setSelectedRow(index)
-    setIsEditing(true);
+    setIsEditing(true)
   };
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
       inputRef.current.focus();
+      inputRef.current.select();
     }
   }, [isEditing]);
+
+  const handleOnBlur = () => {
+    setIsEditing(false)
+    // setSelectedRow(-1)
+    // window.getSelection()?.removeAllRanges()
+  }
+
+const handleMouseDown = (e: React.MouseEvent<HTMLInputElement>) => {
+  const input = inputRef.current;
+  if (!input) return;
+
+  const pos = input.value.length;
+
+  requestAnimationFrame(() => {
+    input.setSelectionRange(pos, pos);
+  });
+};
+
 
   return (
     <div className="w-full h-full bg-white rounded-sm">
@@ -62,7 +81,8 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
                 className="focus:outline-none w-full"
                 onChange={(e) => handleChange(e, row.rowId)}
                 readOnly={!isEditing}
-                onBlur={() => setIsEditing(false)}
+                onBlur={handleOnBlur}
+                onClick={handleMouseDown}
               />
             ) : (
               <span>{row.value}</span>
