@@ -62,18 +62,38 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
     );
   };
 
-  const updateRowData = (rows: NodeRow[], newValue: string, rowId: string) =>
-    rows.map((row) => (row.rowId == rowId ? { ...row, value: newValue } : row));
+  // const updateRowData = (rows: NodeRow[], newValue: string, rowId: string) =>
+  //   rows.map((row) => (row.rowId == rowId ? { ...row, value: newValue } : row));
 
-  const updateNodeRow = (id: string, newValue: string, rowId: string) => {
+  // const updateNodeRow = (id: string, newValue: string, rowId: string) => {
+  //   setNodes((nodes) =>
+  //     nodes.map((node) =>
+  //       node.id == id
+  //         ? {
+  //             ...node,
+  //             data: {
+  //               ...node.data,
+  //               rows: updateRowData(
+  //                 node.data.rows as NodeRow[],
+  //                 newValue,
+  //                 rowId,
+  //               ),
+  //             },
+  //           }
+  //         : node,
+  //     ),
+  //   );
+  // };
+
+  const updateNodeRow = (id: string, newRows: NodeRow[]) => {
     setNodes((nodes) =>
       nodes.map((node) =>
-        node.id == id      
+        node.id == id
           ? {
               ...node,
               data: {
                 ...node.data,
-                rows: updateRowData(node.data.rows as NodeRow[], newValue, rowId),
+                rows:newRows
               },
             }
           : node,

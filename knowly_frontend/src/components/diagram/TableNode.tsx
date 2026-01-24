@@ -15,22 +15,28 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const inputHeaderRef = useRef<HTMLInputElement | null>(null);
   const [selectedRow, setSelectedRow] = useState<number>(-1);
+  // Use local node data instead of real data from prop to prevent rerender
+  const [localNodeData, setLocalNodeData] = useState(data.rows);
+  const [localLabelData, setLocalLabelData] = useState(data.label);
 
   // useEffect(() => {
   //   console.log("Selected changed")
-  // }, [selected])
-
-  const rows = data.rows;
+  // }, [selected])  const rows = data.rows;
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     rowId: string,
   ) => {
-    data.updateNodeRow(id, event.target.value, rowId);
+    // data.updateNodeRow(id, event.target.value, rowId);
+    setLocalNodeData((rows) =>
+      rows.map((row) =>
+        row.rowId === rowId ? { ...row, value: event.target.value } : row,
+      ),
+    );
   };
 
   const handleChangeHeader = (event: React.ChangeEvent<HTMLInputElement>) => {
-    data.updateLabel(id, event.target.value);
+    setLocalLabelData(event.target.value);
   };
 
   const handleFocus = (index: number) => {
@@ -56,10 +62,12 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
 
   const handleOnBlur = () => {
     setisEditingContent(false);
+    data.updateNodeRow(id, localNodeData);
   };
 
   const handleOnBlurHeader = () => {
     setIsEditingHeader(false);
+    data.updateLabel(id, localLabelData);
   };
 
   const handleMouseDown = (
@@ -69,9 +77,8 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
     const input = inputRef.current;
     if (!input) return;
 
-    const pos = input.value.length;
-
     requestAnimationFrame(() => {
+      const pos = input.selectionStart || input.value.length;
       input.setSelectionRange(pos, pos);
     });
   };
@@ -88,7 +95,7 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
         {isEditingHeader ? (
           <input
             ref={inputHeaderRef}
-            value={data.label}
+            value={localLabelData}
             className="focus:outline-none w-full text-center"
             onChange={(e) => handleChangeHeader(e)}
             readOnly={!isEditingHeader}
@@ -96,17 +103,17 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
             onClick={(e) => handleMouseDown(e, inputHeaderRef)}
           />
         ) : (
-          <div>{data.label}</div>
+          <div>{localLabelData || "\u00A0"}</div>
         )}
       </div>
 
       {/* Table body */}
       <div className="flex flex-col">
-        {rows.map((row: NodeRow, index: number) => (
+        {localNodeData.map((row: NodeRow, index: number) => (
           <div
             key={row.rowId}
             className={`px-2 py-1 border-x border-[#3fc5cc] ${
-              index !== rows.length - 1 ? "" : "border-b"
+              index !== localNodeData.length - 1 ? "" : "border-b"
             }`}
             onDoubleClick={() => handleFocus(index)}
           >
@@ -121,7 +128,7 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
                 onClick={(e) => handleMouseDown(e, inputRef)}
               />
             ) : (
-              <span>{row.value}</span>
+              <span>{row.value || "\u00A0"}</span>
             )}
           </div>
         ))}
