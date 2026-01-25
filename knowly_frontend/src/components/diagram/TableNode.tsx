@@ -75,10 +75,10 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
     inputRef: React.RefObject<HTMLInputElement | null>,
   ) => {
     const input = inputRef.current;
-    if (!input) return;
+    if (!input || e.detail > 1) return;
 
     requestAnimationFrame(() => {
-      const pos = input.selectionStart || input.value.length;
+      const pos = input.selectionStart ?? input.value.length;
       input.setSelectionRange(pos, pos);
     });
   };

@@ -29,7 +29,7 @@ const CustomNode: React.FC<CustomNodeProps> = ({ id, data, selected }) => {
   }, [isEditing])
 
   return (
-    <div className="focus:outline-none px-2 py-1 w-full" onDoubleClick={handleFocus}>
+    <div className="focus:outline-none px-2 py-1 w-full bg-[#3fc5cc]" onDoubleClick={handleFocus}>
       <NodeResizer isVisible={selected} minHeight={30} minWidth={100}/>
       {isEditing ? (
         <input

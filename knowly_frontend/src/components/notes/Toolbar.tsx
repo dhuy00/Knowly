@@ -19,7 +19,7 @@ import {
   Strikethrough,
 } from "lucide-react";
 import { BsDiagram3 } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 type ToolbarProps = {
   editor: Editor;
@@ -27,7 +27,7 @@ type ToolbarProps = {
 };
 
 const Toolbar = ({ editor, setOpenDiagram }: ToolbarProps) => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const textFormatStyle = `px-1.5 py-1.5 rounded-sm text-primary hover:bg-blue-200 cursor-pointer`;
   const [fontSize, setFonSize] = useState(12);
 

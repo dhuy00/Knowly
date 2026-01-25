@@ -10,8 +10,8 @@ interface DiagramToolbarProp {
 
 const DiagramToolbar: React.FC<DiagramToolbarProp> = ({addNode}) => {
 
-  const handleAddNode = () => {
-    addNode();
+  const handleAddNode = (type: string) => {
+    addNode(type);
   }
 
   return (
@@ -21,11 +21,11 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({addNode}) => {
       </span>
       <div className="p-4 flex flex-wrap gap-2">
         <div className="border w-fit py-1.5 px-1.5 rounded-sm text-indigo-500 hover:bg-indigo-100 cursor-pointer"
-        onClick={handleAddNode}>
+        onClick={() => handleAddNode('text')}>
           <FaHashnode />
         </div>
         <div className="border w-fit py-1.5 px-1.5 rounded-sm text-indigo-500 hover:bg-indigo-100 cursor-pointer"
-        onClick={handleAddNode}>
+        onClick={() => handleAddNode('table')}>
           <FaTable />
         </div>
       </div>
