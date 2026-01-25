@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { NodeResizer } from "@xyflow/react";
+import { NodeResizer, Handle, Position } from "@xyflow/react";
 import type { NodeData } from "../../types/diagram";
 
 interface CustomNodeProps {
@@ -8,7 +8,7 @@ interface CustomNodeProps {
   selected: boolean
 }
 
-const CustomNode: React.FC<CustomNodeProps> = ({ id, data, selected }) => {
+const TextNode: React.FC<CustomNodeProps> = ({ id, data, selected }) => {
   const [value, setValue] = useState(data.label);
   const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -29,8 +29,10 @@ const CustomNode: React.FC<CustomNodeProps> = ({ id, data, selected }) => {
   }, [isEditing])
 
   return (
-    <div className="focus:outline-none px-2 py-1 w-full bg-[#3fc5cc]" onDoubleClick={handleFocus}>
+    <div className="focus:outline-none px-2 py-1 w-[180px] bg-[#3fc5cc]" onDoubleClick={handleFocus}>
       <NodeResizer isVisible={selected} minHeight={30} minWidth={100}/>
+      <Handle type="target" position={Position.Top}/>
+      <Handle type="source" position={Position.Bottom}/>
       {isEditing ? (
         <input
           ref={inputRef}
@@ -47,4 +49,4 @@ const CustomNode: React.FC<CustomNodeProps> = ({ id, data, selected }) => {
   );
 };
 
-export default CustomNode;
+export default TextNode;

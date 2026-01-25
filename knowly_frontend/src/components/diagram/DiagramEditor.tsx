@@ -12,8 +12,8 @@ import { useState, useCallback } from "react";
 import DiagramToolbar from "./DiagramToolbar";
 import { useNode } from "../../hooks/useNode";
 import type { Node, Edge } from "@xyflow/react";
-import CustomNode from "./CustomNode";
 import TableNode from "./TableNode";
+import TextNode from "./TextNode";
 
 const DiagramEditor = () => {
   const initialNodes: Node[] = [];
@@ -21,7 +21,7 @@ const DiagramEditor = () => {
   const { nodes, onNodesChange, addNode } = useNode({ initialNodes });
 
   const nodeTypes = {
-    'text': CustomNode,
+    'text': TextNode,
     'table': TableNode
   }
   

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { NodeResizer } from "@xyflow/react";
+import { NodeResizer, Handle, Position } from "@xyflow/react";
 import type { NodeData } from "../../types/diagram";
 import type { NodeRow } from "../../types/diagram";
 
@@ -86,6 +86,8 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
   return (
     <div className="w-full h-full bg-white rounded-sm">
       <NodeResizer isVisible={selected} minWidth={150} minHeight={120} />
+      <Handle type="source" position={Position.Top}/>
+      <Handle type="target" position={Position.Bottom}/>
 
       {/* Header */}
       <div
