@@ -29,7 +29,7 @@ const TextNode: React.FC<CustomNodeProps> = ({ id, data, selected }) => {
   }, [isEditing])
 
   return (
-    <div className="focus:outline-none px-2 py-1 w-[180px] bg-[#3fc5cc]" onDoubleClick={handleFocus}>
+    <div className="focus:outline-none px-2 py-1 w-full h-full bg-[#3fc5cc]" onDoubleClick={handleFocus}>
       <NodeResizer isVisible={selected} minHeight={30} minWidth={100}/>
       <Handle type="target" position={Position.Top}/>
       <Handle type="source" position={Position.Bottom}/>

@@ -19,5 +19,8 @@ export const nodeFactories: Record<string, NodeFactory> = {
     type: "text",
     position,
     data: { label },
+    style: {
+      width: 180
+    }
   }),
 };
