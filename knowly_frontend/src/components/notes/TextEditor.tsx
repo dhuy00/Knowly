@@ -11,6 +11,7 @@ import { FontSize } from "../../extensions/FontSize";
 import { Color } from "@tiptap/extension-color";
 import Dialog from "../common/Dialog";
 import DiagramEditor from "../diagram/DiagramEditor";
+import TestDiagramEditor from "../diagram/TestDiagramEditor";
 
 interface RichTextEditorProps {
   content: string;
@@ -71,7 +72,8 @@ const TextEditor = ({ content, onChange }: RichTextEditorProps) => {
         onClose={() => setOpenDiagram(false)}
         title="Diagram view"
         style="w-[95%] h-[700px]">
-          <DiagramEditor/>
+          {/* <DiagramEditor/> */}
+          <TestDiagramEditor/>
       </Dialog>
     </div>
   );
