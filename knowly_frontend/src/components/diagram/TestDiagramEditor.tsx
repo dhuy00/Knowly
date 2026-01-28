@@ -8,7 +8,7 @@ import {
 
 import '@xyflow/react/dist/style.css';
 
-import { AnimatedSVGEdge } from '../test/AnimatedSVGEdge';
+import { AnimatedSVGEdge } from '../test/AnimatedSVGEdge';         
 
 const initialNodes = [
   { id: '1', position: { x: -100, y: -200 }, data: { label: 'A' } },
