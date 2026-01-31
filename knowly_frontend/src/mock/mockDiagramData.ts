@@ -1,22 +1,22 @@
 export const rowData  = [
   {
-    row_id: '1',
+    rowId: '1',
     value: 'id'
   },
   {
-    row_id: '2',
+    rowId: '2',
     value: 'name'
-  },
+  },            
   {
-    row_id: '3',
+    rowId: '3',
     value: 'address'
   },
   {
-    row_id: '4',
+    rowId: '4',
     value: 'password'
   },
   {
-    row_id: '5',
+    rowId: '5',
     value: 'phone_number'
   },
 ]

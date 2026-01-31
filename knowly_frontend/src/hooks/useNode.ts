@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { applyNodeChanges } from "@xyflow/react";
 import type { Node, XYPosition, NodeChange } from "@xyflow/react";
 import { rowData } from "../mock/mockDiagramData";
 import type { NodeRow } from "../types/diagram";
+import { nodeFactories } from "../factories/nodeFactories";
 
 type UseNodeProps = {
   initialNodes: Node[];
@@ -20,33 +21,24 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
     y: Math.random() * 400,
   });
 
-  const addNode = (label: string = "New Node", position?: XYPosition) => {
-    const newNode: Node = {
-      id: crypto.randomUUID(),
-      data: {
-        label,
-        rows: rowData,
-        updateLabel: (id: string, value: string) => {
-          updateNodeLabel(id, value);
-        },
-        updateNodeRow: (id: string, newValue: string, rowId: string) => {
-          updateNodeRow(id, newValue, rowId);
-        },
+  const addNode = (type: string, label = "New Node") => {
+    const id = crypto.randomUUID();
+
+    const newNode = nodeFactories[type](
+      { id, label, position: generateRandomPosition() },
+      {
+        rowData,
+        updateLabel,
+        updateNodeRow,
       },
-      type: "table",
-      position: position ?? generateRandomPosition(),
-      style: {
-        // backgroundColor: "#3fc5cc",
-        color: "#333",
-        borderRadius: "2px",
-        width: 180,
-      },
-    };
+    );
+
+    console.log("New node: ", newNode)
 
     setNodes((prev) => [...prev, newNode]);
   };
 
-  const updateNodeLabel = (id: string, newLabel: string) => {
+  const updateLabel = (id: string, newLabel: string) => {
     setNodes((prev) =>
       prev.map((node) =>
         node.id === id
@@ -62,10 +54,7 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
     );
   };
 
-  const updateRowData = (rows: NodeRow[], newValue: string, rowId: string) =>
-    rows.map((row) => (row.rowId == rowId ? { ...row, value: newValue } : row));
-
-  const updateNodeRow = (id: string, newValue: string, rowId: string) => {
+  const updateNodeRow = (id: string, newRows: NodeRow[]) => {
     setNodes((nodes) =>
       nodes.map((node) =>                 
         node.id == id
@@ -73,7 +62,7 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
               ...node,
               data: {
                 ...node.data,
-                rows: updateRowData(node.data.rows as NodeRow[], newValue, rowId),
+                rows: newRows,
               },
             }
           : node,
@@ -81,9 +70,9 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
     );
   };
 
-  useEffect(() => {
-    console.log("Update nodes: ", nodes)
-  }, [nodes])
+  // useEffect(() => {
+  //   console.log("Update nodes: ", nodes)
+  // }, [nodes])
 
   const updateNodeData = (id: string, data: Partial<Node["data"]>) => {
     setNodes((prev) =>
@@ -114,11 +103,11 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
     setNodes,
     onNodesChange,
     addNode,
-    updateNodeLabel,
+    updateLabel,
     updateNodeData,
     deleteNode,
     deleteSelectedNodes,
   };
 };
 
-export type AddNodeFunction = (label?: string, position?: XYPosition) => void;
+export type AddNodeFunction = (type: string, label?: string) => void;

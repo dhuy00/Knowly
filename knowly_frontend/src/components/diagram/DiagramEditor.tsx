@@ -8,20 +8,20 @@ import {
   MiniMap
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import React, { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import DiagramToolbar from "./DiagramToolbar";
 import { useNode } from "../../hooks/useNode";
 import type { Node, Edge } from "@xyflow/react";
-import CustomNode from "./CustomNode";
 import TableNode from "./TableNode";
+import TextNode from "./TextNode";
 
 const DiagramEditor = () => {
   const initialNodes: Node[] = [];
 
-  const { nodes, onNodesChange, addNode, updateNodeLabel, deleteNode } = useNode({ initialNodes });
+  const { nodes, onNodesChange, addNode } = useNode({ initialNodes });
 
   const nodeTypes = {
-    'custom': CustomNode,
+    'text': TextNode,
     'table': TableNode
   }
   
