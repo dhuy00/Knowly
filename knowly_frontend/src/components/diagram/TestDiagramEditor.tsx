@@ -1,44 +1,55 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   ReactFlow,
   useNodesState,
   useEdgesState,
+  addEdge,
   Background,
 } from '@xyflow/react';
 
 import '@xyflow/react/dist/style.css';
 
-import { AnimatedSVGEdge } from '../test/AnimatedSVGEdge';        
+import CustomNode from '../test/CustomNode';
+import ConnectionLine from '../test/ConnectionLine';
 
 const initialNodes = [
-  { id: '1', position: { x: -100, y: -200 }, data: { label: 'A' } },
-  { id: '2', position: { x: 100, y: 200 }, data: { label: 'B' } },
+  {
+    id: 'connectionline-1',
+    type: 'custom',
+    data: { label: 'Node 1' },
+    position: { x: 250, y: 5 },
+  },
 ];
 
-const edgeTypes = {
-  animatedSvg: AnimatedSVGEdge,
+const nodeTypes = {
+  custom: CustomNode,
 };
 
-const initialEdges = [
-  { id: '1->2', type: 'animatedSvg', source: '1', target: '2' },
-];
-
-const TestDiagramEditor = () => {
-  const [nodes, , onNodesChange] = useNodesState(initialNodes);
-  const [edges, , onEdgesChange] = useEdgesState(initialEdges);
+const ConnectionLineFlow = () => {
+  const [nodes, _, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const onConnect = useCallback(
+    (params) => setEdges((eds) => addEdge(params, eds)),
+    [],
+  );
 
   return (
     <ReactFlow
       nodes={nodes}
       edges={edges}
-      edgeTypes={edgeTypes}
+      nodeTypes={nodeTypes}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
+      connectionLineComponent={ConnectionLine}
+      onConnect={onConnect}
       fitView
+      fitViewOptions={{
+        padding: 0.2,
+      }}
     >
       <Background />
     </ReactFlow>
   );
 };
 
-export default TestDiagramEditor;
+export default ConnectionLineFlow;
