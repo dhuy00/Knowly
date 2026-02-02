@@ -2,6 +2,7 @@ import { ReactFlow, Background, MarkerType, BezierEdge } from "@xyflow/react";
 
 import "@xyflow/react/dist/style.css";
 import CustomEdge from "../test/CustomEdge";
+import OneTo from "./notations/OneTo";
 
 const edgeTypes = {
   default: BezierEdge,
@@ -124,39 +125,7 @@ export default function TestDiagramEditor() {
   return (
     <>
       <div className="w-full h-screen">
-        <svg style={{ position: "absolute", top: 0, left: 0 }}>
-          <defs>
-            <marker
-              id="logo"
-              viewBox="0 0 10 10"
-              markerWidth={12}
-              markerHeight={12}
-              refX={10} // 🔥 điểm chạm vào edge
-              refY={5}
-              orient="auto"
-              markerUnits="strokeWidth"
-            >
-              {/* vertical line */}
-              <line
-                x1="7"
-                y1="1"
-                x2="7"
-                y2="9"
-                stroke="black"
-                strokeWidth="1"
-              />
-              {/* horizontal line */}
-              <line
-                x1="1"
-                y1="5"
-                x2="9"
-                y2="5"
-                stroke="black"
-                strokeWidth="1"
-              />
-            </marker>
-          </defs>
-        </svg>
+        <OneTo/>
         <ReactFlow
           defaultNodes={defaultNodes}
           defaultEdges={defaultEdges}
