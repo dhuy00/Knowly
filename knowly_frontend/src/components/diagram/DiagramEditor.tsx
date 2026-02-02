@@ -5,7 +5,8 @@ import {
   Controls,
   applyEdgeChanges,
   addEdge,
-  MiniMap
+  MiniMap,
+  MarkerType,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useState, useCallback } from "react";
@@ -14,6 +15,7 @@ import { useNode } from "../../hooks/useNode";
 import type { Node, Edge } from "@xyflow/react";
 import TableNode from "./TableNode";
 import TextNode from "./TextNode";
+import OneTo from "./notations/OneTo";
 
 const DiagramEditor = () => {
   const initialNodes: Node[] = [];
@@ -21,10 +23,9 @@ const DiagramEditor = () => {
   const { nodes, onNodesChange, addNode } = useNode({ initialNodes });
 
   const nodeTypes = {
-    'text': TextNode,
-    'table': TableNode
-  }
-  
+    text: TextNode,
+    table: TableNode,
+  };
 
   const nodeColor = (node) => {
     switch (node.type) {
@@ -33,7 +34,7 @@ const DiagramEditor = () => {
       case "output":
         return "#6865A5";
       default:
-        return "#ff0072";              
+        return "#ff0072";
     }
   };
 
@@ -43,7 +44,6 @@ const DiagramEditor = () => {
   //   { label: "First diagram", active: true },
   // ];
 
-
   const initialEdges: Edge[] = [];
 
   const [edges, setEdges] = useState(initialEdges);
@@ -51,12 +51,23 @@ const DiagramEditor = () => {
   const onEdgesChange = useCallback(
     (changes) =>
       setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
-    []
+    [],
   );
 
   const onConnect = useCallback(
-    (params) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
-    []          
+    (params) =>
+      setEdges((edgeSnapshot) =>
+        addEdge(
+          {
+            ...params,
+            type: "smoothstep",
+            markerEnd: "logo",
+            // style: { stroke: "black", strokeWidth: 2 },
+          },
+          edgeSnapshot,
+        ),
+      ),
+    [],
   );
 
   // useEffect(() => {
@@ -69,7 +80,8 @@ const DiagramEditor = () => {
 
   return (
     <div className="bg-background-primary h-full w-full rounded-xl p-5 shadow-sm overflow-hidden flex">
-      <DiagramToolbar addNode={addNode}/>
+      <DiagramToolbar addNode={addNode} />
+      <OneTo/>
       <ReactFlow
         nodes={nodes}
         edges={edges}

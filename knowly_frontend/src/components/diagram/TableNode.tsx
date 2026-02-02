@@ -86,8 +86,8 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
   return (
     <div className="w-full h-full bg-white rounded-sm">
       <NodeResizer isVisible={selected} minWidth={150} minHeight={120} />
-      <Handle type="source" position={Position.Top}/>
-      <Handle type="target" position={Position.Bottom}/>
+      <Handle type="target" position={Position.Top}/>
+      <Handle type="source" position={Position.Bottom}/>
 
       {/* Header */}
       <div
