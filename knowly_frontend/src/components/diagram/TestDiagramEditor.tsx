@@ -2,7 +2,7 @@ import { ReactFlow, Background, MarkerType, BezierEdge } from "@xyflow/react";
 
 import "@xyflow/react/dist/style.css";
 import CustomEdge from "../test/CustomEdge";
-import OneTo from "./notations/OneTo";
+import OneMandatory from "./notations/OneMandatory";
 
 const edgeTypes = {
   default: BezierEdge,
@@ -125,7 +125,7 @@ export default function TestDiagramEditor() {
   return (
     <>
       <div className="w-full h-screen">
-        <OneTo/>
+        <OneMandatory/>
         <ReactFlow
           defaultNodes={defaultNodes}
           defaultEdges={defaultEdges}

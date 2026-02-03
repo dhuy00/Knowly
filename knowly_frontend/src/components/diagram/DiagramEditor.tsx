@@ -15,7 +15,8 @@ import { useNode } from "../../hooks/useNode";
 import type { Node, Edge } from "@xyflow/react";
 import TableNode from "./TableNode";
 import TextNode from "./TextNode";
-import OneTo from "./notations/OneTo";
+import OneMandatory from "./notations/OneMandatory";
+import OneOptional from "./notations/OneOptional";
 
 const DiagramEditor = () => {
   const initialNodes: Node[] = [];
@@ -62,6 +63,7 @@ const DiagramEditor = () => {
             ...params,
             type: "smoothstep",
             markerEnd: "logo",
+            markerStart: "logo-optional",
             // style: { stroke: "black", strokeWidth: 2 },
           },
           edgeSnapshot,
@@ -81,7 +83,8 @@ const DiagramEditor = () => {
   return (
     <div className="bg-background-primary h-full w-full rounded-xl p-5 shadow-sm overflow-hidden flex">
       <DiagramToolbar addNode={addNode} />
-      <OneTo/>
+      <OneMandatory/>
+      <OneOptional/>
       <ReactFlow
         nodes={nodes}
         edges={edges}
