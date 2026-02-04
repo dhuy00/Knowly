@@ -18,7 +18,7 @@ export default function OneOptional() {
         >
           <circle cx="15" cy="5" r="3" stroke="black" strokeWidth="1" fill="white" />
           <line x1="7" y1="1" x2="7" y2="9" stroke="black" strokeWidth="1" />
-          <line x1="1" y1="5" x2="12" y2="5" stroke="black" strokeWidth="1" />
+          <line x1="0" y1="5" x2="12" y2="5" stroke="black" strokeWidth="1" />
         </marker>
       </defs>
     </svg>

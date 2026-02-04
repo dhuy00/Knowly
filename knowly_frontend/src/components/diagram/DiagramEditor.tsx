@@ -17,6 +17,8 @@ import TableNode from "./TableNode";
 import TextNode from "./TextNode";
 import OneMandatory from "./notations/OneMandatory";
 import OneOptional from "./notations/OneOptional";
+import ManyOptional from "./notations/ManyOptional";
+import ManyMandatory from "./notations/ManyMandatory";
 
 const DiagramEditor = () => {
   const initialNodes: Node[] = [];
@@ -63,7 +65,7 @@ const DiagramEditor = () => {
             ...params,
             type: "smoothstep",
             markerEnd: "logo",
-            markerStart: "logo-optional",
+            markerStart: "many-optional",
             // style: { stroke: "black", strokeWidth: 2 },
           },
           edgeSnapshot,
@@ -85,6 +87,8 @@ const DiagramEditor = () => {
       <DiagramToolbar addNode={addNode} />
       <OneMandatory/>
       <OneOptional/>
+      <ManyOptional/>
+      <ManyMandatory/>
       <ReactFlow
         nodes={nodes}
         edges={edges}
