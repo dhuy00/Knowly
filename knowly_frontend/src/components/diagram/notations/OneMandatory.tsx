@@ -7,13 +7,13 @@ export default function OneMandatory() {
     >
       <defs>
         <marker
-          id="logo"
+          id="one-mandatory"
           viewBox="0 0 14 10"
           markerWidth={13}
           markerHeight={12}
           refX={13}
           refY={5}
-          orient="auto"
+          orient="auto-start-reverse"
           markerUnits="strokeWidth"
         >
           <line x1="7" y1="1" x2="7" y2="9" stroke="black" strokeWidth="1" />

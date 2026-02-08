@@ -15,10 +15,8 @@ import { useNode } from "../../hooks/useNode";
 import type { Node, Edge } from "@xyflow/react";
 import TableNode from "./TableNode";
 import TextNode from "./TextNode";
-import OneMandatory from "./notations/OneMandatory";
-import OneOptional from "./notations/OneOptional";
-import ManyOptional from "./notations/ManyOptional";
-import ManyMandatory from "./notations/ManyMandatory";
+import RelationshipEdge from "./notations/RelationshipEdge";
+import EdgeMakers from "./notations/EdgeMakers";
 
 const DiagramEditor = () => {
   const initialNodes: Node[] = [];
@@ -41,13 +39,10 @@ const DiagramEditor = () => {
     }
   };
 
-  // const breadCumbPath = [
-  //   { label: "Notes", href: "/notes" },
-  //   { label: "Myle", href: "/notes/1" },
-  //   { label: "First diagram", active: true },
-  // ];
-
   const initialEdges: Edge[] = [];
+  const edgeTypes = {
+    relationship: RelationshipEdge
+  }
 
   const [edges, setEdges] = useState(initialEdges);
 
@@ -63,10 +58,13 @@ const DiagramEditor = () => {
         addEdge(
           {
             ...params,
-            type: "smoothstep",
-            markerEnd: "logo",
-            markerStart: "many-optional",
-            // style: { stroke: "black", strokeWidth: 2 },
+            type: "relationship",
+            data: {
+              start: "one",
+              end: "many",
+              optionalStart: true,
+              optionalEnd: false
+            }
           },
           edgeSnapshot,
         ),
@@ -74,21 +72,10 @@ const DiagramEditor = () => {
     [],
   );
 
-  // useEffect(() => {
-  //   const selectedNode = nodes.find((n) => n.selected)
-
-  //   if(selectedNode) {
-  //     console.log("Selected node");
-  //   }
-  // }, [nodes])
-
   return (
     <div className="bg-background-primary h-full w-full rounded-xl p-5 shadow-sm overflow-hidden flex">
       <DiagramToolbar addNode={addNode} />
-      <OneMandatory/>
-      <OneOptional/>
-      <ManyOptional/>
-      <ManyMandatory/>
+      <EdgeMakers/>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -96,6 +83,7 @@ const DiagramEditor = () => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        edgeTypes={edgeTypes}
         deleteKeyCode={["Delete"]}
       >
         <Background />

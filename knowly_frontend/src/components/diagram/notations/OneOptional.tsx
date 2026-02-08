@@ -7,18 +7,18 @@ export default function OneOptional() {
     >
       <defs>
         <marker
-          id="logo-optional"
+          id="one-optional"
           viewBox="0 0 20 10"
           markerWidth={20}
           markerHeight={12}
-          refX={3}
+          refX={20}
           refY={5}
-          orient="auto"
+          orient="auto-start-reverse"
           markerUnits="strokeWidth"
         >
-          <circle cx="15" cy="5" r="3" stroke="black" strokeWidth="1" fill="white" />
-          <line x1="7" y1="1" x2="7" y2="9" stroke="black" strokeWidth="1" />
-          <line x1="0" y1="5" x2="12" y2="5" stroke="black" strokeWidth="1" />
+          <circle cx="6" cy="5" r="4" stroke="black" strokeWidth="1" fill="white" />
+          <line x1="15" y1="1" x2="15" y2="9" stroke="black" strokeWidth="1" />
+          <line x1="10" y1="5" x2="20" y2="5" stroke="black" strokeWidth="1" />
         </marker>
       </defs>
     </svg>

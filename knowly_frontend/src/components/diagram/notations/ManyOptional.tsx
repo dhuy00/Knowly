@@ -10,16 +10,16 @@ export default function ManyOptional() {
           id="many-optional"           
           viewBox="0 0 20 10"
           markerWidth={20}
-          markerHeight={12}
-          refX={3}
+          markerHeight={25}
+          refX={15}
           refY={5}
-          orient="auto"
+          orient="auto-start-reverse"
           markerUnits="strokeWidth"
         >
-          <circle cx="12" cy="5" r="3" stroke="black" strokeWidth="1" fill="white" />
-          <line x1="-1" y1="0" x2="8" y2="5" stroke="black" strokeWidth="1" />
-          <line x1="-1" y1="10" x2="8" y2="5" stroke="black" strokeWidth="1" />
-          <line x1="0" y1="5" x2="9" y2="5" stroke="black" strokeWidth="1" />
+          <circle cx="4" cy="5" r="3" stroke="black" strokeWidth="1" fill="white" />
+          <line x1="32" y1="-10" x2="8" y2="5" stroke="black" strokeWidth="1" />
+          <line x1="30" y1="18" x2="8" y2="5" stroke="black" strokeWidth="1" />
+          <line x1="8" y1="5" x2="20" y2="5" stroke="black" strokeWidth="1" />
         </marker>
       </defs>
     </svg>

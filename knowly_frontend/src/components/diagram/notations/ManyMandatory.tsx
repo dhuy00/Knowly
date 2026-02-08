@@ -1,4 +1,4 @@
-export default function ManyMandatory() {
+export default function ManyOptional() {
   return (
     <svg
       style={{ position: "absolute", top: 0, left: 0 }}
@@ -7,19 +7,19 @@ export default function ManyMandatory() {
     >
       <defs>
         <marker
-          id="many-mandatory"
+          id="many-mandatory"           
           viewBox="0 0 20 10"
           markerWidth={20}
-          markerHeight={12}
-          refX={3}
+          markerHeight={25}
+          refX={15}
           refY={5}
-          orient="auto"
+          orient="auto-start-reverse"
           markerUnits="strokeWidth"
         >
-          <line x1="8" y1="1" x2="8" y2="9" stroke="black" strokeWidth="1" />
-          <line x1="-1" y1="0" x2="8" y2="5" stroke="black" strokeWidth="1" />
-          <line x1="-1" y1="10" x2="8" y2="5" stroke="black" strokeWidth="1" />
-          <line x1="0" y1="5" x2="13" y2="5" stroke="black" strokeWidth="1" />
+          <line x1="7" y1="0" x2="7" y2="10" stroke="black" strokeWidth="1" />
+          <line x1="32" y1="-10" x2="8" y2="5" stroke="black" strokeWidth="1" />
+          <line x1="30" y1="18" x2="8" y2="5" stroke="black" strokeWidth="1" />
+          <line x1="2" y1="5" x2="20" y2="5" stroke="black" strokeWidth="1" />
         </marker>
       </defs>
     </svg>
