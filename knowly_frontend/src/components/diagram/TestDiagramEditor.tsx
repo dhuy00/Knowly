@@ -1,44 +1,140 @@
-import React from 'react';
-import {
-  ReactFlow,
-  useNodesState,
-  useEdgesState,
-  Background,
-} from '@xyflow/react';
+import { ReactFlow, Background, MarkerType, BezierEdge } from "@xyflow/react";
 
-import '@xyflow/react/dist/style.css';
-
-import { AnimatedSVGEdge } from '../test/AnimatedSVGEdge';        
-
-const initialNodes = [
-  { id: '1', position: { x: -100, y: -200 }, data: { label: 'A' } },
-  { id: '2', position: { x: 100, y: 200 }, data: { label: 'B' } },
-];
+import "@xyflow/react/dist/style.css";
+import CustomEdge from "../test/CustomEdge";
+import OneMandatory from "./notations/OneMandatory";
 
 const edgeTypes = {
-  animatedSvg: AnimatedSVGEdge,
+  default: BezierEdge,
+  custom: CustomEdge,
 };
 
-const initialEdges = [
-  { id: '1->2', type: 'animatedSvg', source: '1', target: '2' },
+const defaultNodes = [
+  {
+    id: "A",
+    position: { x: 20, y: 20 },
+    data: { label: "A" },
+  },
+  {
+    id: "B",
+    position: { x: 100, y: 200 },
+    data: { label: "B" },
+  },
+  {
+    id: "C",
+    position: { x: 300, y: 20 },
+    data: { label: "C" },
+  },
+  {
+    id: "D",
+    position: { x: 300, y: 170 },
+    data: { label: "D" },
+  },
+  {
+    id: "E",
+    position: { x: 250, y: 300 },
+    data: { label: "E" },
+  },
+  {
+    id: "F",
+    position: { x: 250, y: 450 },
+    data: { label: "F" },
+  },
+  {
+    id: "G",
+    position: { x: 20, y: 450 },
+    data: { label: "G" },
+  },
+  {
+    id: "H",
+    position: { x: 500, y: 450 },
+    data: { label: "H" },
+  },
 ];
 
-const TestDiagramEditor = () => {
-  const [nodes, , onNodesChange] = useNodesState(initialNodes);
-  const [edges, , onEdgesChange] = useEdgesState(initialEdges);
+const defaultEdges = [
+  {
+    id: "A->B",
+    source: "A",
+    target: "B",
+    markerEnd: {
+      type: MarkerType.Arrow,
+    },
+    label: "default arrow",
+  },
+  {
+    id: "C->D",
+    source: "C",
+    target: "D",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+    },
+    label: "default closed arrow",
+  },
+  {
+    id: "D->E",
+    source: "D",
+    target: "E",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      orient: "auto-start-reverse",
+    },
+    label: "marker start and marker end",
+  },
+  {
+    id: "E->F",
+    source: "E",
+    target: "F",
+    markerEnd: "logo",
+    label: "custom marker",
+  },
+  {
+    id: "E->H",
+    source: "E",
+    target: "H",
+    type: "custom",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 20,
+      height: 20,
+    },
+    label: "change color on selection",
+  },
+  {
+    id: "B->G",
+    source: "B",
+    target: "G",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 20,
+      height: 20,
+      color: "#FF0072",
+    },
+    label: "marker size and color",
+    style: {
+      strokeWidth: 2,
+      stroke: "#FF0072",
+    },
+  },
+];
 
+export default function TestDiagramEditor() {
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      edgeTypes={edgeTypes}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      fitView
-    >
-      <Background />
-    </ReactFlow>
+    <>
+      <div className="w-full h-screen">
+        <OneMandatory/>
+        <ReactFlow
+          defaultNodes={defaultNodes}
+          defaultEdges={defaultEdges}
+          fitView
+          edgeTypes={edgeTypes}
+        >
+          <Background />
+        </ReactFlow>
+      </div>
+    </>
   );
-};
-
-export default TestDiagramEditor;
+}

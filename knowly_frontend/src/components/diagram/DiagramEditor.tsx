@@ -5,7 +5,8 @@ import {
   Controls,
   applyEdgeChanges,
   addEdge,
-  MiniMap
+  MiniMap,
+  MarkerType,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useState, useCallback } from "react";
@@ -14,6 +15,8 @@ import { useNode } from "../../hooks/useNode";
 import type { Node, Edge } from "@xyflow/react";
 import TableNode from "./TableNode";
 import TextNode from "./TextNode";
+import RelationshipEdge from "./notations/RelationshipEdge";
+import EdgeMakers from "./notations/EdgeMakers";
 
 const DiagramEditor = () => {
   const initialNodes: Node[] = [];
@@ -21,10 +24,9 @@ const DiagramEditor = () => {
   const { nodes, onNodesChange, addNode } = useNode({ initialNodes });
 
   const nodeTypes = {
-    'text': TextNode,
-    'table': TableNode
-  }
-  
+    text: TextNode,
+    table: TableNode,
+  };
 
   const nodeColor = (node) => {
     switch (node.type) {
@@ -33,43 +35,47 @@ const DiagramEditor = () => {
       case "output":
         return "#6865A5";
       default:
-        return "#ff0072";              
+        return "#ff0072";
     }
   };
 
-  // const breadCumbPath = [
-  //   { label: "Notes", href: "/notes" },
-  //   { label: "Myle", href: "/notes/1" },
-  //   { label: "First diagram", active: true },
-  // ];
-
-
   const initialEdges: Edge[] = [];
+  const edgeTypes = {
+    relationship: RelationshipEdge
+  }
 
   const [edges, setEdges] = useState(initialEdges);
 
   const onEdgesChange = useCallback(
     (changes) =>
       setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
-    []
+    [],
   );
 
   const onConnect = useCallback(
-    (params) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
-    []          
+    (params) =>
+      setEdges((edgeSnapshot) =>
+        addEdge(
+          {
+            ...params,
+            type: "relationship",
+            data: {
+              start: "one",
+              end: "many",
+              optionalStart: true,
+              optionalEnd: false
+            }
+          },
+          edgeSnapshot,
+        ),
+      ),
+    [],
   );
-
-  // useEffect(() => {
-  //   const selectedNode = nodes.find((n) => n.selected)
-
-  //   if(selectedNode) {
-  //     console.log("Selected node");
-  //   }
-  // }, [nodes])
 
   return (
     <div className="bg-background-primary h-full w-full rounded-xl p-5 shadow-sm overflow-hidden flex">
-      <DiagramToolbar addNode={addNode}/>
+      <DiagramToolbar addNode={addNode} />
+      <EdgeMakers/>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -77,6 +83,7 @@ const DiagramEditor = () => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        edgeTypes={edgeTypes}
         deleteKeyCode={["Delete"]}
       >
         <Background />

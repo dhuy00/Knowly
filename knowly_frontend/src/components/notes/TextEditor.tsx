@@ -72,8 +72,8 @@ const TextEditor = ({ content, onChange }: RichTextEditorProps) => {
         onClose={() => setOpenDiagram(false)}
         title="Diagram view"
         style="w-[95%] h-[700px]">
-          {/* <DiagramEditor/> */}
-          <TestDiagramEditor/>
+          <DiagramEditor/>
+          {/* <TestDiagramEditor/> */}
       </Dialog>
     </div>
   );
