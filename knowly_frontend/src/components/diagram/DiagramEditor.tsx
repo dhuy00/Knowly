@@ -73,8 +73,9 @@ const DiagramEditor = () => {
   );
 
   return (
-    <div className="bg-background-primary h-full w-full rounded-xl p-5 shadow-sm overflow-hidden flex">
+    <div className="flex h-full w-full gap-4 bg-background-common">
       <DiagramToolbar addNode={addNode} />
+    <div className="bg-background-primary h-full w-full rounded-md p-5 shadow-sm overflow-hidden flex">
       <EdgeMakers/>
       <ReactFlow
         nodes={nodes}
@@ -90,6 +91,7 @@ const DiagramEditor = () => {
         <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
         <Controls />
       </ReactFlow>
+    </div>
     </div>
   );
 };

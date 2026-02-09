@@ -41,7 +41,7 @@ const Dialog: React.FC<DialogProps> = ({
 
           {/* Dialog Box */}
           <motion.div
-            className={`relative bg-white rounded-2xl shadow-xl px-6 py-2 ${style} z-10`}
+            className={`relative rounded-2xl shadow-xl px-6 py-2 ${style} z-10`}
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
@@ -50,7 +50,7 @@ const Dialog: React.FC<DialogProps> = ({
           >
             {/* Header */}
             {(title || onClose) && (
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-3">
                 <h2 className="text-xl font-semibold">{title}</h2>
                 <button
                   onClick={onClose}
