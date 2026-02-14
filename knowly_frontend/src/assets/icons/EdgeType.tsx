@@ -2,7 +2,7 @@ import React from "react";
 
 const EdgeType = ({size = 13}) => {
   return (
-    <svg
+    <svg      
       width={size}
       height={size}       
       viewBox="0 0 13 13"     
