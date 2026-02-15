@@ -6,7 +6,7 @@ import { MdOutlineTableChart } from "react-icons/md";
 import { RiStackLine } from "react-icons/ri";
 import Divider from "../common/Divider";
 import EdgeType from "../../assets/icons/EdgeType";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";       
 
 interface DiagramToolbarProp {
   addNode: AddNodeFunction;
