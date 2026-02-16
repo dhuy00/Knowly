@@ -110,13 +110,29 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
       <span className="text-small text-text-secondary font-medium">
         Configuaration
       </span>
-      <Selection
-        options={edgeTypes}
-        open={openEdgeTypes}
-        setOpen={setOpenEdgeTypes}
-        handleSelect={handleChangeEdgeType}
-        CurrentValue={SelectedEdgeTypeIcon}
-      />
+      <div className="flex gap-1">
+        <Selection
+          options={edgeTypes}
+          open={openEdgeTypes}
+          setOpen={handleEdgeTypeSelect}
+          handleSelect={handleChangeEdgeType}
+          CurrentValue={SelectedEdgeTypeIcon}
+        />
+        <Selection
+          options={edgeTypes}
+          open={openEdgeTypes}
+          setOpen={handleEdgeTypeSelect}
+          handleSelect={handleChangeEdgeType}
+          CurrentValue={SelectedEdgeTypeIcon}
+        />
+        <Selection
+          options={edgeTypes}
+          open={openEdgeTypes}
+          setOpen={handleEdgeTypeSelect}
+          handleSelect={handleChangeEdgeType}
+          CurrentValue={SelectedEdgeTypeIcon}
+        />
+      </div>
     </div>
   );
 };
