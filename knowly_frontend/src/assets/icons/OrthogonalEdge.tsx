@@ -1,6 +1,6 @@
 import React from "react";
 
-const EdgeType = ({size = 13}) => {
+const OrthogonalEdge = ({size = 13}) => {
   return (
     <svg      
       width={size}
@@ -18,4 +18,4 @@ const EdgeType = ({size = 13}) => {
   );
 };
 
-export default EdgeType;
+export default OrthogonalEdge;

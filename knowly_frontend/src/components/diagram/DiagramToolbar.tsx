@@ -1,20 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import type { AddNodeFunction } from "../../hooks/useNode";
 import { IoLogoWebComponent } from "react-icons/io5";
 import { IoSearchOutline } from "react-icons/io5";
 import { MdOutlineTableChart } from "react-icons/md";
 import { RiStackLine } from "react-icons/ri";
 import Divider from "../common/Divider";
-import EdgeType from "../../assets/icons/EdgeType";
-import { IoIosArrowDown } from "react-icons/io";       
+import EdgeType from "../../assets/icons/OrthogonalEdge";
+import { IoIosArrowDown } from "react-icons/io";
+import OrthogonalEdge from "../../assets/icons/OrthogonalEdge";
+import Selection from "./Selection";
 
 interface DiagramToolbarProp {
   addNode: AddNodeFunction;
 }
 
+type EdgeType = {
+  id: number;
+  name: string;
+  component: React.ComponentType<{ size?: number }>;
+};
+
 const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
   const handleAddNode = (type: string) => {
     addNode(type);
+  };
+  const defaultEdgeTypeId = 1;
+
+  const [openEdgeTypes, setOpenEdgeTypes] = useState<boolean>(false);
+  const [currentEdgeType, setCurrentEdgeType] =
+    useState<number>(defaultEdgeTypeId);
+
+  const edgeTypes: EdgeType[] = [
+    {
+      id: 1,
+      name: "Orthogonal",
+      component: OrthogonalEdge,
+    },
+    {
+      id: 2,
+      name: "Orthogonal",
+      component: OrthogonalEdge,
+    },
+    {
+      id: 3,
+      name: "Orthogonal",
+      component: OrthogonalEdge,
+    },
+    {
+      id: 4,
+      name: "Orthogonal",
+      component: OrthogonalEdge,
+    },
+    {
+      id: 5,
+      name: "Orthogonal",
+      component: OrthogonalEdge,
+    },
+    {
+      id: 6,
+      name: "Orthogonal",
+      component: OrthogonalEdge,
+    },
+  ];
+
+  const selectedEdge = edgeTypes.find((item) => item.id === currentEdgeType);
+  const SelectedEdgeTypeIcon = selectedEdge?.component || OrthogonalEdge;
+
+  const handleEdgeTypeSelect = () => {
+    setOpenEdgeTypes(!openEdgeTypes);
+  };
+
+  const handleChangeEdgeType = (edgeType: number) => {
+    setCurrentEdgeType(edgeType);
+    setOpenEdgeTypes(false);
   };
 
   return (
@@ -52,13 +110,13 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
       <span className="text-small text-text-secondary font-medium">
         Configuaration
       </span>
-      <div className="flex">
-        <div className="border flex gap-2 justify-between border-stone-400 pl-2 pr-1 py-1
-        rounded-xs cursor-pointer">
-          <EdgeType size={15}/>
-          <IoIosArrowDown className="text-xs"/>
-        </div>
-      </div>
+      <Selection
+        options={edgeTypes}
+        open={openEdgeTypes}
+        setOpen={setOpenEdgeTypes}
+        handleSelect={handleChangeEdgeType}
+        CurrentValue={SelectedEdgeTypeIcon}
+      />
     </div>
   );
 };
