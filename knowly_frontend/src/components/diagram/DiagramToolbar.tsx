@@ -122,7 +122,7 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
           options={edgeTypes}
           open={openEdgeTypes}
           setOpen={handleEdgeTypeSelect}
-          handleSelect={handleChangeEdgeType}
+          handleSelect={handleChangeEdgeType}      
           CurrentValue={SelectedEdgeTypeIcon}
         />
         <Selection
