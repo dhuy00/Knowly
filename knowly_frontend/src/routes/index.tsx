@@ -14,7 +14,7 @@ import TestDiagram from "../components/notes/TestDiagram.js";
 import DiagramEditor from "../components/diagram/DiagramEditor.js";
 
 
-export const router = createBrowserRouter([     
+export const router = createBrowserRouter([          
   {
     path: "/",
     element: <MainLayout />,
