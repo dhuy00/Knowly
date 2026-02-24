@@ -13,7 +13,6 @@ import NoteDetail from "../components/notes/NoteDetail.js"
 import TestDiagram from "../components/notes/TestDiagram.js";
 import DiagramEditor from "../components/diagram/DiagramEditor.js";
 
-
 export const router = createBrowserRouter([          
   {
     path: "/",
