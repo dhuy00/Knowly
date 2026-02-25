@@ -6,7 +6,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import TodoList from "../pages/todo-list/TodoList";
 import Notes from "../pages/notes/Notes";
 import Projects from "../pages/projects/Projects";
-import Notifications from "../pages/notifications/Notifications";
+import Notifications from "../pages/notifications/Notifications";     
 import Settings from "../pages/settings/Settings";
 import Support from "../pages/support/Support";
 import NoteDetail from "../components/notes/NoteDetail.js"
