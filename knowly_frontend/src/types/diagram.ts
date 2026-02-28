@@ -13,6 +13,18 @@ export interface NodeData {
   updateNodeRow: (id: string, newRows: NodeRow[]) => void;
 }
 
+export interface EdgeType {
+  id: number;
+  name: string;
+  component: React.ComponentType<{ size?: number }>;
+};
+
+export interface NodeType {
+  id: number;
+  name: string;
+  icon: React.ComponentType<{ className?: string }>;
+};
+
 export type NodeFactoryContext = {
   rowData: NodeRow[],
   updateLabel: (id: string, value: string) => void,

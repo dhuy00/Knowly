@@ -3,196 +3,58 @@ import React, { useState } from "react";
 import type { AddNodeFunction } from "../../hooks/useNode";
 import { IoLogoWebComponent } from "react-icons/io5";
 import { IoSearchOutline } from "react-icons/io5";
-import { MdOutlineTableChart } from "react-icons/md";
-import { RiStackLine } from "react-icons/ri";
 import Divider from "../common/Divider";
-import EdgeType from "../../assets/icons/OrthogonalEdge";
 import OrthogonalEdge from "../../assets/icons/OrthogonalEdge";
 import Selection from "./Selection";
-import None from "../../assets/icons/startEdge/None";
 import EndArrow from "../../assets/icons/endEdge/Arrow";
 import StartArrow from "../../assets/icons/startEdge/Arrow";
 import { TbColorPicker } from "react-icons/tb";
+import { EDGE_TYPES } from "../../constant/edgeTypes";
+import { NODE_TYPES } from "../../constant/nodeTypes";
+import { EDGE_START } from "../../constant/edgeStart";
+import { EDGE_END } from "../../constant/edgeEnd";
+import { EDGE_CONFIG } from "../../constant/diagram";
 
 interface DiagramToolbarProp {
   addNode: AddNodeFunction;
 }
 
-type EdgeType = {
-  id: number;
-  name: string;
-  component: React.ComponentType<{ size?: number }>;
-};
-
-type NodeType = {
-  id: number;
-  name: string;
-  icon: React.ComponentType<{ className?: string }>;
-};
+const DEFAULT_EDGE_TYPE = 1;
+const DEFAULT_EDGE_START = 1;
+const DEFAULT_EDGE_END = 1;
 
 const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
   const handleAddNode = (type: string) => {
     addNode(type);
   };
 
-  const defaultEdgeTypeId = 1;
-  const defaultEdgeStart = 1;
-  const defaultEdgeEnd = 1;
+  const [openDropdown, setOpenDropdown] = useState<
+    "edgeType" | "edgeStart" | "edgeEnd" | null
+  >(null);
 
-  const [openEdgeTypes, setOpenEdgeTypes] = useState<boolean>(false);
-  const [openEdgeStart, setOpenEdgeStart] = useState<boolean>(false);
-  const [openEdgeEnd, setOpenEdgeEnd] = useState<boolean>(false);
+  const [edgeConfig, setEdgeConfig] = useState({
+    type: DEFAULT_EDGE_TYPE,
+    start: DEFAULT_EDGE_START,
+    end: DEFAULT_EDGE_END,
+  });
 
-  const [currentEdgeType, setCurrentEdgeType] =
-    useState<number>(defaultEdgeTypeId);
-  const [currentEdgeStart, setCurrentEdgeStart] =
-    useState<number>(defaultEdgeStart);
-  const [currentEdgeEnd, setCurrentEdgeEnd] = useState<number>(defaultEdgeEnd);
-
-  const edgeTypes: EdgeType[] = [
-    {
-      id: 1,
-      name: "Orthogonal",
-      component: OrthogonalEdge,
-    },
-    {
-      id: 2,
-      name: "Orthogonal",
-      component: OrthogonalEdge,
-    },
-    {
-      id: 3,
-      name: "Orthogonal",
-      component: OrthogonalEdge,
-    },
-    {
-      id: 4,
-      name: "Orthogonal",
-      component: OrthogonalEdge,
-    },
-    {
-      id: 5,
-      name: "Orthogonal",
-      component: OrthogonalEdge,
-    },
-    {
-      id: 6,
-      name: "Orthogonal",
-      component: OrthogonalEdge,
-    },
-  ];
-
-  const nodeTypes: NodeType[] = [
-    {
-      id: 1,
-      name: "Table",
-      icon: MdOutlineTableChart,
-    },
-    {
-      id: 2,
-      name: "Text",
-      icon: RiStackLine,
-    },
-  ];
-
-  const edgeSymbolStart: EdgeType[] = [
-    {
-      id: 1,
-      name: "Arrow",
-      component: StartArrow,
-    },
-    {
-      id: 2,
-      name: "None",
-      component: None,
-    },
-    {
-      id: 3,
-      name: "None",
-      component: None,
-    },
-    {
-      id: 4,
-      name: "None",
-      component: None,
-    },
-    {
-      id: 5,
-      name: "None",
-      component: None,
-    },
-  ];
-
-  const edgeSymbolEnd: EdgeType[] = [
-    {
-      id: 1,
-      name: "Arrow",
-      component: EndArrow,
-    },
-    {
-      id: 2,
-      name: "Orthogonal",
-      component: OrthogonalEdge,
-    },
-    {
-      id: 3,
-      name: "Orthogonal",
-      component: OrthogonalEdge,
-    },
-    {
-      id: 4,
-      name: "Orthogonal",
-      component: OrthogonalEdge,
-    },
-    {
-      id: 5,
-      name: "Orthogonal",
-      component: OrthogonalEdge,
-    },
-    {
-      id: 6,
-      name: "Orthogonal",
-      component: OrthogonalEdge,
-    },
-  ];
-
-  const selectedEdge = edgeTypes.find((item) => item.id === currentEdgeType);
-  const selectedEdgeStart = edgeSymbolStart.find(
-    (item) => item.id === currentEdgeStart,
+  const selectedEdge = EDGE_TYPES.find((item) => item.id === edgeConfig.type);
+  const selectedEdgeStart = EDGE_START.find(
+    (item) => item.id === edgeConfig.start,
   );
-  const selectedEdgeEnd = edgeSymbolEnd.find(
-    (item) => item.id === currentEdgeEnd,
-  );
+  const selectedEdgeEnd = EDGE_END.find((item) => item.id === edgeConfig.end);
 
   const SelectedEdgeTypeIcon = selectedEdge?.component || OrthogonalEdge;
   const SelecedEdgeStartIcon = selectedEdgeStart?.component || StartArrow;
   const SelecedEdgeEndIcon = selectedEdgeEnd?.component || EndArrow;
 
-  const handleEdgeTypeSelect = () => {
-    setOpenEdgeTypes(!openEdgeTypes);
+  const toggleDropdown = (type: "edgeType" | "edgeStart" | "edgeEnd") => {
+    setOpenDropdown((prev) => (prev === type ? null : type));
   };
 
-  const handleEdgeStartSelect = () => {
-    setOpenEdgeStart(!openEdgeStart);
-  };
-
-  const handleEdgeEndSelect = () => {
-    setOpenEdgeEnd(!openEdgeEnd);
-  };
-
-  const handleChangeEdgeType = (edgeType: number) => {
-    setCurrentEdgeType(edgeType);
-    setOpenEdgeTypes(false);
-  };
-
-  const handleChangeEdgeStart = (type: number) => {
-    setCurrentEdgeStart(type);
-    setOpenEdgeStart(false);
-  };
-
-  const handleChangeEdgeEnd = (type: number) => {
-    setCurrentEdgeEnd(type);
-    setOpenEdgeEnd(false);
+  const handleChange = (key: "type" | "start" | "end", value: number) => {
+    setEdgeConfig((prev) => ({ ...prev, [key]: value }));
+    setOpenDropdown(null);
   };
 
   return (
@@ -217,60 +79,54 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
         />
       </div>
 
-      {nodeTypes.map((nodeType, index) => {
+      {NODE_TYPES.map((nodeType, index) => {
         const Icon = nodeType.icon;
-        return (<div
-          className="flex items-center gap-2 py-1 px-2 hover:bg-stone-100 rounded-sm cursor-pointer"
-          onClick={() => handleAddNode(nodeType.name.toLowerCase())}
-        >
-          <Icon className="text-lg text-gray-600" />
-          <span className="text-common font-medium text-black">{nodeType.name}</span>
-        </div>)
-        
+        return (
+          <div
+            key={index}
+            className="flex items-center gap-2 py-1 px-2 hover:bg-stone-100 rounded-sm cursor-pointer"
+            onClick={() => handleAddNode(nodeType.name.toLowerCase())}
+          >
+            <Icon className="text-lg text-gray-600" />
+            <span className="text-common font-medium text-black">
+              {nodeType.name}
+            </span>
+          </div>
+        );
       })}
-
-      {/* <div
-        className="flex items-center gap-2 py-1 px-2 hover:bg-stone-100 rounded-sm cursor-pointer"
-        onClick={() => handleAddNode("table")}
-      >
-        <MdOutlineTableChart className="text-lg text-gray-600" />
-        <span className="text-common font-medium text-black">Table</span>
-      </div>
-
-      <div className="flex items-center gap-2 py-1 px-2 hover:bg-stone-100 rounded-sm cursor-pointer">
-        <RiStackLine className="text-lg text-gray-600" />
-        <span className="text-common font-medium text-black">Node</span>
-      </div> */}
       <Divider />
       <span className="text-small text-text-secondary font-medium">
         Configuaration
       </span>
       <div className="flex gap-1">
         <Selection
-          options={edgeTypes}
-          open={openEdgeTypes}
-          setOpen={handleEdgeTypeSelect}
-          handleSelect={handleChangeEdgeType}
+          type={EDGE_CONFIG.EDGE_TYPE}
+          options={EDGE_TYPES}
+          open={openDropdown === "edgeType"}
+          setOpen={() => toggleDropdown("edgeType")}
+          handleSelect={handleChange}
           CurrentValue={SelectedEdgeTypeIcon}
         />
         <Selection
-          options={edgeSymbolStart}
-          open={openEdgeStart}
-          setOpen={handleEdgeStartSelect}
-          handleSelect={handleChangeEdgeStart}
+          type={EDGE_CONFIG.EDGE_START}
+          options={EDGE_START}
+          open={openDropdown === "edgeStart"}
+          setOpen={() => toggleDropdown("edgeStart")}
+          handleSelect={handleChange}
           CurrentValue={SelecedEdgeStartIcon}
         />
         <Selection
-          options={edgeSymbolEnd}
-          open={openEdgeEnd}
-          setOpen={handleEdgeEndSelect}
-          handleSelect={handleChangeEdgeEnd}
+          type={EDGE_CONFIG.EDGE_END}
+          options={EDGE_END}
+          open={openDropdown === "edgeEnd"}
+          setOpen={() => toggleDropdown("edgeEnd")}
+          handleSelect={handleChange}
           CurrentValue={SelecedEdgeEndIcon}
         />
       </div>
       <span className="text-small text-text-secondary font-medium">Color</span>
       <label
-        className="flex gap-1 items-center border border-text-secondary w-fit rounded-xs px-[2px]
+        className="flex gap-1 items-center border border-text-secondary w-fit rounded-xs px-0.5
       hover:bg-gray-100 cursor-pointer"
         htmlFor="color-picker"
       >

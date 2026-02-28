@@ -2,6 +2,7 @@ import React from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
 const Selection = ({
+  type,
   options,
   open,
   setOpen,
@@ -28,7 +29,7 @@ const Selection = ({
             return (
               <span
                 className="flex py-1 hover:bg-stone-200 pl-2 pr-1"
-                onClick={() => handleSelect(option.id)}
+                onClick={() => handleSelect(type, option.id)}
               >
                 <Icon key={index} size={15} />
               </span>
