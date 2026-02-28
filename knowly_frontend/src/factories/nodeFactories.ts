@@ -3,7 +3,7 @@ import type { NodeFactory } from "../types/diagram";
 export const nodeFactories: Record<string, NodeFactory> = {
   table: ({ id, label, position }, ctx) => ({
     id,
-    type: "table",
+    type: 'table',
     position,
     data: {
       label,
@@ -16,7 +16,7 @@ export const nodeFactories: Record<string, NodeFactory> = {
 
   text: ({ id, label, position }) => ({
     id,
-    type: "text",
+    type: 'text',
     position,
     data: { label },
     style: {

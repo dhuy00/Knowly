@@ -33,8 +33,6 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
       },
     );
 
-    console.log("New node: ", newNode)
-
     setNodes((prev) => [...prev, newNode]);
   };
 

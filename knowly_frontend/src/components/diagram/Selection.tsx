@@ -9,7 +9,7 @@ const Selection = ({
   CurrentValue,
 }) => {
   return (
-    <div className="flex flex-col w-fit gap-1">
+    <div className="flex flex-col w-fit gap-1 relative">
       <div
         className="border flex gap-2 justify-between border-stone-400 pl-2 pr-1 py-1
               rounded-xs cursor-pointer"
@@ -21,7 +21,8 @@ const Selection = ({
         />
       </div>
       {open && (
-        <div className=" border flex flex-col border-stone-400 rounded-xs cursor-pointer">
+        <div className=" border flex flex-col border-stone-400 rounded-xs cursor-pointer absolute
+        bg-white top-7 w-full">
           {options.map((option, index) => {
             const Icon = option.component;
             return (
