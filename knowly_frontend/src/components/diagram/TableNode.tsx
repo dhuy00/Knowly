@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { NodeResizer, Handle, Position } from "@xyflow/react";
 import type { NodeData } from "../../types/diagram";
 import type { NodeRow } from "../../types/diagram";
+import ContextMenu from "../common/ContextMenu";
 
 interface TableNodeProps {
   id: string;
@@ -15,13 +16,14 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const inputHeaderRef = useRef<HTMLInputElement | null>(null);
   const [selectedRow, setSelectedRow] = useState<number>(-1);
+  const [isOpenContextMenu, setIsOpenContextMenu] = useState<boolean>(false);
+  const [contextMenuPosition, setContextMenuPosition] = useState({
+    x: 0,
+    y: 0,
+  });
   // Use local node data instead of real data from prop to prevent rerender
   const [localNodeData, setLocalNodeData] = useState(data.rows);
   const [localLabelData, setLocalLabelData] = useState(data.label);
-
-  // useEffect(() => {
-  //   console.log("Selected changed")
-  // }, [selected])  const rows = data.rows;
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -83,11 +85,53 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
     });
   };
 
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+    setContextMenuPosition((prev) => ({
+      ...prev,
+      x: e.clientX,
+      y: e.clientY,
+    }));
+    setIsOpenContextMenu(true);
+  };
+
+  useEffect(() => {
+    if (!isOpenContextMenu) return;
+
+    const closeMenu = () => {
+      setIsOpenContextMenu(false);
+    };
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeMenu();
+      }
+    };
+
+    window.addEventListener("pointerdown", closeMenu, true); // capture phase
+    window.addEventListener("wheel", closeMenu, true);
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("pointerdown", closeMenu, true);
+      window.removeEventListener("wheel", closeMenu, true);
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [isOpenContextMenu]);
+
+  const handleAddRow = () => {
+    console.log("log: ", localNodeData)
+  }
+
   return (
-    <div className="w-full h-full bg-white rounded-sm">
+    <div
+      className="w-full h-full bg-white rounded-sm"
+      onContextMenu={handleContextMenu}
+    >
+      {isOpenContextMenu && <ContextMenu position={contextMenuPosition} handle={handleAddRow}/>}
       <NodeResizer isVisible={selected} minWidth={150} minHeight={120} />
-      <Handle type="target" position={Position.Top}/>
-      <Handle type="source" position={Position.Bottom}/>
+      <Handle type="target" position={Position.Top} />
+      <Handle type="source" position={Position.Bottom} />
 
       {/* Header */}
       <div
