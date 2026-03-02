@@ -30,6 +30,7 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
         rowData,
         updateLabel,
         updateNodeRow,
+        addRowToNode
       },
     );
 
@@ -54,7 +55,7 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
 
   const updateNodeRow = (id: string, newRows: NodeRow[]) => {
     setNodes((nodes) =>
-      nodes.map((node) =>                 
+      nodes.map((node) =>
         node.id == id
           ? {
               ...node,
@@ -65,6 +66,30 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
             }
           : node,
       ),
+    );
+  };
+
+  const addRowToNode = (nodeId: string) => {
+    setNodes((prev) =>
+      prev.map((node) => {
+        if (node.id !== nodeId) return node;
+
+        const currentRows = node.data.rows ?? [];
+
+        const rowToAdd: NodeRow = {
+          rowId: crypto.randomUUID(),
+          value: "New Row",
+        };
+
+
+        return {
+          ...node,
+          data: {
+            ...node.data,
+            rows: [...currentRows, rowToAdd],
+          },
+        };
+      }),
     );
   };
 
@@ -105,6 +130,7 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
     updateNodeData,
     deleteNode,
     deleteSelectedNodes,
+    addRowToNode
   };
 };
 

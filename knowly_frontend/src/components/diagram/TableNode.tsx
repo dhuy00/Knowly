@@ -21,6 +21,7 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
     x: 0,
     y: 0,
   });
+  const contextMenuRef = useRef<HTMLDivElement | null>(null);
   // Use local node data instead of real data from prop to prevent rerender
   const [localNodeData, setLocalNodeData] = useState(data.rows);
   const [localLabelData, setLocalLabelData] = useState(data.label);
@@ -98,6 +99,15 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
   useEffect(() => {
     if (!isOpenContextMenu) return;
 
+    const handlePointerDown = (e: PointerEvent) => {
+      if (
+        contextMenuRef.current &&
+        !contextMenuRef.current.contains(e.target as Node)
+      ) {
+        setIsOpenContextMenu(false);
+      }
+    };
+
     const closeMenu = () => {
       setIsOpenContextMenu(false);
     };
@@ -108,27 +118,29 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
       }
     };
 
-    window.addEventListener("pointerdown", closeMenu, true); // capture phase
+    window.addEventListener("pointerdown", handlePointerDown, true);
     window.addEventListener("wheel", closeMenu, true);
     window.addEventListener("keydown", handleEscape);
 
     return () => {
-      window.removeEventListener("pointerdown", closeMenu, true);
+      window.removeEventListener("pointerdown", handlePointerDown, true);
       window.removeEventListener("wheel", closeMenu, true);
       window.removeEventListener("keydown", handleEscape);
     };
   }, [isOpenContextMenu]);
 
   const handleAddRow = () => {
-    console.log("log: ", localNodeData)
-  }
+    data.addRowToNode(id)
+  };
 
   return (
     <div
       className="w-full h-full bg-white rounded-sm"
       onContextMenu={handleContextMenu}
     >
-      {isOpenContextMenu && <ContextMenu position={contextMenuPosition} handle={handleAddRow}/>}
+      {isOpenContextMenu && (
+        <ContextMenu position={contextMenuPosition} handle={handleAddRow} menuRef={contextMenuRef} />
+      )}
       <NodeResizer isVisible={selected} minWidth={150} minHeight={120} />
       <Handle type="target" position={Position.Top} />
       <Handle type="source" position={Position.Bottom} />

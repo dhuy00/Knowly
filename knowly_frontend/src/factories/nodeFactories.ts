@@ -10,6 +10,7 @@ export const nodeFactories: Record<string, NodeFactory> = {
       rows: ctx.rowData,
       updateLabel: ctx.updateLabel,
       updateNodeRow: ctx.updateNodeRow,
+      addRowToNode: ctx.addRowToNode
     },
     style: { width: 180 },
   }),
