@@ -10,8 +10,9 @@ export interface NodeData {
   label: string;
   rows: NodeRow[];
   updateLabel: (id: string, value: string) => void,
-  updateNodeRow: (id: string, rowId: string, newValue: string) => void,
+  updateNodeRow: (id: string, newRows: NodeRow[]) => void,
   addRowToNode: (id: string) => void
+
 }
 
 export interface EdgeType {
@@ -29,7 +30,7 @@ export interface NodeType {
 export type NodeFactoryContext = {
   rowData: NodeRow[],
   updateLabel: (id: string, value: string) => void,
-  updateNodeRow: (id: string, rowId: string, newValue: string) => void,
+  updateNodeRow: (id: string, newValue: NodeRow[]) => void,
   addRowToNode: (id: string) => void
 }
 

@@ -31,12 +31,11 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
     rowId: string,
   ) => {
     // data.updateNodeRow(id, event.target.value, rowId);
-    // setLocalNodeData((rows) =>
-    //   rows.map((row) =>
-    //     row.rowId === rowId ? { ...row, value: event.target.value } : row,
-    //   ),
-    // );
-    data.updateNodeRow(id, rowId, event.target.value);
+    setLocalNodeData((rows) =>
+      rows.map((row) =>
+        row.rowId === rowId ? { ...row, value: event.target.value } : row,
+      ),
+    );
   };
 
   const handleChangeHeader = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,7 +130,7 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
   }, [isOpenContextMenu]);
 
   const handleAddRow = () => {
-    data.addRowToNode(id);
+    data.addRowToNode(id)
   };
 
   return (
@@ -140,11 +139,7 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
       onContextMenu={handleContextMenu}
     >
       {isOpenContextMenu && (
-        <ContextMenu
-          position={contextMenuPosition}
-          handle={handleAddRow}
-          menuRef={contextMenuRef}
-        />
+        <ContextMenu position={contextMenuPosition} handle={handleAddRow} menuRef={contextMenuRef} />
       )}
       <NodeResizer isVisible={selected} minWidth={150} minHeight={120} />
       <Handle type="target" position={Position.Top} />
@@ -172,11 +167,11 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
 
       {/* Table body */}
       <div className="flex flex-col">
-        {data.rows.map((row: NodeRow, index: number) => (
+        {localNodeData.map((row: NodeRow, index: number) => (
           <div
             key={row.rowId}
             className={`px-2 py-1 border-x border-[#3fc5cc] ${
-              index !== data.rows.length - 1 ? "" : "border-b"
+              index !== localNodeData.length - 1 ? "" : "border-b"
             }`}
             onDoubleClick={() => handleFocus(index)}
           >

@@ -30,7 +30,7 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
         rowData,
         updateLabel,
         updateNodeRow,
-        addRowToNode,
+        addRowToNode
       },
     );
 
@@ -53,23 +53,19 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
     );
   };
 
-  const updateNodeRow = (id: string, rowID: string, newValue: string) => {
-    setNodes((prevNodes) =>
-      prevNodes.map((node) => {
-        if (node.id !== id) return node;
-
-        const updatedRows = (node.data.rows ?? []).map((row) =>
-          row.rowId === rowID ? { ...row, value: newValue } : row,
-        );
-
-        return {
-          ...node,
-          data: {
-            ...node.data,
-            rows: updatedRows,
-          },
-        };
-      }),
+  const updateNodeRow = (id: string, newRows: NodeRow[]) => {
+    setNodes((nodes) =>
+      nodes.map((node) =>
+        node.id == id
+          ? {
+              ...node,
+              data: {
+                ...node.data,
+                rows: newRows,
+              },
+            }
+          : node,
+      ),
     );
   };
 
@@ -78,14 +74,13 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
       prev.map((node) => {
         if (node.id !== nodeId) return node;
 
-        const currentRows = (node.data.rows ?? []) as NodeRow[];
+        const currentRows = node.data.rows ?? [];
 
         const rowToAdd: NodeRow = {
           rowId: crypto.randomUUID(),
           value: "New Row",
         };
 
-        // console.log("Current rows: ", rowToAdd);
 
         return {
           ...node,
@@ -97,6 +92,10 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
       }),
     );
   };
+
+  // useEffect(() => {
+  //   console.log("Update nodes: ", nodes)
+  // }, [nodes])
 
   const updateNodeData = (id: string, data: Partial<Node["data"]>) => {
     setNodes((prev) =>
@@ -131,7 +130,7 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
     updateNodeData,
     deleteNode,
     deleteSelectedNodes,
-    addRowToNode,
+    addRowToNode
   };
 };
 
