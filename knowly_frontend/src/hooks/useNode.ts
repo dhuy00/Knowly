@@ -69,15 +69,15 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
     );
   };
 
-  const addRowToNode = (nodeId: string) => {
+  const addRowToNode = (nodeId: string, rowId: string) => {
     setNodes((prev) =>
       prev.map((node) => {
         if (node.id !== nodeId) return node;
 
-        const currentRows = node.data.rows ?? [];
+        const currentRows = (node.data.rows ?? []) as NodeRow[];
 
         const rowToAdd: NodeRow = {
-          rowId: crypto.randomUUID(),
+          rowId: rowId,
           value: "New Row",
         };
 

@@ -130,7 +130,17 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
   }, [isOpenContextMenu]);
 
   const handleAddRow = () => {
-    data.addRowToNode(id)
+    const rowId = crypto.randomUUID();
+    data.addRowToNode(id, rowId);
+
+    setLocalNodeData((prev) => {
+      const rowToAdd: NodeRow = {
+        rowId: rowId,
+        value: "New Row",
+      };
+
+      return [...prev, rowToAdd];
+    });
   };
 
   return (
@@ -139,7 +149,11 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
       onContextMenu={handleContextMenu}
     >
       {isOpenContextMenu && (
-        <ContextMenu position={contextMenuPosition} handle={handleAddRow} menuRef={contextMenuRef} />
+        <ContextMenu
+          position={contextMenuPosition}
+          handle={handleAddRow}
+          menuRef={contextMenuRef}
+        />
       )}
       <NodeResizer isVisible={selected} minWidth={150} minHeight={120} />
       <Handle type="target" position={Position.Top} />

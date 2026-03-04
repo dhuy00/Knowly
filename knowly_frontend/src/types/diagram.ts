@@ -11,7 +11,7 @@ export interface NodeData {
   rows: NodeRow[];
   updateLabel: (id: string, value: string) => void,
   updateNodeRow: (id: string, newRows: NodeRow[]) => void,
-  addRowToNode: (id: string) => void
+  addRowToNode: (id: string, rowId: string) => void
 
 }
 
@@ -31,7 +31,7 @@ export type NodeFactoryContext = {
   rowData: NodeRow[],
   updateLabel: (id: string, value: string) => void,
   updateNodeRow: (id: string, newValue: NodeRow[]) => void,
-  addRowToNode: (id: string) => void
+  addRowToNode: (id: string, rowId: string) => void
 }
 
 export type NodeFactory  = (
