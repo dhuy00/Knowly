@@ -155,7 +155,6 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
           menuRef={contextMenuRef}
         />
       )}
-      <NodeResizer isVisible={selected} minWidth={150} minHeight={120} />
       <Handle type="target" position={Position.Left} />
       <Handle type="source" position={Position.Right} />
 
