@@ -1,6 +1,10 @@
 import type { EdgeType } from "../types/diagram";
 import Arrow from "../assets/icons/endEdge/Arrow";
 import None from "../assets/icons/startEdge/None";
+import OneOptional from "../assets/icons/endEdge/OneOptional";
+import OneMandatory from "../assets/icons/endEdge/OneMandatory";
+import ManyOptional from "../assets/icons/endEdge/ManyOptional";
+import ManyMandatory from "../assets/icons/endEdge/ManyMandatory";
 
 export const EDGE_END: EdgeType[] = [
   {
@@ -16,21 +20,21 @@ export const EDGE_END: EdgeType[] = [
   {
     id: 3,
     name: "OneOptional",
-    component: None,
+    component: OneOptional,
   },
   {
     id: 4,
     name: "OneMandatory",
-    component: None,
+    component: OneMandatory,
   },
   {
     id: 5,
     name: "ManyOptional",
-    component: None,
+    component: ManyOptional,
   },
   {
     id: 6,
-    name: "ManyOptional",
-    component: None,
+    name: "ManyMandatory",
+    component: ManyMandatory,
   },
 ];
