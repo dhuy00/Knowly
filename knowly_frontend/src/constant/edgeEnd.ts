@@ -11,30 +11,40 @@ export const EDGE_END: EdgeType[] = [
     id: 1,
     name: "Arrow",
     component: Arrow,
+    end: 'arrow',
   },
   {
     id: 2,
     name: "None",
     component: None,
+    end: "none",
   },
   {
     id: 3,
     name: "OneOptional",
     component: OneOptional,
+    end: "one",
+    optionalEnd: true
   },
   {
     id: 4,
     name: "OneMandatory",
     component: OneMandatory,
+    end: "one",
+    optionalEnd: false
   },
   {
     id: 5,
     name: "ManyOptional",
     component: ManyOptional,
+    end: "many",
+    optionalEnd: true,
   },
   {
     id: 6,
     name: "ManyMandatory",
     component: ManyMandatory,
+    end: "many",
+    optionalEnd: false
   },
 ];

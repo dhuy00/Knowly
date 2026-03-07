@@ -18,7 +18,12 @@ import TextNode from "./TextNode";
 import RelationshipEdge from "./notations/RelationshipEdge";
 import EdgeMakers from "./notations/EdgeMakers";
 import eventBus from "../../utils/eventBus";
-import { UPDATE_SELECTED_NODE } from "../../constant/event";
+import {
+  UPDATE_EDGE_START,
+  UPDATE_EDGE_END,
+  UPDATE_SELECTED_NODE,
+  UPDATE_SELECTED_EDGE,
+} from "../../constant/event";
 
 const DiagramEditor = () => {
   const initialNodes: Node[] = [];
@@ -78,6 +83,10 @@ const DiagramEditor = () => {
     eventBus.emit(UPDATE_SELECTED_NODE, nodes);
   };
 
+  const onEdgeClick = (event, edge) => {
+    eventBus.emit(UPDATE_SELECTED_EDGE, edge.id)
+  };
+
   const updateEdgeData = (id: string, data: Partial<Edge["data"]>) => {
     setEdges((edges) =>
       edges.map((edge) =>
@@ -94,9 +103,34 @@ const DiagramEditor = () => {
     );
   };
 
-  // useEffect(() => {
-  //   eventBus.on()
-  // }, [])
+  useEffect(() => {
+    const updateEdgeStart = eventBus.on(UPDATE_EDGE_START, (data) => {
+      console.log("Update node start: ", data);
+
+      const optional = data.edge.optional || null;
+      if (optional) {
+        updateEdgeData(data.edgeId, { optionalStart: data.edge.optionalStart });
+      }
+      updateEdgeData(data.edgeId, { start: data.edge.start });
+    });
+
+    const updateEdgeEnd = eventBus.on(UPDATE_EDGE_END, (data) => {
+      const optional = data.edge.optional || null;
+      if (optional) {
+        updateEdgeData(data.edgeId, { optionalEnd: data.edge.optionalEnd });
+      }
+      updateEdgeData(data.edgeId, { end: data.edge.end });
+    });
+
+    return () => {
+      updateEdgeStart();
+      updateEdgeEnd();
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("Update edge data: ", edges)
+  }, [edges])
 
   return (
     <div className="flex h-full w-full gap-4 bg-background-common">
@@ -113,6 +147,7 @@ const DiagramEditor = () => {
           edgeTypes={edgeTypes}
           deleteKeyCode={["Delete"]}
           onSelectionChange={onSelectionChange}
+          onEdgeClick={onEdgeClick}
         >
           <Background />
           <MiniMap

@@ -15,7 +15,14 @@ import { EDGE_START } from "../../constant/edgeStart";
 import { EDGE_END } from "../../constant/edgeEnd";
 import { EDGE_CONFIG } from "../../constant/diagram";
 import eventBus from "../../utils/eventBus";
-import { UPDATE_SELECTED_NODE, UPDATE_NODE_COLOR, UPDATE_TEXT_NODE_COLOR } from "../../constant/event";
+import {
+  UPDATE_SELECTED_NODE,
+  UPDATE_NODE_COLOR,
+  UPDATE_TEXT_NODE_COLOR,
+  UPDATE_EDGE_END,
+  UPDATE_EDGE_START,
+  UPDATE_SELECTED_EDGE,
+} from "../../constant/event";
 
 interface DiagramToolbarProp {
   addNode: AddNodeFunction;
@@ -26,6 +33,7 @@ const DEFAULT_EDGE_START = 1;
 const DEFAULT_EDGE_END = 1;
 
 const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
+  //Declaration
   const handleAddNode = (type: string) => {
     addNode(type);
   };
@@ -35,6 +43,7 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
   >(null);
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [selectedTextColor, setSelectedTextColor] = useState<string>("");
+  const [selectedEdgeId, setSelectedEdgeId] = useState<string>("");
 
   const [edgeConfig, setEdgeConfig] = useState({
     type: DEFAULT_EDGE_TYPE,
@@ -56,24 +65,6 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
     setOpenDropdown((prev) => (prev === type ? null : type));
   };
 
-  const handleChange = (key: "type" | "start" | "end", value: number) => {
-    setEdgeConfig((prev) => ({ ...prev, [key]: value }));
-    setOpenDropdown(null);
-  };
-
-  useEffect(() => {
-    const unsubscribe = eventBus.on(UPDATE_SELECTED_NODE, (nodes) => {
-      if (nodes.length > 0) {
-        const Bgcolor = nodes[0].data.color;
-        const textColor = nodes[0].data.textColor;
-        setSelectedColor(Bgcolor);
-        setSelectedTextColor(textColor);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
   const handleChangeColor = (e) => {
     const color = e.target.value;
     setSelectedColor(color);
@@ -84,6 +75,53 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
     setSelectedTextColor(color);
   };
 
+  //Event handler
+  useEffect(() => {
+    const updateSelectedNode = eventBus.on(UPDATE_SELECTED_NODE, (nodes) => {
+      if (nodes.length > 0) {
+        const Bgcolor = nodes[0].data.color;
+        const textColor = nodes[0].data.textColor;
+        setSelectedColor(Bgcolor);
+        setSelectedTextColor(textColor);
+      }
+    });
+
+    const updateSelectedEdge = eventBus.on(UPDATE_SELECTED_EDGE, (edgeId) => {
+      if (edgeId) {
+        setSelectedEdgeId(edgeId);
+      }
+    });
+
+    return () => {
+      updateSelectedNode();
+      updateSelectedEdge();
+    };
+  }, []);
+
+  const handleChange = (key: "type" | "start" | "end", value: number) => {
+    setEdgeConfig((prev) => ({ ...prev, [key]: value }));
+
+    if (!selectedEdgeId) return
+
+    if (key === "start") {
+      const edge = EDGE_START.find((item) => item.id == value);
+      const data = {
+        edge: edge,
+        edgeId: selectedEdgeId
+      }
+      eventBus.emit(UPDATE_EDGE_START, data);
+    } else if (key === "end") {
+      const edge = EDGE_START.find((item) => item.id == value);
+      const data = {
+        edge: edge,
+        edgeId: selectedEdgeId
+      }
+      eventBus.emit(UPDATE_EDGE_END, data);
+    }
+
+    setOpenDropdown(null);
+  };
+
   const handleFinishSelectingColor = () => {
     eventBus.emit(UPDATE_NODE_COLOR, selectedColor); // emit once
   };
@@ -92,6 +130,7 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
     eventBus.emit(UPDATE_TEXT_NODE_COLOR, selectedTextColor); // emit once
   };
 
+  //HTML
   return (
     <div className="shadow-sm gap-2 w-62 rounded-md flex flex-col overflow-hidden bg-background-primary px-3">
       <div className="w-full text-sm font-semibold py-2 flex items-center gap-2">
@@ -174,7 +213,9 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
         />
         <TbColorPicker />
       </label>
-      <span className="text-small text-text-secondary font-medium">Text Color</span>
+      <span className="text-small text-text-secondary font-medium">
+        Text Color
+      </span>
       <label
         className="flex gap-1 items-center border border-text-secondary w-fit rounded-xs px-0.5
       hover:bg-gray-100 cursor-pointer"

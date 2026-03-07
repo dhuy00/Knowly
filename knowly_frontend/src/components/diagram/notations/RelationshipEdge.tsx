@@ -2,8 +2,8 @@ import React from "react";
 import { BaseEdge, getSmoothStepPath } from "@xyflow/react";
 
 const RelationshipEdge = (props) => {
-  const getMarker = (type: string, optional: boolean) => {
-    if (type != "one" && type != "many") {
+  const getMarker = (type: string, optional?: boolean) => {
+    if (type != "one" && type != "many" && type != "arrow" && type != "none") {
       return;
     }
 
@@ -14,8 +14,12 @@ const RelationshipEdge = (props) => {
       edgeType = "url(#one-mandatory)";
     } else if (type === "many" && optional) {
       edgeType = "url(#many-optional)";
-    } else {
+    } else if (type === "many" && !optional) {
       edgeType = "url(#many-mandatory)";
+    } else if (type === "arrow") {
+      edgeType = "url(#arrow)";
+    } else if (type === "none") {
+      edgeType = "url(#none)";
     }
 
     return edgeType;

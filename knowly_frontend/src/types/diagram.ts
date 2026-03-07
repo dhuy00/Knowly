@@ -21,6 +21,10 @@ export interface EdgeType {
   id: number;
   name: string;
   component: React.ComponentType<{ size?: number }>;
+  start?: string,
+  end?: string,
+  optionalStart?: boolean,
+  optionalEnd?: boolean
 };
 
 export interface NodeType {
