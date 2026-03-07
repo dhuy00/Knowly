@@ -1,5 +1,5 @@
 // NEED REFACTOR
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { AddNodeFunction } from "../../hooks/useNode";
 import { IoLogoWebComponent } from "react-icons/io5";
 import { IoSearchOutline } from "react-icons/io5";
@@ -14,6 +14,8 @@ import { NODE_TYPES } from "../../constant/nodeTypes";
 import { EDGE_START } from "../../constant/edgeStart";
 import { EDGE_END } from "../../constant/edgeEnd";
 import { EDGE_CONFIG } from "../../constant/diagram";
+import eventBus from "../../utils/eventBus";
+import { UPDATE_SELECTED_NODE, UPDATE_NODE_COLOR, UPDATE_TEXT_NODE_COLOR } from "../../constant/event";
 
 interface DiagramToolbarProp {
   addNode: AddNodeFunction;
@@ -31,6 +33,8 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
   const [openDropdown, setOpenDropdown] = useState<
     "edgeType" | "edgeStart" | "edgeEnd" | null
   >(null);
+  const [selectedColor, setSelectedColor] = useState<string>("");
+  const [selectedTextColor, setSelectedTextColor] = useState<string>("");
 
   const [edgeConfig, setEdgeConfig] = useState({
     type: DEFAULT_EDGE_TYPE,
@@ -55,6 +59,37 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
   const handleChange = (key: "type" | "start" | "end", value: number) => {
     setEdgeConfig((prev) => ({ ...prev, [key]: value }));
     setOpenDropdown(null);
+  };
+
+  useEffect(() => {
+    const unsubscribe = eventBus.on(UPDATE_SELECTED_NODE, (nodes) => {
+      if (nodes.length > 0) {
+        const Bgcolor = nodes[0].data.color;
+        const textColor = nodes[0].data.textColor;
+        setSelectedColor(Bgcolor);
+        setSelectedTextColor(textColor);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleChangeColor = (e) => {
+    const color = e.target.value;
+    setSelectedColor(color);
+  };
+
+  const handleChangeTextColor = (e) => {
+    const color = e.target.value;
+    setSelectedTextColor(color);
+  };
+
+  const handleFinishSelectingColor = () => {
+    eventBus.emit(UPDATE_NODE_COLOR, selectedColor); // emit once
+  };
+
+  const handleFinishSelectingTextColor = () => {
+    eventBus.emit(UPDATE_TEXT_NODE_COLOR, selectedTextColor); // emit once
   };
 
   return (
@@ -130,7 +165,28 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
       hover:bg-gray-100 cursor-pointer"
         htmlFor="color-picker"
       >
-        <input id="color-picker" type="color" />
+        <input
+          id="color-picker"
+          type="color"
+          value={selectedColor}
+          onChange={handleChangeColor}
+          onBlur={handleFinishSelectingColor}
+        />
+        <TbColorPicker />
+      </label>
+      <span className="text-small text-text-secondary font-medium">Text Color</span>
+      <label
+        className="flex gap-1 items-center border border-text-secondary w-fit rounded-xs px-0.5
+      hover:bg-gray-100 cursor-pointer"
+        htmlFor="color-picker-text"
+      >
+        <input
+          id="color-picker-text"
+          type="color"
+          value={selectedTextColor}
+          onChange={handleChangeTextColor}
+          onBlur={handleFinishSelectingTextColor}
+        />
         <TbColorPicker />
       </label>
     </div>

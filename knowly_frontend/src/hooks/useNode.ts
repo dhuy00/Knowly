@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { applyNodeChanges } from "@xyflow/react";
 import type { Node, XYPosition, NodeChange } from "@xyflow/react";
 import { rowData } from "../mock/mockDiagramData";
@@ -23,14 +23,19 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
 
   const addNode = (type: string, label = "New Node") => {
     const id = crypto.randomUUID();
+    const color = '#3fc5cc'
+    const textColor = "#000000"
 
     const newNode = nodeFactories[type](
       { id, label, position: generateRandomPosition() },
       {
+        color,
+        textColor,
         rowData,
         updateLabel,
         updateNodeRow,
-        addRowToNode
+        addRowToNode,
+        updateNodeData
       },
     );
 
@@ -93,9 +98,9 @@ export const useNode = ({ initialNodes }: UseNodeProps) => {
     );
   };
 
-  // useEffect(() => {
-  //   console.log("Update nodes: ", nodes)
-  // }, [nodes])
+  useEffect(() => {
+    console.log("Update nodes: ", nodes)
+  }, [nodes])
 
   const updateNodeData = (id: string, data: Partial<Node["data"]>) => {
     setNodes((prev) =>

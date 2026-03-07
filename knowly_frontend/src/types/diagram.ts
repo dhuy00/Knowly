@@ -9,10 +9,12 @@ export interface NodeRow {
 export interface NodeData {
   label: string;
   rows: NodeRow[];
+  color: string;
+  textColor: string
   updateLabel: (id: string, value: string) => void,
   updateNodeRow: (id: string, newRows: NodeRow[]) => void,
   addRowToNode: (id: string, rowId: string) => void
-
+  updateNodeData: (id: string, data: Partial<Node["data"]>) => void,
 }
 
 export interface EdgeType {
@@ -29,9 +31,12 @@ export interface NodeType {
 
 export type NodeFactoryContext = {
   rowData: NodeRow[],
+  color: string,
+  textColor: string,
   updateLabel: (id: string, value: string) => void,
   updateNodeRow: (id: string, newValue: NodeRow[]) => void,
-  addRowToNode: (id: string, rowId: string) => void
+  addRowToNode: (id: string, rowId: string) => void,
+  updateNodeData: (id: string, data: Partial<Node["data"]>) => void
 }
 
 export type NodeFactory  = (

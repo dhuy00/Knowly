@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { NodeResizer, Handle, Position } from "@xyflow/react";
+import { Handle, Position } from "@xyflow/react";
 import type { NodeData } from "../../types/diagram";
 import type { NodeRow } from "../../types/diagram";
 import ContextMenu from "../common/ContextMenu";
+import eventBus from "../../utils/eventBus";
+import { UPDATE_NODE_COLOR, UPDATE_TEXT_NODE_COLOR } from "./../../constant/event";
 
 interface TableNodeProps {
   id: string;
@@ -25,6 +27,8 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
   // Use local node data instead of real data from prop to prevent rerender
   const [localNodeData, setLocalNodeData] = useState(data.rows);
   const [localLabelData, setLocalLabelData] = useState(data.label);
+
+  const selectedRef = useRef(selected);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -86,7 +90,7 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
     });
   };
 
-  const handleContextMenu = (e) => {
+  const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     setContextMenuPosition((prev) => ({
       ...prev,
@@ -129,6 +133,29 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
     };
   }, [isOpenContextMenu]);
 
+  useEffect(() => {
+    selectedRef.current = selected;
+  }, [selected]);
+
+  useEffect(() => {
+    const unsubscribeBgColor = eventBus.on(UPDATE_NODE_COLOR, (color) => {
+      if (selectedRef.current) {
+        data.updateNodeData(id, { color: color });
+      }
+    });
+
+    const unsubscribeTextColor = eventBus.on(UPDATE_TEXT_NODE_COLOR, (textColor) => {
+      if (selectedRef.current) {
+        data.updateNodeData(id, { textColor: textColor });
+      }
+    });
+
+    return () => {
+      unsubscribeBgColor();
+      unsubscribeTextColor();
+    };
+  }, []);
+
   const handleAddRow = () => {
     const rowId = crypto.randomUUID();
     data.addRowToNode(id, rowId);
@@ -160,7 +187,8 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
 
       {/* Header */}
       <div
-        className="bg-[#3fc5cc] px-3 py-1 text-center rounded-t-sm"
+        className="px-3 py-1 text-center rounded-t-sm"
+        style={{ backgroundColor: data.color, color: data.textColor }}
         onDoubleClick={() => handleFocusHeader()}
       >
         {isEditingHeader ? (
@@ -183,9 +211,10 @@ const TableNode: React.FC<TableNodeProps> = ({ id, data, selected }) => {
         {localNodeData.map((row: NodeRow, index: number) => (
           <div
             key={row.rowId}
-            className={`px-2 py-1 border-x border-[#3fc5cc] ${
+            className={`px-2 py-1 border-x ${
               index !== localNodeData.length - 1 ? "" : "border-b"
             }`}
+            style={{ borderColor: data.color }}
             onDoubleClick={() => handleFocus(index)}
           >
             {selectedRow === index ? (

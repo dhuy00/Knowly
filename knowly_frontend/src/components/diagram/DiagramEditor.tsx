@@ -17,6 +17,8 @@ import TableNode from "./TableNode";
 import TextNode from "./TextNode";
 import RelationshipEdge from "./notations/RelationshipEdge";
 import EdgeMakers from "./notations/EdgeMakers";
+import eventBus from "../../utils/eventBus";
+import { UPDATE_SELECTED_NODE } from "../../constant/event";
 
 const DiagramEditor = () => {
   const initialNodes: Node[] = [];
@@ -30,9 +32,9 @@ const DiagramEditor = () => {
 
   const nodeColor = (node) => {
     switch (node.type) {
-      case "input":
+      case "text":
         return "#2ac44b";
-      case "output":
+      case "table":
         return "#6865A5";
       default:
         return "#ff0072";
@@ -72,6 +74,10 @@ const DiagramEditor = () => {
     [],
   );
 
+  const onSelectionChange = ({nodes, edges}) => {
+    eventBus.emit(UPDATE_SELECTED_NODE, nodes);
+  }
+
   return (
     <div className="flex h-full w-full gap-4 bg-background-common">
       <DiagramToolbar addNode={addNode} />
@@ -86,6 +92,7 @@ const DiagramEditor = () => {
         onConnect={onConnect}
         edgeTypes={edgeTypes}
         deleteKeyCode={["Delete"]}
+        onSelectionChange={onSelectionChange}
       >
         <Background />
         <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />

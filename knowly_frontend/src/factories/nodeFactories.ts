@@ -8,9 +8,12 @@ export const nodeFactories: Record<string, NodeFactory> = {
     data: {
       label,
       rows: ctx.rowData,
+      color: ctx.color,
+      textColor: ctx.textColor,
       updateLabel: ctx.updateLabel,
       updateNodeRow: ctx.updateNodeRow,
-      addRowToNode: ctx.addRowToNode
+      addRowToNode: ctx.addRowToNode,
+      updateNodeData: ctx.updateNodeData
     },
     style: { width: 180 },
   }),
