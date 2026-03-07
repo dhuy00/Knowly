@@ -9,7 +9,7 @@ import {
   MarkerType,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import DiagramToolbar from "./DiagramToolbar";
 import { useNode } from "../../hooks/useNode";
 import type { Node, Edge } from "@xyflow/react";
@@ -43,8 +43,8 @@ const DiagramEditor = () => {
 
   const initialEdges: Edge[] = [];
   const edgeTypes = {
-    relationship: RelationshipEdge
-  }
+    relationship: RelationshipEdge,
+  };
 
   const [edges, setEdges] = useState(initialEdges);
 
@@ -65,8 +65,8 @@ const DiagramEditor = () => {
               start: "one",
               end: "many",
               optionalStart: true,
-              optionalEnd: false
-            }
+              optionalEnd: false,
+            },
           },
           edgeSnapshot,
         ),
@@ -74,31 +74,56 @@ const DiagramEditor = () => {
     [],
   );
 
-  const onSelectionChange = ({nodes, edges}) => {
+  const onSelectionChange = ({ nodes, edges }) => {
     eventBus.emit(UPDATE_SELECTED_NODE, nodes);
-  }
+  };
+
+  const updateEdgeData = (id: string, data: Partial<Edge["data"]>) => {
+    setEdges((edges) =>
+      edges.map((edge) =>
+        edge.id === id
+          ? {
+              ...edge,
+              data: {
+                ...edge.data,
+                ...data,
+              },
+            }
+          : edge,
+      ),
+    );
+  };
+
+  // useEffect(() => {
+  //   eventBus.on()
+  // }, [])
 
   return (
     <div className="flex h-full w-full gap-4 bg-background-common">
       <DiagramToolbar addNode={addNode} />
-    <div className="bg-background-primary h-full w-full rounded-md p-5 shadow-sm overflow-hidden flex">
-      <EdgeMakers/>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        nodeTypes={nodeTypes}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        edgeTypes={edgeTypes}
-        deleteKeyCode={["Delete"]}
-        onSelectionChange={onSelectionChange}
-      >
-        <Background />
-        <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
-        <Controls />
-      </ReactFlow>
-    </div>
+      <div className="bg-background-primary h-full w-full rounded-md p-5 shadow-sm overflow-hidden flex">
+        <EdgeMakers />
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          nodeTypes={nodeTypes}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          edgeTypes={edgeTypes}
+          deleteKeyCode={["Delete"]}
+          onSelectionChange={onSelectionChange}
+        >
+          <Background />
+          <MiniMap
+            nodeColor={nodeColor}
+            nodeStrokeWidth={3}
+            zoomable
+            pannable
+          />
+          <Controls />
+        </ReactFlow>
+      </div>
     </div>
   );
 };

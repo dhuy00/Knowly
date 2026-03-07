@@ -1,6 +1,6 @@
 import type { EdgeType } from "../types/diagram";
 import Arrow from "../assets/icons/endEdge/Arrow";
-import OrthogonalEdge from "../assets/icons/OrthogonalEdge";
+import None from "../assets/icons/startEdge/None";
 
 export const EDGE_END: EdgeType[] = [
   {
@@ -10,27 +10,27 @@ export const EDGE_END: EdgeType[] = [
   },
   {
     id: 2,
-    name: "Orthogonal",
-    component: OrthogonalEdge,
+    name: "None",
+    component: None,
   },
   {
     id: 3,
-    name: "Orthogonal",
-    component: OrthogonalEdge,
+    name: "OneOptional",
+    component: None,
   },
   {
     id: 4,
-    name: "Orthogonal",
-    component: OrthogonalEdge,
+    name: "OneMandatory",
+    component: None,
   },
   {
     id: 5,
-    name: "Orthogonal",
-    component: OrthogonalEdge,
+    name: "ManyOptional",
+    component: None,
   },
   {
     id: 6,
-    name: "Orthogonal",
-    component: OrthogonalEdge,
+    name: "ManyOptional",
+    component: None,
   },
 ];
