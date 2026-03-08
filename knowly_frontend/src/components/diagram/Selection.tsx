@@ -8,9 +8,10 @@ const Selection = ({
   setOpen,
   handleSelect,
   CurrentValue,
+  disable = false
 }) => {
   return (
-    <div className="flex flex-col w-fit gap-1 relative">
+    <div className={`flex flex-col w-fit gap-1 relative ${disable ? 'opacity-50 pointer-events-none' : ''}`}>
       <div
         className="border flex gap-2 justify-between border-stone-400 pl-2 pr-1 py-1
               rounded-xs cursor-pointer"

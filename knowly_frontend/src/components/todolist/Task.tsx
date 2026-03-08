@@ -34,9 +34,9 @@ const Task = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("Is drag over: ", isDragOver)
-  }, [isDragOver])
+  // useEffect(() => {
+  //   console.log("Is drag over: ", isDragOver)
+  // }, [isDragOver])
 
   return (
     <div className={`task-item min-h-20 rounded-lg border p-2 border-border-secondary 

@@ -10,10 +10,6 @@ interface ContextMenuProps {
   position: Position;
 }
 
-const handleOnClick = () => {
-  console.log("Handle onclick");
-}
-
 const ContextMenu = ({ position, handle, menuRef }) => {
   return createPortal(
     <div

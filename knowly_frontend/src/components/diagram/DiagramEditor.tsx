@@ -67,8 +67,10 @@ const DiagramEditor = () => {
             ...params,
             type: "relationship",
             data: {
-              start: "one",
-              end: "many",
+              startId: 2,
+              start: "none",
+              endId: 2,
+              end: "none",
               optionalStart: true,
               optionalEnd: false,
             },
@@ -81,10 +83,12 @@ const DiagramEditor = () => {
 
   const onSelectionChange = ({ nodes, edges }) => {
     eventBus.emit(UPDATE_SELECTED_NODE, nodes);
-  };
 
-  const onEdgeClick = (event, edge) => {
-    eventBus.emit(UPDATE_SELECTED_EDGE, edge.id)
+    if (edges.length !== 0) {
+      eventBus.emit(UPDATE_SELECTED_EDGE, edges[0]);
+    } else {
+      eventBus.emit(UPDATE_SELECTED_EDGE, edges[0]);
+    }
   };
 
   const updateEdgeData = (id: string, data: Partial<Edge["data"]>) => {
@@ -105,21 +109,23 @@ const DiagramEditor = () => {
 
   useEffect(() => {
     const updateEdgeStart = eventBus.on(UPDATE_EDGE_START, (data) => {
-      console.log("Update node start: ", data);
+      console.log("Update edge start: ", data);
 
-      const optional = data.edge.optional || null;
-      if (optional) {
+      const optional = data.edge.optionalStart ?? null;
+      if (optional != null) {
         updateEdgeData(data.edgeId, { optionalStart: data.edge.optionalStart });
       }
       updateEdgeData(data.edgeId, { start: data.edge.start });
+      updateEdgeData(data.edgeId, { startId: data.edge.id });
     });
 
     const updateEdgeEnd = eventBus.on(UPDATE_EDGE_END, (data) => {
-      const optional = data.edge.optional || null;
-      if (optional) {
+      const optional = data.edge.optionalEnd ?? null;
+      if (optional != null) {
         updateEdgeData(data.edgeId, { optionalEnd: data.edge.optionalEnd });
       }
       updateEdgeData(data.edgeId, { end: data.edge.end });
+      updateEdgeData(data.edgeId, { endId: data.edge.id });
     });
 
     return () => {
@@ -128,9 +134,9 @@ const DiagramEditor = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log("Update edge data: ", edges)
-  }, [edges])
+  // useEffect(() => {
+  //   console.log("Update edge data: ", edges)
+  // }, [edges])
 
   return (
     <div className="flex h-full w-full gap-4 bg-background-common">
@@ -147,7 +153,6 @@ const DiagramEditor = () => {
           edgeTypes={edgeTypes}
           deleteKeyCode={["Delete"]}
           onSelectionChange={onSelectionChange}
-          onEdgeClick={onEdgeClick}
         >
           <Background />
           <MiniMap

@@ -90,6 +90,39 @@ const EdgeMakers = () => {
           <line x1="8" y1="5" x2="20" y2="5" stroke="black" strokeWidth="1" />
         </marker>
       </defs>
+
+      {/* Arrow */}
+      <defs>
+        <marker
+          id="arrow"
+          viewBox="0 0 20 10"
+          markerWidth={20}
+          markerHeight={25}
+          refX={15}
+          refY={5}
+          orient="auto-start-reverse"
+          markerUnits="strokeWidth"
+        >
+          <line x1="10" y1="-1" x2="20" y2="5" stroke="black" strokeWidth="1" />
+          <line x1="20" y1="5" x2="10" y2="10" stroke="black" strokeWidth="1" />
+          <line x1="2" y1="5" x2="20" y2="5" stroke="black" strokeWidth="1" />
+        </marker>
+      </defs>
+
+      {/* None */}
+      <defs>
+        <marker
+          id="none"
+          viewBox="0 0 20 10"
+          markerWidth={20}
+          markerHeight={25}
+          refX={15}
+          refY={5}
+          orient="auto-start-reverse"
+          markerUnits="strokeWidth"
+        >
+        </marker>
+      </defs>
     </svg>
   );
 };

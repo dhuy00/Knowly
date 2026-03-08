@@ -11,7 +11,7 @@ export const EDGE_START: EdgeType[] = [
     id: 1,
     name: "Arrow",
     component: Arrow,
-    start: "none",
+    start: "arrow",
   },
   {
     id: 2,

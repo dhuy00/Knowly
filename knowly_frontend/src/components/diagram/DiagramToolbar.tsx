@@ -29,8 +29,8 @@ interface DiagramToolbarProp {
 }
 
 const DEFAULT_EDGE_TYPE = 1;
-const DEFAULT_EDGE_START = 1;
-const DEFAULT_EDGE_END = 1;
+const DEFAULT_EDGE_START = 2;
+const DEFAULT_EDGE_END = 2;
 
 const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
   //Declaration
@@ -86,9 +86,15 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
       }
     });
 
-    const updateSelectedEdge = eventBus.on(UPDATE_SELECTED_EDGE, (edgeId) => {
-      if (edgeId) {
-        setSelectedEdgeId(edgeId);
+    const updateSelectedEdge = eventBus.on(UPDATE_SELECTED_EDGE, (edge) => {
+      if (edge?.id) {
+        setSelectedEdgeId(edge.id);
+        setEdgeConfig((prev) => ({ ...prev, start: edge.data.startId }));
+        setEdgeConfig((prev) => ({ ...prev, end: edge.data.endId }));
+      } else {
+        setEdgeConfig((prev) => ({ ...prev, start: DEFAULT_EDGE_START }));
+        setEdgeConfig((prev) => ({ ...prev, end: DEFAULT_EDGE_END }));
+        setSelectedEdgeId("");
       }
     });
 
@@ -101,21 +107,21 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
   const handleChange = (key: "type" | "start" | "end", value: number) => {
     setEdgeConfig((prev) => ({ ...prev, [key]: value }));
 
-    if (!selectedEdgeId) return
+    if (!selectedEdgeId) return;
 
     if (key === "start") {
       const edge = EDGE_START.find((item) => item.id == value);
       const data = {
         edge: edge,
-        edgeId: selectedEdgeId
-      }
+        edgeId: selectedEdgeId,
+      };
       eventBus.emit(UPDATE_EDGE_START, data);
     } else if (key === "end") {
-      const edge = EDGE_START.find((item) => item.id == value);
+      const edge = EDGE_END.find((item) => item.id == value);
       const data = {
         edge: edge,
-        edgeId: selectedEdgeId
-      }
+        edgeId: selectedEdgeId,
+      };
       eventBus.emit(UPDATE_EDGE_END, data);
     }
 
@@ -180,6 +186,7 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
           setOpen={() => toggleDropdown("edgeType")}
           handleSelect={handleChange}
           CurrentValue={SelectedEdgeTypeIcon}
+          disable={selectedEdgeId == ""}
         />
         <Selection
           type={EDGE_CONFIG.EDGE_START}
@@ -188,6 +195,7 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
           setOpen={() => toggleDropdown("edgeStart")}
           handleSelect={handleChange}
           CurrentValue={SelecedEdgeStartIcon}
+          disable={selectedEdgeId == ""}
         />
         <Selection
           type={EDGE_CONFIG.EDGE_END}
@@ -196,6 +204,7 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
           setOpen={() => toggleDropdown("edgeEnd")}
           handleSelect={handleChange}
           CurrentValue={SelecedEdgeEndIcon}
+          disable={selectedEdgeId == ""}
         />
       </div>
       <span className="text-small text-text-secondary font-medium">Color</span>
