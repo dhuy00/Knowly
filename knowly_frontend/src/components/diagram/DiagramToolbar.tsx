@@ -9,7 +9,6 @@ import Selection from "./Selection";
 import EndArrow from "../../assets/icons/endEdge/Arrow";
 import StartArrow from "../../assets/icons/startEdge/Arrow";
 import { TbColorPicker } from "react-icons/tb";
-import { EDGE_TYPES } from "../../constant/edgeTypes";
 import { NODE_TYPES } from "../../constant/nodeTypes";
 import { EDGE_START } from "../../constant/edgeStart";
 import { EDGE_END } from "../../constant/edgeEnd";
@@ -28,7 +27,6 @@ interface DiagramToolbarProp {
   addNode: AddNodeFunction;
 }
 
-const DEFAULT_EDGE_TYPE = 1;
 const DEFAULT_EDGE_START = 2;
 const DEFAULT_EDGE_END = 2;
 
@@ -39,29 +37,26 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
   };
 
   const [openDropdown, setOpenDropdown] = useState<
-    "edgeType" | "edgeStart" | "edgeEnd" | null
+    "edgeStart" | "edgeEnd" | null
   >(null);
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [selectedTextColor, setSelectedTextColor] = useState<string>("");
   const [selectedEdgeId, setSelectedEdgeId] = useState<string>("");
 
   const [edgeConfig, setEdgeConfig] = useState({
-    type: DEFAULT_EDGE_TYPE,
     start: DEFAULT_EDGE_START,
     end: DEFAULT_EDGE_END,
   });
 
-  const selectedEdge = EDGE_TYPES.find((item) => item.id === edgeConfig.type);
   const selectedEdgeStart = EDGE_START.find(
     (item) => item.id === edgeConfig.start,
   );
   const selectedEdgeEnd = EDGE_END.find((item) => item.id === edgeConfig.end);
 
-  const SelectedEdgeTypeIcon = selectedEdge?.component || OrthogonalEdge;
   const SelecedEdgeStartIcon = selectedEdgeStart?.component || StartArrow;
   const SelecedEdgeEndIcon = selectedEdgeEnd?.component || EndArrow;
 
-  const toggleDropdown = (type: "edgeType" | "edgeStart" | "edgeEnd") => {
+  const toggleDropdown = (type: "edgeStart" | "edgeEnd") => {
     setOpenDropdown((prev) => (prev === type ? null : type));
   };
 
@@ -179,15 +174,6 @@ const DiagramToolbar: React.FC<DiagramToolbarProp> = ({ addNode }) => {
         Configuaration
       </span>
       <div className="flex gap-1">
-        <Selection
-          type={EDGE_CONFIG.EDGE_TYPE}
-          options={EDGE_TYPES}
-          open={openDropdown === "edgeType"}
-          setOpen={() => toggleDropdown("edgeType")}
-          handleSelect={handleChange}
-          CurrentValue={SelectedEdgeTypeIcon}
-          disable={selectedEdgeId == ""}
-        />
         <Selection
           type={EDGE_CONFIG.EDGE_START}
           options={EDGE_START}
