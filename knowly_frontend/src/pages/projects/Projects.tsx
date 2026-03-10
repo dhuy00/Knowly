@@ -107,12 +107,12 @@ const Projects = () => {
       </div>
 
       {/* Project Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 overflow-auto pr-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 overflow-auto pr-2 p-1">
 
         {filtered.map((project) => (
           <div
             key={project.id}
-            className="bg-white border rounded-xl p-5 flex flex-col gap-4 hover:shadow-xl transition group"
+            className="bg-white shadow-sm rounded-xl p-3 flex flex-col gap-3 hover:shadow-xl transition group"
           >
 
             {/* Top */}
@@ -124,12 +124,12 @@ const Projects = () => {
                 </div>
 
                 <div>
-                  <h2 className="font-semibold text-lg leading-tight">
+                  <h2 className="font-semibold text-[14px] leading-tight">
                     {project.name}
                   </h2>
 
                   <span
-                    className={`text-xs px-2 py-1 rounded-full ${statusColors[project.status]}`}
+                    className={`text-xs px-2 py-0.5 rounded-full ${statusColors[project.status]}`}
                   >
                     {project.status}
                   </span>
@@ -140,25 +140,25 @@ const Projects = () => {
             </div>
 
             {/* Description */}
-            <p className="text-sm text-gray-500 line-clamp-2">
+            <p className="text-[13px] text-gray-500 line-clamp-2">
               {project.description}
             </p>
 
             {/* Info */}
             <div className="flex justify-between text-sm">
 
-              <div className="flex items-center gap-1 text-gray-500">
+              <div className="flex items-center gap-1 text-gray-500 text-[13px]">
                 <FiCalendar />
                 {project.due}
               </div>
 
-              <div className={`font-medium ${priorityColors[project.priority]}`}>
+              <div className={`font-medium text-[13px] ${priorityColors[project.priority]}`}>
                 {project.priority} Priority
               </div>
             </div>
 
             {/* Tasks */}
-            <div className="flex justify-between text-sm text-gray-500">
+            <div className="flex justify-between text-[13px] text-gray-500">
               <span>{project.completed}/{project.tasks} tasks</span>
               <span>{project.progress}%</span>
             </div>
