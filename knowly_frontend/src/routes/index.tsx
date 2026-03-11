@@ -12,6 +12,7 @@ import Support from "../pages/support/Support";
 import NoteDetail from "../components/notes/NoteDetail.js"
 import TestDiagram from "../components/notes/TestDiagram.js";
 import DiagramEditor from "../components/diagram/DiagramEditor.js";
+import ProjectDetail from "../pages/projects/ProjectDetail.js";
 
 export const router = createBrowserRouter([          
   {
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
       {
         path: "projects",
         element: (<Projects />),
+      },
+      {
+        path: "projects/:id",
+        element: (<ProjectDetail />),
       },
       {
         path: "notifications",
