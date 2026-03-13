@@ -8,6 +8,9 @@ import {
   FiFileText,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { MdUpload } from "react-icons/md";
+import MemberList from "./MemberList";
+import Description from "./Description";
 
 const ProjectDetail = () => {
   const navigate = useNavigate();
@@ -63,33 +66,25 @@ const ProjectDetail = () => {
   ];
 
   return (
-    <div className="w-full h-full p-6 overflow-auto bg-background-primary">
+    <div className="w-full h-full overflow-auto bg-background-primary rounded-xl p-6 shadow-sm">
       {/* HEADER */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate(-1)}
-            className="p-2 rounded-lg hover:bg-gray-100 transition"
+            className="p-2 rounded-sm hover:bg-gray-100 transition"
           >
             <FiArrowLeft size={18} />
           </button>
 
           <div>
-            <h1 className="text-2xl font-semibold">{project.name}</h1>
-            <p className="text-gray-500 text-sm">Last updated 2 hours ago</p>
+            <h1 className="text-lg font-semibold">{project.name}</h1>
+            <p className="text-gray-500 text-xs">Last updated 2 hours ago</p>
           </div>
         </div>
 
         {/* MEMBERS */}
-        <div className="flex -space-x-2">
-          {project.members.map((m, i) => (
-            <img
-              key={i}
-              src={m}
-              className="w-8 h-8 rounded-full border border-white"
-            />
-          ))}
-        </div>
+        <MemberList members={project.members}/>
       </div>
 
       {/* MAIN GRID */}
@@ -97,19 +92,117 @@ const ProjectDetail = () => {
         {/* LEFT SIDE */}
         <div className="col-span-3 space-y-6">
           {/* DESCRIPTION */}
-          <div className="bg-white/70 backdrop-blur rounded-xl p-5 shadow-sm">
-            <h2 className="font-semibold mb-2 flex items-center gap-2">
-              <FiFileText />
-              Description
-            </h2>
+          <Description description={project.description}/>
 
-            <p className="text-gray-600 text-sm leading-relaxed">
-              {project.description}
-            </p>
+          {/* TASK LIST */}
+          <div className="bg-white rounded-md p-6 border border-gray-200">
+            {/* HEADER */}
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-sm font-semibold text-gray-800">Tasks</h2>
+
+              <button
+                className="text-xs bg-text-primary-hover text-white px-3 py-2 rounded-md 
+              hover:bg-text-primary-active transition font-medium cursor-pointer"
+              >
+                New Task
+              </button>
+            </div>
+
+            {/* TABLE HEADER */}
+            <div className="grid grid-cols-6 text-xs font-medium text-gray-500 px-4 pb-3 border-b border-gray-100">
+              <div className="col-span-2">Issue</div>
+              <div>Status</div>
+              <div>Priority</div>
+              <div>Estimate</div>
+              <div>Spent</div>
+            </div>
+
+            {/* TABLE BODY */}
+            <div className="divide-y divide-gray-100">
+              {tasks.map((task, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-6 items-center px-4 py-4 text-sm hover:bg-gray-50 transition"
+                >
+                  {/* ISSUE */}
+                  <div className="col-span-2 font-medium text-gray-800">
+                    {task.title}
+                  </div>
+
+                  {/* STATUS */}
+                  <div>
+                    <span className="text-xs font-medium bg-blue-100 text-blue-600 px-2.5 py-1 rounded-full">
+                      {task.status}
+                    </span>
+                  </div>
+
+                  {/* PRIORITY */}
+                  <div>
+                    <span className="text-xs font-medium bg-red-100 text-red-600 px-2.5 py-1 rounded-full">
+                      {task.priority}
+                    </span>
+                  </div>
+
+                  {/* ESTIMATE */}
+                  <div className="text-gray-600">{task.estimate}</div>
+
+                  {/* SPENT */}
+                  <div className="text-gray-600">{task.spent}</div>
+                </div>
+              ))}
+            </div>
           </div>
 
+          {/* DOCUMENTS */}
+          <div className="bg-white/70 rounded-md p-5 border border-gray-200">
+            <div className="flex justify-between mb-4">
+              <h2 className="font-semibold flex items-center gap-2 text-sm">
+                <FiPaperclip />
+                Documents
+              </h2>
+
+              <button
+                className="text-xs text-white bg-text-primary-hover hover:bg-text-primary-active
+              cursor-pointer flex gap-1 justify-center items-center px-3 py-1.5 rounded-sm"
+              >
+                <MdUpload />
+                <span className="no-underline">Upload</span>
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {documents.map((doc, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-gray-100 rounded-md">
+                      <FiFileText size={16} />
+                    </div>
+
+                    <div>
+                      <p className="text-xs font-medium">{doc.name}</p>
+                      <p className="text-[10px] text-gray-500">{doc.size}</p>
+                    </div>
+                  </div>
+
+                  <button
+                    className="text-xs text-gray-500 font-semibold hover:underline
+                  hover:text-text-primary-hover cursor-pointer"
+                  >
+                    Download
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT SIDEBAR */}
+        <div className="space-y-5">
           {/* PROGRESS */}
-          <div className="bg-white/70 rounded-xl p-5 shadow-sm">
+          <div className="bg-white/70 rounded-md p-5 border border-gray-200">
             <div className="flex justify-between mb-2 text-sm">
               <span className="font-medium">Progress</span>
               <span>{project.progress}%</span>
@@ -123,92 +216,8 @@ const ProjectDetail = () => {
             </div>
           </div>
 
-          {/* TASK LIST */}
-          <div className="bg-white/80 rounded-xl p-5 shadow-sm">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="font-semibold">Tasks</h2>
-
-              <button className="text-sm bg-blue-500 text-white px-3 py-1.5 rounded-md hover:bg-blue-600 transition">
-                + New Task
-              </button>
-            </div>
-
-            {/* TABLE HEADER */}
-            <div className="grid grid-cols-6 text-xs text-gray-500 px-3 pb-2">
-              <div className="col-span-2">Issue</div>
-              <div>Status</div>
-              <div>Priority</div>
-              <div>Estimate</div>
-              <div>Spent</div>
-            </div>
-
-            <div className="space-y-1">
-              {tasks.map((task, i) => (
-                <div
-                  key={i}
-                  className="grid grid-cols-6 items-center text-sm px-3 py-3 rounded-lg hover:bg-gray-50 transition"
-                >
-                  <div className="col-span-2 font-medium">{task.title}</div>
-
-                  <div>
-                    <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded">
-                      {task.status}
-                    </span>
-                  </div>
-
-                  <div className="text-gray-600">{task.priority}</div>
-
-                  <div className="text-gray-600">{task.estimate}</div>
-
-                  <div className="text-gray-600">{task.spent}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* DOCUMENTS */}
-          <div className="bg-white/70 rounded-xl p-5 shadow-sm">
-            <div className="flex justify-between mb-4">
-              <h2 className="font-semibold flex items-center gap-2">
-                <FiPaperclip />
-                Documents
-              </h2>
-
-              <button className="text-sm text-blue-500 hover:underline">
-                Upload
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              {documents.map((doc, i) => (
-                <div
-                  key={i}
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-gray-100 rounded-md">
-                      <FiFileText size={16} />
-                    </div>
-
-                    <div>
-                      <p className="text-sm font-medium">{doc.name}</p>
-                      <p className="text-xs text-gray-500">{doc.size}</p>
-                    </div>
-                  </div>
-
-                  <button className="text-xs text-gray-500 hover:text-black">
-                    Download
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* RIGHT SIDEBAR */}
-        <div className="space-y-5">
           {/* PROJECT INFO */}
-          <div className="bg-white/70 rounded-xl p-5 shadow-sm">
+          <div className="bg-white/70 rounded-md p-5 border-gray-200 border">
             <h2 className="font-semibold mb-4 text-sm">Project Info</h2>
 
             <div className="space-y-4 text-sm">
@@ -235,7 +244,7 @@ const ProjectDetail = () => {
           </div>
 
           {/* TIME TRACKING */}
-          <div className="bg-white/70 rounded-xl p-5 shadow-sm">
+          <div className="bg-white/70 rounded-md p-5 border border-gray-200">
             <h2 className="font-semibold mb-3 flex items-center gap-2 text-sm">
               <FiClock />
               Time Tracking
@@ -260,7 +269,7 @@ const ProjectDetail = () => {
           </div>
 
           {/* TEAM */}
-          <div className="bg-white/70 rounded-xl p-5 shadow-sm">
+          <div className="bg-white/70 rounded-md p-5 border border-gray-200">
             <h2 className="font-semibold mb-3 flex items-center gap-2 text-sm">
               <FiUsers />
               Team
