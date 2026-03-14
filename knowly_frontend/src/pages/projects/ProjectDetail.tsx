@@ -1,14 +1,8 @@
 import React from "react";
 import {
   FiArrowLeft,
-  FiCalendar,
-  FiClock,
-  FiPaperclip,
-  FiUsers,
-  FiFileText,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { MdUpload } from "react-icons/md";
 import MemberList from "./MemberList";
 import Description from "./Description";
 import TaskList from "./TaskList";
@@ -100,7 +94,7 @@ const ProjectDetail = () => {
           <Description description={project.description}/>
 
           {/* TASK LIST */}
-          <TaskList tasks={tasks}/>
+          <TaskList/>
 
           {/* DOCUMENTS */}
           <Documents documents={documents}/>

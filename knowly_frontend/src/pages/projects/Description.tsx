@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { FiFileText, FiEdit2, FiUpload, FiSave, FiX } from "react-icons/fi";
-import TextEditor from "../../components/notes/TextEditor";
+import { FiFileText, FiEdit2, FiSave, FiX } from "react-icons/fi";
+import DescriptionEditor from "./DescriptionEditor";
 
 interface DescriptionProps {
   description: string;
@@ -22,14 +22,13 @@ const Description = ({ description: initialDescription }: DescriptionProps) => {
     setIsEditing(false);
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const uploaded = Array.from(e.target.files || []);
-    setFiles((prev) => [...prev, ...uploaded]);
-  };
+  // const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const uploaded = Array.from(e.target.files || []);
+  //   setFiles((prev) => [...prev, ...uploaded]);
+  // };
 
   return (
     <div className="bg-white/70 backdrop-blur rounded-md p-5 border border-gray-200">
-      
       {/* HEADER */}
       <div className="flex justify-between items-center mb-3">
         <h2 className="font-semibold flex items-center gap-2 text-sm">
@@ -40,7 +39,8 @@ const Description = ({ description: initialDescription }: DescriptionProps) => {
         {!isEditing && (
           <button
             onClick={() => setIsEditing(true)}
-            className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800"
+            className="flex items-center gap-1 text-xs text-gray-700 font-medium hover:underline 
+            cursor-pointer"
           >
             <FiEdit2 size={14} />
             Edit
@@ -61,24 +61,11 @@ const Description = ({ description: initialDescription }: DescriptionProps) => {
       {/* EDIT MODE */}
       {isEditing && (
         <div className="space-y-4">
-          
           {/* TipTap Editor */}
-          <TextEditor
+          <DescriptionEditor
             content={tempDescription}
             onChange={setTempDescription}
           />
-
-          {/* Upload file */}
-          <label className="flex items-center gap-2 text-xs cursor-pointer text-gray-600 hover:text-gray-800">
-            <FiUpload size={14} />
-            Upload file
-            <input
-              type="file"
-              multiple
-              className="hidden"
-              onChange={handleFileUpload}
-            />
-          </label>
 
           {/* File list */}
           {files.length > 0 && (
@@ -93,7 +80,8 @@ const Description = ({ description: initialDescription }: DescriptionProps) => {
           <div className="flex gap-2">
             <button
               onClick={handleSave}
-              className="flex items-center gap-1 text-xs bg-blue-600 text-white px-3 py-1.5 rounded-md hover:bg-blue-700"
+              className="flex items-center gap-1 text-xs bg-text-primary-hover text-white
+              px-4 py-1.5 rounded-sm hover:bg-text-primary-active cursor-pointer"
             >
               <FiSave size={14} />
               Save
@@ -101,13 +89,13 @@ const Description = ({ description: initialDescription }: DescriptionProps) => {
 
             <button
               onClick={handleCancel}
-              className="flex items-center gap-1 text-xs border px-3 py-1.5 rounded-md hover:bg-gray-100"
+              className="flex items-center gap-1 text-xs border px-3 py-1.5 rounded-sm 
+              hover:bg-gray-100"
             >
               <FiX size={14} />
               Cancel
             </button>
           </div>
-
         </div>
       )}
     </div>

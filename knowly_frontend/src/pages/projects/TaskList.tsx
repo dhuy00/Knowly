@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { GoChevronDown } from "react-icons/go";
 import { FiChevronRight } from "react-icons/fi";
+import Dialog from "../../components/common/Dialog";
+import AddTaskForm from "./components/AddTaskForm";
 
 const mockTasks = [
   {
@@ -55,6 +56,8 @@ const mockTasks = [
 
 const TaskList = () => {
   const [open, setOpen] = useState({});
+  const [openDiagram, setOpenDiagram] = useState<boolean>(false);
+  const [tasks, setTasks] = useState(mockTasks);
 
   const toggle = (id) => {
     setOpen((prev) => ({
@@ -91,7 +94,9 @@ const TaskList = () => {
                 </button>
               )}
 
-              <span className="text-gray-400 text-xs hover:underline cursor-pointer">Issue #{number}</span>
+              <span className="text-gray-400 text-xs hover:underline cursor-pointer">
+                Issue #{number}
+              </span>
 
               <span className="font-medium text-gray-800">{task.title}</span>
             </div>
@@ -125,7 +130,10 @@ const TaskList = () => {
       <div className="flex justify-between mb-6">
         <h2 className="text-sm font-semibold text-gray-800">Tasks</h2>
 
-        <button className="text-xs bg-text-primary-hover text-white px-3 py-2 rounded-md hover:bg-text-primary-active transition">
+        <button
+          className="text-xs bg-text-primary-hover text-white px-3 py-2 rounded-md hover:bg-text-primary-active transition"
+          onClick={() => setOpenDiagram(true)}
+        >
           New Task
         </button>
       </div>
@@ -139,6 +147,19 @@ const TaskList = () => {
 
       {/* TABLE BODY */}
       <div className="divide-y divide-gray-100">{renderTasks(mockTasks)}</div>
+
+      <Dialog
+        open={openDiagram}
+        onClose={() => setOpenDiagram(false)}
+        title="Diagram view"
+        style="w-[95%] h-[650px] bg-background-common"
+      >
+        <AddTaskForm
+          tasks={tasks}
+          setTasks={setTasks}
+          onClose={() => setOpenDiagram(false)}
+        />
+      </Dialog>
     </div>
   );
 };
