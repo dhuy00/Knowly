@@ -1,10 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
 @import "./xy-theme.css";
 
 @theme {
   /* Color */
-  --color-text-primary: rgba(8, 16, 33);
+  --color-primary: lab(69.33% -49.4173 4.26511);
+  --color-background-primary: lab(1.98691% -.30449 -.685298);
+  --color-background-secondary: #1A1A1A;
   --color-text-primary-hover: rgba(79, 70, 229, 1);
   --color-text-primary-active: rgba(54, 44, 207, 1);
   --color-text-secondary: rgba(100, 116, 139, 1);
@@ -14,8 +17,6 @@
   --color-border-primary: rgba(226, 232, 240, 1);
   --color-border-secondary: rgba(155, 155, 155, 1);
   --color-background-common: rgba(246, 246, 246, 1);
-  --color-background-primary: rgba(255, 255, 255, 1);
-  --color-background-secondary:   rgba(250, 250, 250, 1);
   --color-background-hover-primary: rgba(28, 46, 150, 0.04);
   --color-background-hover-secondary: rgba(28, 46, 150, 0.08);
   --color-background-active-primary: rgba(28, 46, 150, 0.1);
@@ -24,6 +25,7 @@
   --color-button-primary-hover: rgba(54, 44, 207, 1);
   /* Font */
   --font-poppins: "Poppins", sans-serif;
+  --font-inter: "Inter", sans-serif;
   /* Font size */
   --text-common: 14px;
   --text-small: 12px;

@@ -13,6 +13,7 @@ import NoteDetail from "../components/notes/NoteDetail.js"
 import TestDiagram from "../components/notes/TestDiagram.js";
 import DiagramEditor from "../components/diagram/DiagramEditor.js";
 import ProjectDetail from "../pages/projects/ProjectDetail.js";
+import Login from "../pages/login/Login.js";
 
 export const router = createBrowserRouter([          
   {
@@ -68,4 +69,8 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/login",
+    element: <Login/>
+  }
 ]);

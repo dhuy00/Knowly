@@ -1,16 +1,14 @@
 import { Outlet, Link } from "react-router-dom";
-import Sidebar from "./Sidebar";
 import { useState } from "react";
+import Navigation from "../components/common/Navigation";
 
 export default function MainLayout() {
 
   return (
-    <div className="flex font-poppins bg-background-common p-4 h-screen">
-      <nav style={{ display: "flex", gap: 20 }}>
-        <Sidebar/>
-      </nav>
+    <div className="font-inter text-white bg-background-primary p-4 h-screen">
+      <Navigation/>
 
-      <div style={{ paddingLeft: 20, width: "100%" }}>
+      <div style={{ paddingTop: 20, width: "100%" }}>
         <Outlet />
       </div>
     </div>
