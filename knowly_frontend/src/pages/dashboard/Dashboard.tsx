@@ -259,6 +259,7 @@ const Dashboard = () => {
                   <XAxis dataKey="name" stroke="#666" />
                   <YAxis stroke="#666" />
                   <Tooltip
+                    cursor={{ fill: "transparent" }} 
                     contentStyle={{
                       backgroundColor: "#1A1A1A",
                       border: "1px solid #2A2A2A",
@@ -266,8 +267,8 @@ const Dashboard = () => {
                       color: "#fff",
                     }}
                   />
-                  <Bar dataKey="planned" fill="#4A5568" name="Planned" radius={[8, 8, 0, 0]} />
-                  <Bar dataKey="actual" fill="#10b981" name="Actual" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="planned" fill="#4A5568" name="Planned" radius={[8, 8, 0, 0]} barSize={80} />
+                  <Bar dataKey="actual" fill="#10b981" name="Actual" radius={[8, 8, 0, 0]} barSize={80} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
