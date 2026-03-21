@@ -1,7 +1,7 @@
 export const mockUsers = [
   {
     id: "1",
-    name: "Alex Rivera",
+    name: "Huy Duc",
     email: "alex.rivera@company.com",
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alex",
     role: "admin",
