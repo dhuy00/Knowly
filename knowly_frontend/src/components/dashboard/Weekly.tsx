@@ -12,6 +12,7 @@ import {
 import {
   mockTimeEntries,
 } from "../../mock/mockData";
+import CustomSelect from "./CustomSelect";
 
 const Weekly = () => {
     const weekEntries = mockTimeEntries.filter((e) => {
@@ -52,42 +53,41 @@ const Weekly = () => {
             tasks
           </p>
         </div>
-        <select className="bg-[#0F0F0F] border border-[#2A2A2A] rounded-xl text-gray-400 text-sm px-4 py-2 outline-none focus:border-emerald-500/50 transition">
-          <option>Last 7 days</option>
-          <option>Last 30 days</option>
-          <option>Last 90 days</option>
-        </select>
+        <CustomSelect/>
       </div>
       
-      <ResponsiveContainer width="100%" height={250} >
-        <AreaChart data={weeklyData}>
-          <defs>
-            <linearGradient id="colorHours" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
-              <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#2A2A2A" />
-          <XAxis dataKey="day" stroke="#666" />
-          <YAxis stroke="#666" />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: "#1A1A1A",
-              border: "1px solid #2A2A2A",
-              borderRadius: "12px",
-              color: "#fff",
-            }}
-          />
-          <Area
-            type="monotone"
-            dataKey="hours"
-            stroke="#10b981"
-            strokeWidth={3}
-            fillOpacity={1}
-            fill="url(#colorHours)"
-          />
-        </AreaChart>
-      </ResponsiveContainer>
+      <div className="chart-container">
+        <ResponsiveContainer width="100%" height={250} >
+          <AreaChart data={weeklyData} >
+            <defs>
+              <linearGradient id="colorHours" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="#2A2A2A" />
+            <XAxis dataKey="day" stroke="#666" />
+            <YAxis stroke="#666" />
+            <Tooltip
+              
+              contentStyle={{
+                backgroundColor: "#1A1A1A",
+                border: "1px solid #2A2A2A",
+                borderRadius: "12px",
+                color: "#fff",
+              }}
+            />
+            <Area
+              type="monotone"
+              dataKey="hours"
+              stroke="#10b981"
+              strokeWidth={3}
+              fillOpacity={1}
+              fill="url(#colorHours)"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };

@@ -139,53 +139,7 @@ const Dashboard = () => {
 
           {/* Right Column - 4 cols */}
           <div className="lg:col-span-4 space-y-6">
-            {/* Productivity Score */}
-            <div className="bg-gradient-to-br from-emerald-500/10 to-[#1A1A1A] border border-emerald-500/20 rounded-2xl p-6">
-              <div className="flex items-center gap-2 mb-4">
-                <Award className="size-5 text-emerald-400" />
-                <h2 className="text-lg font-semibold text-white">
-                  Productivity Score
-                </h2>
-              </div>
 
-              <div className="relative w-32 h-32 mx-auto mb-4">
-                <svg className="w-full h-full -rotate-90">
-                  <circle
-                    cx="64"
-                    cy="64"
-                    r="56"
-                    stroke="#2A2A2A"
-                    strokeWidth="8"
-                    fill="none"
-                  />
-                  <circle
-                    cx="64"
-                    cy="64"
-                    r="56"
-                    stroke="#10b981"
-                    strokeWidth="8"
-                    fill="none"
-                    strokeDasharray={`${(productivityScore / 100) * 351.86} 351.86`}
-                    strokeLinecap="round"
-                    className="transition-all duration-1000"
-                  />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center flex-col">
-                  <div className="text-4xl font-bold text-white">
-                    {productivityScore}
-                  </div>
-                  <div className="text-xs text-gray-500">Score</div>
-                </div>
-              </div>
-
-              <p className="text-center text-sm text-gray-400">
-                {productivityScore >= 80
-                  ? "Outstanding performance! 🔥"
-                  : productivityScore >= 60
-                    ? "Great work today! 💪"
-                    : "Keep pushing forward! 🚀"}
-              </p>
-            </div>
 
             {/* Active Goals */}
             <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-6">

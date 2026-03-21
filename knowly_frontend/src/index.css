@@ -107,5 +107,15 @@ blockquote {
   box-shadow: 0 0 0 1.5px #5766ee !important;
 }
 
+.chart-container svg:focus {
+  outline: none !important;
+}
 
+.chart-container path:focus {
+  outline: none !important;
+}
+
+.chart-container g:focus {
+  outline: none !important;
+}
 
