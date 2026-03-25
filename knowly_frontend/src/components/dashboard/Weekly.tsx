@@ -36,7 +36,7 @@ const Weekly = () => {
   
 
   return (
-    <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-6">
+    <div className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-6 h-[366px]">
       <div className="flex items-center justify-between mb-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
