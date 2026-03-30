@@ -45,7 +45,7 @@ const Navigation = () => {
 
   const navItems = [
     { path: "/", icon: LayoutDashboard, label: "Dashboard" },
-    { path: "/my-work", icon: CheckSquare, label: "My Work" },
+    { path: "/my-task", icon: CheckSquare, label: "My Task" },
     { path: "/projects", icon: FolderKanban, label: "Projects" },
     { path: "/time-tracking", icon: Clock, label: "Time Tracking" },
     { path: "/analytics", icon: BarChart3, label: "Analytics" },

@@ -14,6 +14,7 @@ import TestDiagram from "../components/notes/TestDiagram.js";
 import DiagramEditor from "../components/diagram/DiagramEditor.js";
 import ProjectDetail from "../pages/projects/ProjectDetail.js";
 import Login from "../pages/login/Login.js";
+import { MyTask } from "../pages/my-task/MyTask.js";
 
 export const router = createBrowserRouter([          
   {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         path: "dashboard",
         element: (<Dashboard />),
+      },
+      {
+        path: "my-task",
+        element: (<MyTask />),
       },
       {
         path: "todo-list",
