@@ -16,6 +16,8 @@ import { mockTasks, mockProjects, currentUser, mockUsers } from "../../mock/mock
 import { TaskItem } from "../../components/my-task/TaskItem";
 import { TaskFormModal } from "../../components/my-task/TaskFormModal";
 import type { Task } from "../../types/task";
+import Header from "../../components/my-task/Header";
+import FilterBar from "../../components/my-task/FilterBar";
 
 export function MyTask() {
   const [viewMode, setViewMode] = useState<"list" | "board">("list");
@@ -94,89 +96,10 @@ export function MyTask() {
     <div className="min-h-full bg-[#0F0F0F]">
       <div className="max-w-[1800px] mx-auto p-6 space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl text-white mb-1">My Work</h1>
-            <p className="text-gray-500 text-sm">{filteredTasks.length} tasks assigned to you</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center border border-[#2A2A2A] rounded-xl overflow-hidden">
-              <button
-                onClick={() => setViewMode("list")}
-                className={`px-4 py-2 text-sm transition ${
-                  viewMode === "list"
-                    ? "bg-[#2A2A2A] text-white"
-                    : "text-gray-400 hover:text-white"
-                }`}
-              >
-                List
-              </button>
-              <button
-                onClick={() => setViewMode("board")}
-                className={`px-4 py-2 text-sm transition ${
-                  viewMode === "board"
-                    ? "bg-[#2A2A2A] text-white"
-                    : "text-gray-400 hover:text-white"
-                }`}
-              >
-                Board
-              </button>
-            </div>
-            <button
-              onClick={() => {
-                setEditingTask(undefined);
-                setIsTaskFormOpen(true);
-              }}
-              className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition"
-            >
-              <Plus className="size-4" />
-              New Task
-            </button>
-          </div>
-        </div>
+        <Header/>
 
         {/* Filters */}
-        <div className="bg-[#1A1A1A] border border-[#2A2A2A]/50 rounded-2xl p-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-500" />
-              <input
-                type="text"
-                placeholder="Search tasks..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 bg-[#0F0F0F] border border-[#2A2A2A]/50 rounded-xl text-white placeholder-gray-600 outline-none focus:border-emerald-500/50 transition"
-              />
-            </div>
-            <select
-              value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-4 py-2.5 bg-[#0F0F0F] border border-[#2A2A2A]/50 rounded-xl text-white outline-none focus:border-emerald-500/50 transition"
-            >
-              <option value="all">All Status</option>
-              <option value="backlog">Backlog</option>
-              <option value="todo">To Do</option>
-              <option value="in-progress">In Progress</option>
-              <option value="in-review">In Review</option>
-              <option value="done">Done</option>
-            </select>
-            <select
-              value={filterPriority}
-              onChange={(e) => setFilterPriority(e.target.value)}
-              className="px-4 py-2.5 bg-[#0F0F0F] border border-[#2A2A2A]/50 rounded-xl text-white outline-none focus:border-emerald-500/50 transition"
-            >
-              <option value="all">All Priority</option>
-              <option value="urgent">Urgent</option>
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
-            </select>
-            <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[#0F0F0F] border border-[#2A2A2A]/50 rounded-xl text-gray-400 hover:text-white hover:border-emerald-500/30 transition">
-              <Filter className="size-4" />
-              More Filters
-            </button>
-          </div>
-        </div>
+        <FilterBar/>
 
         {/* Content */}
         {viewMode === "list" ? (

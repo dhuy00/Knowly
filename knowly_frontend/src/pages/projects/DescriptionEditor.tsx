@@ -7,7 +7,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import EditorToolbar from "./EditorToolbar";
 import FontFamily from '@tiptap/extension-font-family'
 import { TextStyle } from "@tiptap/extension-text-style";
-import { FontSize } from "../../extensions/FontSize";
+import { FontSize } from "../../factories/extensions/FontSize";
 import { Color } from "@tiptap/extension-color";
 import Dialog from "../../components/common/Dialog";
 import DiagramEditor from "../../components/diagram/DiagramEditor";
