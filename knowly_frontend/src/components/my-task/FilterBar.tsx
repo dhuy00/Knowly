@@ -6,12 +6,13 @@ const FilterBar = () => {
   const [filterStatus, setFilterStatus] = useState("all");
   const [filterPriority, setFilterPriority] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
-  const mockDataList = [
-    "option one",
-    "option two",
-    "option three",
-    "option four",
-    "option five"
+
+  const mockStatus = [
+    "all",
+    "backlog",
+    "todo",
+    "in-progress",
+    "in-review"
   ]
 
   const mockPriority = [
@@ -37,7 +38,7 @@ const FilterBar = () => {
             focus:border-emerald-500/50 transition text-sm"
           />
         </div>
-        <CustomSelect defaultValue="Last 7 days" list={mockDataList}/>
+        <CustomSelect defaultValue="All status" list={mockStatus}/>
         <CustomSelect defaultValue="All priority" list={mockPriority}/>
         <button className="flex items-center text-xs justify-center gap-2 px-4 h-10
         bg-[#0F0F0F] border border-[#2A2A2A]/50 rounded-md text-gray-400 

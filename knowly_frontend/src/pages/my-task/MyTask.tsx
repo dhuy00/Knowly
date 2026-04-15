@@ -18,6 +18,7 @@ import { TaskFormModal } from "../../components/my-task/TaskFormModal";
 import type { Task } from "../../types/task";
 import Header from "../../components/my-task/Header";
 import FilterBar from "../../components/my-task/FilterBar";
+import TaskList from "../../components/my-task/TaksList"
 
 export function MyTask() {
   const [viewMode, setViewMode] = useState<"list" | "board">("list");
@@ -103,21 +104,7 @@ export function MyTask() {
 
         {/* Content */}
         {viewMode === "list" ? (
-          <div className="space-y-3">
-            {filteredTasks.map((task) => (
-              <TaskItem
-                key={task.id}
-                task={task}
-                onEdit={handleEditTask}
-                onDelete={handleDeleteTask}
-              />
-            ))}
-            {filteredTasks.length === 0 && (
-              <div className="text-center py-12 text-gray-500">
-                <p>No tasks found</p>
-              </div>
-            )}
-          </div>
+          <TaskList/>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {Object.entries(groupedByStatus).map(([status, tasks]) => (
