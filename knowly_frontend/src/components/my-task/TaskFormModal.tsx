@@ -3,6 +3,7 @@ import { X, Calendar, Clock, Users, Tag, Flag } from "lucide-react";
 import type { Task } from "../../types/task";
 import { mockUsers, mockProjects } from "../../mock/mockData";
 import CustomSelect from "./CustomSelect";
+import AssigneeSelection from "./AssigneeSelection";
 
 interface TaskFormModalProps {
   isOpen: boolean;
@@ -166,13 +167,15 @@ export function TaskFormModal({
                 placeholder="0"
                 min="0"
                 step="0.5"
-                className="w-full px-4 py-2.5 bg-[#0F0F0F] border border-[#2A2A2A]/50 rounded-lg text-white placeholder-gray-600 outline-none focus:border-emerald-500/50 transition"
+                className="w-full px-4 py-2.5 bg-[#0F0F0F] border border-[#2A2A2A]/50 rounded-lg
+                 text-white placeholder-gray-600 outline-none focus:border-emerald-500/50 
+                 transition text-sm"
               />
             </div>
 
             <div>
               <label className="block text-sm text-gray-300 mb-2">
-                <Calendar className="size-4 inline mr-1.5" />
+                <Calendar className="size-4 inline mr-1.5 text-white" />
                 Due Date
               </label>
               <input
@@ -190,7 +193,8 @@ export function TaskFormModal({
                       : undefined,
                   })
                 }
-                className="w-full px-4 py-2.5 bg-[#0F0F0F] border border-[#2A2A2A]/50 rounded-lg text-white outline-none focus:border-emerald-500/50 transition"
+                className="w-full px-4 py-2.5 bg-[#0F0F0F] border border-[#2A2A2A]/50 rounded-lg
+                 text-white outline-none focus:border-emerald-500/50 transition text-sm custom-date"
               />
             </div>
           </div>
@@ -201,30 +205,7 @@ export function TaskFormModal({
               <Users className="size-4 inline mr-1.5" />
               Assignees
             </label>
-            <div className="grid grid-cols-2 gap-2">
-              {mockUsers.map((user) => (
-                <button
-                  key={user.id}
-                  type="button"
-                  onClick={() => handleAssigneeToggle(user.id)}
-                  className={`flex items-center gap-3 p-3 rounded-lg border transition ${
-                    formData.assignees?.includes(user.id)
-                      ? "bg-emerald-500/10 border-emerald-500/30 text-white"
-                      : "bg-[#0F0F0F] border-[#2A2A2A]/50 text-gray-400 hover:border-emerald-500/30"
-                  }`}
-                >
-                  <img
-                    src={user.avatar}
-                    alt={user.name}
-                    className="w-8 h-8 rounded-md"
-                  />
-                  <div className="text-left flex-1 min-w-0">
-                    <p className="text-sm truncate">{user.name}</p>
-                    <p className="text-xs opacity-70 truncate">{user.role}</p>
-                  </div>
-                </button>
-              ))}
-            </div>
+            <AssigneeSelection/>
           </div>
 
           {/* Labels */}
@@ -256,15 +237,15 @@ export function TaskFormModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2.5 bg-[#0F0F0F] border border-[#2A2A2A]/50 rounded-lg 
-            text-gray-400 hover:text-white hover:border-emerald-500/30 transition text-sm"
+            className="px-4 py-3 bg-[#0F0F0F] border border-[#2A2A2A]/50 rounded-lg 
+            text-gray-400 hover:text-white hover:border-emerald-500/30 transition text-sm leading-none"
           >
             Cancel
           </button>
           <button
             onClick={handleSubmit}
-            className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white 
-            rounded-lg transition text-sm"
+            className="px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white 
+            rounded-lg transition text-sm leading-none"
           >
             {initialTask ? "Update Task" : "Create Task"}
           </button>

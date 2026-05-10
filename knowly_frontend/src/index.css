@@ -119,3 +119,7 @@ blockquote {
   outline: none !important;
 }
 
+.custom-date::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
