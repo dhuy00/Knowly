@@ -41,7 +41,7 @@ const Header = ({
       <div>
         <div className="flex items-center gap-2 text-emerald-400">
           <FaTasks />
-          <h1 className="text-2xl text-emerald-400 text-[20px] font-semibold">
+          <h1 className=" text-emerald-400 text-[20px] font-semibold">
             My Tasks
           </h1>
         </div>
@@ -62,10 +62,12 @@ const Header = ({
             focus:border-emerald-500/50 transition text-sm w-[900px]"
           />
         </div>
-        <button className="p-2.5 text-gray-400 hover:text-white hover:bg-[#2A2A2A] 
-        rounded-lg transition cursor-pointer">
-            <Filter className="size-4" />
-          </button>
+        <button
+          className="p-2.5 text-gray-400 hover:text-white hover:bg-[#2A2A2A] 
+        rounded-lg transition cursor-pointer"
+        >
+          <Filter className="size-4" />
+        </button>
       </div>
       <div className="flex items-center gap-3">
         <div className="flex items-center border border-[#2A2A2A] rounded-sm overflow-hidden">
