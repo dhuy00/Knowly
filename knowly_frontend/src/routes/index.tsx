@@ -15,6 +15,7 @@ import DiagramEditor from "../components/diagram/DiagramEditor.js";
 import ProjectDetail from "../components/projects/ProjectDetail.js";
 import Login from "../pages/login/Login.js";
 import { MyTask } from "../pages/my-task/MyTask.js";
+import TimeTracking from "../pages/time-tracking/TimeTracking.js";
 
 export const router = createBrowserRouter([          
   {
@@ -71,6 +72,10 @@ export const router = createBrowserRouter([
       {
         path: "diagram-test",
         element: (<TestDiagram />),
+      },
+      {
+        path: "time-tracking",
+        element: (<TimeTracking />),
       },
     ],
   },
