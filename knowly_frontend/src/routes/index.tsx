@@ -13,9 +13,6 @@ import Projects from "../pages/projects/Projects.js";
 import Notifications from "../pages/notifications/Notifications";     
 import Settings from "../pages/settings/Settings";
 import Support from "../pages/support/Support";
-import NoteDetail from "../components/notes/NoteDetail.js"
-import TestDiagram from "../components/notes/TestDiagram.js";
-import DiagramEditor from "../components/diagram/DiagramEditor.js";
 import ProjectDetail from "../components/projects/ProjectDetail.js";
 import Login from "../pages/login/Login.js";
 import { MyTask } from "../pages/my-task/MyTask.js";
@@ -25,12 +22,8 @@ import NoteDetail from "../components/notes/NoteDetail";
 import TestDiagram from "../components/notes/TestDiagram";
 import DiagramEditor from "../components/diagram/DiagramEditor";
 
-import ProjectDetail from "../pages/projects/ProjectDetail";
 
-import Login from "../pages/login/Login";
 import Register from "../pages/login/Register";
-
-import { MyTask } from "../pages/my-task/MyTask";
 
 export const router = createBrowserRouter([
   {
