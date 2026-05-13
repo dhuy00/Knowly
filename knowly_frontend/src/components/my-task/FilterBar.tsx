@@ -24,7 +24,7 @@ const FilterBar = () => {
   ]
 
   return (
-    <div className="bg-[#1A1A1A] border border-[#2A2A2A]/50 rounded-md p-4">
+    <div className="bg-[#1A1A1A] border border-[#2A2A2A]/50 rounded-md p-4 mb-3">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="relative">
           <Search className="absolute left-3 top-[12px] size-4 text-gray-500" />

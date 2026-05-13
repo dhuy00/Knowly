@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
 
-const CustomSelect = ({defaultValue, list}) => {
+const StatusSelect = ({defaultValue, list}) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
 
   const handleDropdown = () => {
@@ -33,4 +33,4 @@ const CustomSelect = ({defaultValue, list}) => {
   );
 };
 
-export default CustomSelect;
+export default StatusSelect;

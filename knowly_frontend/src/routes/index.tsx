@@ -9,10 +9,17 @@ import NotFound from "../pages/NotFound";
 import Dashboard from "../pages/dashboard/Dashboard";
 import TodoList from "../pages/todo-list/TodoList";
 import Notes from "../pages/notes/Notes";
-import Projects from "../pages/projects/Projects";
-import Notifications from "../pages/notifications/Notifications";
+import Projects from "../pages/projects/Projects.js";
+import Notifications from "../pages/notifications/Notifications";     
 import Settings from "../pages/settings/Settings";
 import Support from "../pages/support/Support";
+import NoteDetail from "../components/notes/NoteDetail.js"
+import TestDiagram from "../components/notes/TestDiagram.js";
+import DiagramEditor from "../components/diagram/DiagramEditor.js";
+import ProjectDetail from "../components/projects/ProjectDetail.js";
+import Login from "../pages/login/Login.js";
+import { MyTask } from "../pages/my-task/MyTask.js";
+import TimeTracking from "../pages/time-tracking/TimeTracking.js";
 
 import NoteDetail from "../components/notes/NoteDetail";
 import TestDiagram from "../components/notes/TestDiagram";
@@ -101,6 +108,10 @@ export const router = createBrowserRouter([
       {
         path: "diagram-test",
         element: <TestDiagram />,
+      },
+      {
+        path: "time-tracking",
+        element: (<TimeTracking />),
       },
     ],
   },
