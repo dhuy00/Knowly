@@ -12,42 +12,54 @@ import {
   Sparkles,
   Eye,
   EyeOff,
+  User,
 } from "lucide-react";
 
 import useAuth from "../../hooks/useAuth";
 
-export default function Login() {
+export default function Register() {
   const navigate = useNavigate();
 
-  const { login, loading } = useAuth();
+  // assume your hook already has register()
+  const { register, loading } = useAuth();
 
   const [form, setForm] = useState({
+    name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
-  const [rememberMe, setRememberMe] = useState(false);
-
   const [showPassword, setShowPassword] = useState(false);
+
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setError("");
 
-    setForm({
-      ...form,
+    setForm((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   const validate = () => {
+    if (!form.name.trim()) {
+      return "Name is required";
+    }
+
+    if (form.name.trim().length < 2) {
+      return "Name must be at least 2 characters";
+    }
+
     if (!form.email.trim()) {
       return "Email is required";
     }
 
     if (!/\S+@\S+\.\S+/.test(form.email)) {
-      return "Invalid email";
+      return "Invalid email address";
     }
 
     if (!form.password.trim()) {
@@ -56,6 +68,14 @@ export default function Login() {
 
     if (form.password.length < 6) {
       return "Password must be at least 6 characters";
+    }
+
+    if (!form.confirmPassword.trim()) {
+      return "Please confirm your password";
+    }
+
+    if (form.password !== form.confirmPassword) {
+      return "Passwords do not match";
     }
 
     return null;
@@ -68,21 +88,28 @@ export default function Login() {
 
     if (validationError) {
       setError(validationError);
+      toast.error(validationError);
       return;
     }
 
-    const result = await login({
-      email: form.email,
-      password: form.password,
-      rememberMe,
-    });
+    try {
+      const result = await register({
+        username: form.name,
+        email: form.email,
+        password: form.password,
+      });
 
-    if (!result.success) {
-      toast.error(result.message);
-      return;
+      if (!result.success) {
+        toast.error(result.message || "Register failed");
+        return;
+      }
+
+      toast.success("Account created successfully");
+
+      navigate("/login");
+    } catch (err) {
+      toast.error("Something went wrong");
     }
-
-    navigate("/dashboard");
   };
 
   return (
@@ -168,8 +195,7 @@ export default function Login() {
           </div>
 
           {/* FOOTER */}
-          <div>
-          
+          <div>          
           </div>
         </div>
       </div>
@@ -187,17 +213,21 @@ export default function Login() {
               <Zap className="w-7 h-7 text-primary" fill="currentColor" />
             </div>
 
-            <span className="text-2xl font-semibold text-white">TaskFlow</span>
+            <span className="text-2xl font-semibold text-white">
+              TaskFlow
+            </span>
           </div>
 
           {/* CARD */}
           <div className="bg-[#111111] border border-primary/10 rounded-2xl p-8 shadow-2xl">
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-primary mb-2">
-                Welcome back
+                Create Account
               </h1>
 
-              <p className="text-gray-400">Sign in to continue</p>
+              <p className="text-gray-400">
+                Start managing your tasks smarter
+              </p>
             </div>
 
             {/* ERROR */}
@@ -208,6 +238,38 @@ export default function Login() {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-5">
+              {/* NAME */}
+              <div>
+                <label className="block text-sm text-gray-300 mb-2">
+                  Username
+                </label>
+
+                <div className="relative">
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+
+                  <input
+                    type="text"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder="John Doe"
+                    className="
+                      w-full
+                      bg-[#0a0a0a]
+                      border border-gray-700
+                      rounded-xl
+                      pl-12
+                      pr-4
+                      py-3
+                      text-white
+                      outline-none
+                      focus:border-primary
+                      transition-all
+                    "
+                  />
+                </div>
+              </div>
+
               {/* EMAIL */}
               <div>
                 <label className="block text-sm text-gray-300 mb-2">
@@ -284,55 +346,50 @@ export default function Login() {
                 </div>
               </div>
 
-              {/* OPTIONS */}
-              <div className="flex items-center justify-between">
-                <label className="group flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="hidden"
-                  />
-
-                  <div
-                    className="
-                      w-4 h-4 rounded border border-gray-500
-                      flex items-center justify-center
-                      transition
-                      group-has-[:checked]:bg-primary
-                      group-has-[:checked]:border-primary
-                    "
-                  >
-                    <svg
-                      className="
-                        w-3 h-3 text-black
-                        opacity-0 transition
-                        group-has-[:checked]:opacity-100
-                      "
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      strokeWidth="3"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  </div>
-
-                  <span className="text-sm text-gray-400">
-                    Remember me
-                  </span>
+              {/* CONFIRM PASSWORD */}
+              <div>
+                <label className="block text-sm text-gray-300 mb-2">
+                  Confirm Password
                 </label>
 
-                <Link
-                  to="/forgot-password"
-                  className="text-sm text-primary hover:underline"
-                >
-                  Forgot password?
-                </Link>
+                <div className="relative">
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    value={form.confirmPassword}
+                    onChange={handleChange}
+                    placeholder="Confirm password"
+                    className="
+                      w-full
+                      bg-[#0a0a0a]
+                      border border-gray-700
+                      rounded-xl
+                      pl-12
+                      pr-12
+                      py-3
+                      text-white
+                      outline-none
+                      focus:border-primary
+                      transition-all
+                    "
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setShowConfirmPassword(!showConfirmPassword)
+                    }
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
               </div>
 
               {/* BUTTON */}
@@ -357,10 +414,10 @@ export default function Login() {
                 "
               >
                 {loading ? (
-                  "Signing in..."
+                  "Creating account..."
                 ) : (
                   <>
-                    Sign In
+                    Create Account
                     <ArrowRight className="w-5 h-5" />
                   </>
                 )}
@@ -369,9 +426,9 @@ export default function Login() {
 
             {/* FOOTER */}
             <div className="mt-6 text-center text-sm text-gray-400">
-              Don&apos;t have an account?{" "}
-              <Link to="/register" className="text-primary hover:underline">
-                Create account
+              Already have an account?{" "}
+              <Link to="/login" className="text-primary hover:underline">
+                Sign in
               </Link>
             </div>
           </div>

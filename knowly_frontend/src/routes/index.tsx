@@ -1,81 +1,118 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import MainLayout from "../layouts/MainLayout";
 
+import ProtectedRoute from "./ProtectedRoute";
+
 import NotFound from "../pages/NotFound";
+
 import Dashboard from "../pages/dashboard/Dashboard";
 import TodoList from "../pages/todo-list/TodoList";
 import Notes from "../pages/notes/Notes";
 import Projects from "../pages/projects/Projects";
-import Notifications from "../pages/notifications/Notifications";     
+import Notifications from "../pages/notifications/Notifications";
 import Settings from "../pages/settings/Settings";
 import Support from "../pages/support/Support";
-import NoteDetail from "../components/notes/NoteDetail.js"
-import TestDiagram from "../components/notes/TestDiagram.js";
-import DiagramEditor from "../components/diagram/DiagramEditor.js";
-import ProjectDetail from "../pages/projects/ProjectDetail.js";
-import Login from "../pages/login/Login.js";
-import { MyTask } from "../pages/my-task/MyTask.js";
 
-export const router = createBrowserRouter([          
+import NoteDetail from "../components/notes/NoteDetail";
+import TestDiagram from "../components/notes/TestDiagram";
+import DiagramEditor from "../components/diagram/DiagramEditor";
+
+import ProjectDetail from "../pages/projects/ProjectDetail";
+
+import Login from "../pages/login/Login";
+import Register from "../pages/login/Register";
+
+import { MyTask } from "../pages/my-task/MyTask";
+
+export const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
-    errorElement: <NotFound />,       
+
+    element: (
+      <ProtectedRoute>
+        <MainLayout />
+      </ProtectedRoute>
+    ),
+
+    errorElement: <NotFound />,
 
     children: [
-      { index: true, element: <Dashboard /> },
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+
       {
         path: "dashboard",
-        element: (<Dashboard />),
+        element: <Dashboard />,
       },
+
       {
         path: "my-task",
-        element: (<MyTask />),
+        element: <MyTask />,
       },
+
       {
         path: "todo-list",
-        element: (<TodoList />),
+        element: <TodoList />,
       },
+
       {
         path: "notes",
-        element: (<Notes />),
+        element: <Notes />,
       },
+
       {
         path: "notes/:id",
-        element: (<NoteDetail />),
+        element: <NoteDetail />,
       },
+
       {
         path: "notes/diagram/:id",
-        element: (<DiagramEditor />),
+        element: <DiagramEditor />,
       },
+
       {
         path: "projects",
-        element: (<Projects />),
+        element: <Projects />,
       },
+
       {
         path: "projects/:id",
-        element: (<ProjectDetail />),
+        element: <ProjectDetail />,
       },
+
       {
         path: "notifications",
-        element: (<Notifications />),
+        element: <Notifications />,
       },
+
       {
         path: "settings",
-        element: (<Settings />),
+        element: <Settings />,
       },
+
       {
         path: "support",
-        element: (<Support />),
+        element: <Support />,
       },
+
       {
         path: "diagram-test",
-        element: (<TestDiagram />),
+        element: <TestDiagram />,
       },
     ],
   },
+
+  // public routes
   {
     path: "/login",
-    element: <Login/>
-  }
+    element: <Login />,
+  },
+
+  {
+    path: "/register",
+    element: <Register />,
+  },
 ]);

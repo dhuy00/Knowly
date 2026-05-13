@@ -28,6 +28,7 @@
     "@tiptap/react": "^3.14.0",
     "@tiptap/starter-kit": "^3.14.0",
     "@xyflow/react": "^12.10.0",
+    "axios": "^1.16.0",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.554.0",
     "motion": "^12.36.0",
@@ -42,7 +43,8 @@
     "slate": "^0.120.0",
     "slate-history": "^0.113.1",
     "slate-react": "^0.120.0",
-    "tailwindcss": "^4.1.17"
+    "tailwindcss": "^4.1.17",
+    "zustand": "^5.0.13"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
