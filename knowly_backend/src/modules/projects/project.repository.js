@@ -37,10 +37,7 @@ export const getProjectsByUser = (userId) => {
   });
 };
 
-export const findProjectDetail = (
-  projectId,
-  userId
-) => {
+export const findProjectDetail = (projectId, userId) => {
   return prisma.project.findFirst({
     where: {
       id: Number(projectId),
@@ -66,10 +63,7 @@ export const findProjectDetail = (
   });
 };
 
-export const updateProject = (
-  projectId,
-  data
-) => {
+export const updateProject = (projectId, data) => {
   return prisma.project.update({
     where: {
       id: Number(projectId),
@@ -79,9 +73,7 @@ export const updateProject = (
   });
 };
 
-export const deleteProject = (
-  projectId
-) => {
+export const deleteProject = (projectId) => {
   return prisma.project.delete({
     where: {
       id: Number(projectId),
@@ -89,10 +81,7 @@ export const deleteProject = (
   });
 };
 
-export const findProjectMember = (
-  projectId,
-  userId
-) => {
+export const findProjectMember = (projectId, userId) => {
   return prisma.projectMember.findFirst({
     where: {
       projectId,
