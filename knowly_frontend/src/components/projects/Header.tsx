@@ -1,7 +1,7 @@
 import React from "react";
 import { Plus } from "lucide-react";
 
-const Header = () => {
+const Header = ({openAddProject}) => {
   return (
     <div className="flex items-center justify-between">
       <div>
@@ -13,6 +13,7 @@ const Header = () => {
       <button
         className="flex items-center gap-1.5 px-3.5 py-[8px] bg-emerald-600 hover:bg-emerald-700
            text-white rounded-sm transition text-sm font-medium"
+           onClick={() => openAddProject(true)}
       >
         <Plus className="size-4" />
         New Project
