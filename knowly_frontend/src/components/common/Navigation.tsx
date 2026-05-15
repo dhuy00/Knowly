@@ -18,12 +18,14 @@ import { Link } from "react-router";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router";
+import { SettingForm } from "../setting/SettingForm";
 
 const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [openSettingForm, setOpenSettingForm] = useState(false);
 
   // useEffect(() => {
   //   const isAuth = localStorage.getItem("isAuthenticated");
@@ -60,10 +62,15 @@ const Navigation = () => {
     localStorage.removeItem("isAuthenticated");
     navigate("/login");
   };
+
+  const handleSaveSetting = () => {};
+
   return (
     <>
-      <header className="h-16 border border-primary/10 bg-background-secondary flex items-center 
-      px-6 sticky top-0 z-40 rounded-md">
+      <header
+        className="h-16 border border-primary/10 bg-background-secondary flex items-center 
+      px-6 sticky top-0 z-40 rounded-md"
+      >
         {/* Logo */}
         <div className="flex items-center gap-3 mr-8">
           <div className="w-9 h-9 bg-gradient-to-br from-primary to-primary rounded-lg flex items-center justify-center">
@@ -145,7 +152,11 @@ const Navigation = () => {
                   <p className="text-xs text-gray-500">{currentUser.email}</p>
                 </div>
                 <div className="p-2">
-                  <button className="w-full flex items-center gap-3 px-3 py-2 text-gray-400 hover:text-white hover:bg-[#2A2A2A] rounded-md transition text-sm">
+                  <button
+                    className="w-full flex items-center gap-3 px-3 py-2 text-gray-400
+                   hover:text-white hover:bg-[#2A2A2A] rounded-md transition text-sm"
+                    onClick={() => setOpenSettingForm(true)}
+                  >
                     <Settings className="size-4" />
                     Settings
                   </button>
@@ -161,6 +172,13 @@ const Navigation = () => {
             )}
           </div>
         </div>
+        <SettingForm
+          isOpen={openSettingForm}
+          onClose={() => {
+            setOpenSettingForm(false);
+          }}
+          onSubmit={handleSaveSetting}
+        />
       </header>
     </>
   );

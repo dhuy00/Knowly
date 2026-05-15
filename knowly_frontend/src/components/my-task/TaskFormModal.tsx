@@ -3,7 +3,7 @@ import { X, Calendar, Clock, Users, Tag, Flag } from "lucide-react";
 import type { Task } from "../../types/task";
 import { mockUsers, mockProjects } from "../../mock/mockData";
 import CustomSelect from "./CustomSelect";
-import AssigneeSelection from "./AssigneeSelection";
+import AssigneeSelection from "../common/AssigneeSelection";
 
 interface TaskFormModalProps {
   isOpen: boolean;
